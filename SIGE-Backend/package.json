@@ -1,0 +1,21 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "Esta carpeta contiene el modelo de backend para el proyecto SIGE",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": " igorariza /"
+  },
+  "keywords": [
+    "sige"
+  ],
+  "author": "luis alberto gómez",
+  "license": "MIT",
+  "dependencies": {
+    "firebase": "^7.6.2"
+  }
+}
