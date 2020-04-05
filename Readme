@@ -1,0 +1,60 @@
+Name: SIGE
+Responsibility: Is a Backend-Api for the SIGE system.
+Description: This repo contain the Api by SIGE, it management all information of the SIGE
+             (users, institutions, courses, groups, Academic charge, historys, chat,
+             calcifications, reports, analytics, etc ..).
+Autors (Developers): Igor Ariza, Cristian Manosalva, Luis Gómez.
+Matains: GroupAr.
+version: 1.0.0 [ (users),(login) ]
+Licence: ---Software Proprietary---
+
+routes:
+
+---CRUD to Users------
+
+//To create a user or a lot of users// 
+
+-createStudent:
+-createTeacher:
+-createDependent:
+-createPrincipal:
+-createCoordinator:
+-createAssistant:
+-createAccountant:
+
+//To read a user or a lot of users// 
+
+-readAllUsers:
+-readStudents:
+-readStudent:<pk>
+-readTeachers:
+-readTeacher:<pk>
+-readDependents:
+-readDependent:<pk>
+-readStaffs:
+-readPrincipal:
+-readCoordinators:
+-readCoordinator:<pk>
+-readAssistants:
+-readAssistant: <pk>
+-readAccountant:<pk>
+
+//To update a user or a lot of users// 
+
+-updateStudent:<pk>
+-updateTeacher:<pk>
+-updateDependent:<pk>
+-updatePrincipal:<pk>
+-updateCoordinator:<pk>
+-updateAssistant: <pk>
+-updateAccountant:<pk>
+
+//To delete a user or a lot of users// 
+
+-deleteStudent:<pk>
+-deleteTeacher:<pk>
+-deleteDependent:<pk>
+-deletePrincipal:<pk>
+-deleteCoordinator:<pk>
+-deleteAssistant: <pk>
+-deleteAccountant:<pk>
