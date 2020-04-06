@@ -10,15 +10,6 @@ Licence: ---Software Proprietary---
 
 run project:
 
-1- type-shell: [direcotrio-root]/$ cd [direcotrio]/SIGE-Backend
-Ejemplo: -----------------------------------------------------------------------------
-[direcotrio-root]/SIGE-Backend$ ls
-app  docker-compose.yml  Dockerfile  Readme  requirements.txt
-2- type-shell: [direcotrio-root]/SIGE-Backend$ docker build .
-Ejemplo: -----------------------------------------------------------------------------
-Successfully built f5856b2a516d
-3- type-shell: [direcotrio-root]/SIGE-Backend$ docker-compose build
-4- type-shell: [direcotrio-root]/SIGE-Backend$ docker 
 
 
 routes:
