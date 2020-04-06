@@ -1,15 +1,15 @@
 language: python
 python:
-    - "3.6"
-cache: pip3
+  - "3.6"
+cache: pip
 branches:
-   only:
+  only:
     - master
-   env:
-    - DJANGO=3.0
-   before_install:
-    - cd app/
-   install:
-    - "pip3 install -r requirements.txt"
-    script: 
-    - python3 app/manage.py test
+env:
+  - DJANGO=3.0
+before_install:
+  - cd app/
+install:
+  - "pip install -r requirements.txt"
+script:
+  - python app/manage.py test
