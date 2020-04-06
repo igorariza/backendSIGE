@@ -11,7 +11,7 @@ WORKDIR /app
 COPY ./app /app
 
 RUN pip3 install pipenv
-RUN pipenv install 
+#RUN pipenv install 
 
 RUN adduser -D myuser 
 user myuser
