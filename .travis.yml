@@ -12,4 +12,4 @@ before_install:
 install:
   - "pip install -r requirements.txt"
 script:
-  - python app/manage.py test
+  - python manage.py test
