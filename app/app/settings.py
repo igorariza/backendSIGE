@@ -27,6 +27,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = [
     '0.0.0.0',
+    '127.0.0.1',
     'localhost',
     'sige-api-groupar.herokuapp.com'
 ]
@@ -43,10 +44,14 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'users',
     'institutions',
-    'test'
+    'test',
+    'rest_framework',
+    'rest_framework.authtoken',
+    'corsheaders'
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -127,3 +132,12 @@ USE_TZ = True
 STATIC_URL = '/static/'
 """Configurate costumuser by Auth"""
 AUTH_USER_MODEL = 'users.CustomUser'
+
+REST_AUTH_SERIALIZERS = {
+    "USER_DETAILS_SERIALIZER": "users.serializers.UserSerializer",
+}
+REST_AUTH_REGISTER_SERIALIZERS = {
+    "REGISTER_SERIALIZER": "users.serializers.RegisterUserSerializer",
+}
+
+CORS_ORIGIN_ALLOW_ALL = True
