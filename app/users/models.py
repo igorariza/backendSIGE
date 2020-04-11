@@ -50,6 +50,7 @@ class CustomUser(AbstractUser):
         
     """Fields own of the customuser"""
     #foto = models.ImageField('Foto de perfil', upload_to= 'users/photos/', blank=True, null=True)
+    codeUser = models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')
     documentIdUser = models.CharField(validators = [phone_or_id_validate], max_length=10, null = False ,unique=True)
     typeIdeUser = models.CharField(max_length=100, null = False)
     firstNameUser = models.CharField(max_length=100,null = False)
@@ -85,25 +86,54 @@ class CustomUser(AbstractUser):
         
     def __str__(self):
         return str(self.correo)
-"""
+
 # ========== Modelo del Docente que contiene un usuario ========== 
-class Docente(models.Model):
+class TeacherUser(models.Model):
     
+    """create a user"""
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    interes_mora = models.FloatField()
-    #category = models.CharField(max_length=10)
-    cycle = models.CharField(max_length=10)
-    contrat_number = models.IntegerField(unique=True)
-    financial_state = models.CharField(max_length=10)
-    billing = models.CharField(max_length=10)
+    """fields to TeacherUser"""
+    codeTeacher = models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')
+    degreesTeacher = models.CharField(max_length=100)
+
+# ========== Modelo del Estudiante que contiene un usuario ========== 
+class StudentUser(models.Model):
+    
+    """create a user"""
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    """fields to TeacherUser"""
+    codeStudent = models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')
+
+
+#==========  Modelo del familiar que extiende de usuario basico ========== 
+class RelativeUser(models.Model):
+    
+    """On staff user can be: Parent | Attending"""
+    USER_TYPE_CHOICES = (
+      (1, 'parent'),
+      (2, 'attending'),
+    )
+    """create a relation with a user"""
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    """fields to Relative"""
+    codeRelative = models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')
+    typeRelative = models.PositiveSmallIntegerField(choices=USER_TYPE_CHOICES)
+    student = models.ForeignKey(StudentUser, on_delete=models.CASCADE)
 
 #==========  Modelo del trabajador que extiende de usuario basico ========== 
-class Worker(models.Model):
+class StaffUser(models.Model):
+    
+    """On staff user can be: Principal | Subprincial | Payer |
+       assistantSIMAT | assistant"""
     USER_TYPE_CHOICES = (
-      (1, 'admin'),
-      (2, 'manager'),
-      (3, 'operator'),
+      (1, 'principal'),
+      (2, 'subprincial'),
+      (3, 'payer'),
+      (4, 'assistant'),
+      (5, 'assistantSIMAT'),
     )
+    """create a relation with a user"""
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    user_type = models.PositiveSmallIntegerField(choices=USER_TYPE_CHOICES)
-"""
+    """fields to Staff"""
+    codeStaff = models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')
+    ocupationStaff = models.PositiveSmallIntegerField(choices=USER_TYPE_CHOICES)
