@@ -3,6 +3,8 @@ from users.models import CustomUser, TeacherUser, StudentUser, RelativeUser, Sta
 from django.contrib.auth.hashers import make_password
 
 # ========== Serializador para el usuario ================================================================
+
+
 class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
@@ -28,6 +30,8 @@ class UserSerializer(serializers.ModelSerializer):
         ]
 
 # ========== Serializador para crear el usuario ==========
+
+
 class CreateUserSerializer(serializers.ModelSerializer):
 
     passwordUser = serializers.CharField(
@@ -79,6 +83,8 @@ class CreateUserSerializer(serializers.ModelSerializer):
         return user
 
 # ========== Serializador para inactivar un user ==========
+
+
 class InactivateUserSerializer(serializers.ModelSerializer):
 
     class Meta:
@@ -108,6 +114,8 @@ class InactivateUserSerializer(serializers.ModelSerializer):
         return user
 
 # ========== Serializador para actualizar el usuario ==========
+
+
 class UpdateUserSerializer(serializers.ModelSerializer):
 
     class Meta:
@@ -140,6 +148,8 @@ class UpdateUserSerializer(serializers.ModelSerializer):
         return user
 
 # ========== Serializador para el teacher ============================================================
+
+
 class TeacherSerializer(serializers.ModelSerializer):
 
     user = UserSerializer()
@@ -148,13 +158,17 @@ class TeacherSerializer(serializers.ModelSerializer):
         model = TeacherUser
         fields = [
             'codeTeacher',
-            'degreesTeacher'
+            'degreesTeacher',
+            'user'
         ]
-        
+
 # ========== Serializador para crear teacher con usuario ==========
+
+
 class CreateTeacherSerializer(serializers.ModelSerializer):
-    
+
     user = UserSerializer()
+
     class Meta:
         model = TeacherUser
         fields = [
@@ -171,6 +185,8 @@ class CreateTeacherSerializer(serializers.ModelSerializer):
         return teacher
 
 # ========== Serializador para actualizar el teacher ==========
+
+
 class UpdateTeacherSerializer(serializers.ModelSerializer):
 
     class Meta:
@@ -185,22 +201,28 @@ class UpdateTeacherSerializer(serializers.ModelSerializer):
         return user
 
 # ========== Serializador para el student ============================================================
+
+
 class StudentSerializer(serializers.ModelSerializer):
 
     user = UserSerializer()
 
     class Meta:
-        model = TeacherUser
+        model = StudentUser
         fields = [
-            'codeStudent'
+            'codeStudent',
+            'user'
         ]
-        
+
 # ========== Serializador para crear student con usuario ==========
+
+
 class CreateStudentSerializer(serializers.ModelSerializer):
-    
+
     user = UserSerializer()
+
     class Meta:
-        model = TeacherUser
+        model = StudentUser
         fields = [
             'codeStudent',
             'user'
@@ -214,6 +236,8 @@ class CreateStudentSerializer(serializers.ModelSerializer):
         return student
 
 # ========== Serializador para actualizar el student ==========
+
+
 class UpdateStudentSerializer(serializers.ModelSerializer):
 
     class Meta:
@@ -227,20 +251,27 @@ class UpdateStudentSerializer(serializers.ModelSerializer):
         return user
 
 # ========== Serializador para el relative ============================================================
+
+
 class RelativeSerializer(serializers.ModelSerializer):
 
     user = UserSerializer()
 
     class Meta:
-        model = TeacherUser
+        model = RelativeUser
         fields = [
-            'codeStudent'
-        ]
-        
+            'codeRelative',
+            'typeRelative',
+            'student',
+            'user']
+
 # ========== Serializador para crear relative con usuario ==========
+
+
 class CreateRelativeSerializer(serializers.ModelSerializer):
-    
+
     user = UserSerializer()
+
     class Meta:
         model = RelativeUser
         fields = [
@@ -258,15 +289,16 @@ class CreateRelativeSerializer(serializers.ModelSerializer):
         return relative
 
 # ========== Serializador para actualizar el relative ==========
+
+
 class UpdateRelativeSerializer(serializers.ModelSerializer):
 
     class Meta:
-        model = StudentUser
+        model = RelativeUser
         fields = [
             'codeRelative',
             'typeRelative',
             'student',
-            'user'
         ]
 
     def update(self, instance, validated_data):
@@ -274,18 +306,22 @@ class UpdateRelativeSerializer(serializers.ModelSerializer):
         return user
 
 # ========== Serializador para el trabajador ==========================================================
+
+
 class StaffSerializer(serializers.ModelSerializer):
     class Meta:
         model = StaffUser
         fields = ['codeStaff', 'ocupationStaff']
 
 # ========== Serializador: crea trabajador con usuario al tiempo ==========
+
+
 class CreateStaffSerializer(serializers.ModelSerializer):
     user = UserSerializer()
 
     class Meta:
         model = StaffUser
-        fields = ['codeStaff', 'ocupationStaff']
+        fields = ['codeStaff', 'ocupationStaff', 'user']
 
     def create(self, validated_data):
         user = validated_data.pop('user')
@@ -295,6 +331,8 @@ class CreateStaffSerializer(serializers.ModelSerializer):
         return staff
 
 # ========== Serializador para actualizar el staff ==========
+
+
 class UpdateStaffSerializer(serializers.ModelSerializer):
 
     class Meta:

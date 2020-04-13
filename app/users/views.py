@@ -129,7 +129,6 @@ class Login(APIView):
 class UserList(ListAPIView):
     queryset = CustomUser.objects.all()
     serializer_class = UserSerializer
-    permission_classes = (AllowPrincipal, AllowSubprincipal)
 
 # Listar un usuario por id
 class UserDetail(RetrieveAPIView):
