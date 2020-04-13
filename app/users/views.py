@@ -100,23 +100,33 @@ class AllowAssistantSIMAT(BasePermission):
 class Login(APIView):
     def post(self, request):
         documentIdUser = request.data.get('documentIdUser', None)
-        passwordUser = request.data.get('password', None)
+        passwordUser = request.data.get('passwordUser', None)
         if documentIdUser and passwordUser:
-            user_querysets = StaffUser.objects.filter(user__email__iexact=documentIdUser).values(
-                'codeStaff', 'user', 'user__documentIdUser', 'user__is_active',  'user__passwordUser')
-            if (user_querysets.exists() and user_querysets[0]['user__is_active']):
-                user = user_querysets[0]
-                if(check_password(passwordUser, user['user__passwordUser'])):
-                    user.pop('user__passwordUser')
-                    user.pop('user__is_active')
-                    userC = CustomUser.objects.filter(
-                        email__iexact=documentIdUser)
-                    token, created = Token.objects.get_or_create(user=userC[0])
-                    return Response({"message": "Login exitoso",  "code": 200, "token": token.key, "data":  user})
-                else:
+            user_querysets = CustomUser.objects.filter(documentIdUser__iexact=documentIdUser).values(
+            'codeUser',
+            'documentIdUser',
+            'typeIdeUser',
+            'firstNameUser',
+            'lastNameUser',
+            'emailUser',
+            'phoneUser',
+            'addressUser',
+            'passwordUser',
+            'dateOfBirthUser',
+            'dateLastAccessUser',
+            'genderUser',
+            'rhUser',
+            'codeHeadquartersUser',
+            'is_active',
+            )
+            if (user_querysets.exists() and user_querysets[0]['is_active']):
+                 user= user_querysets[0]
+                 if(check_password(passwordUser, user['passwordUser'])):
+                    message = "correcto"
+                    return Response({"message": message, "code": 200, 'data': user})
+                 else:
                     message = "Contraseña incorrecta"
                     return Response({"message": message, "code": 204, 'data': {}})
-
             else:
                 message = "El id proporcionado no existe o el usuario no está activo"
                 return Response({"message": message, "code": 204, 'data': {}})
