@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from users.models import CustomUser, TeacherUser, StudentUser, RelativeUser, StaffUser
 from django.contrib.auth.hashers import make_password
-
+from json import JSONEncoder
 # ========== Serializador para el usuario ================================================================
 
 
@@ -29,9 +29,12 @@ class UserSerializer(serializers.ModelSerializer):
             'is_superuser'
         ]
 
+# ========== Serializador para  el  login usuario ==========
+class UserEncoder(JSONEncoder, serializers.ModelSerializer):
+        def default(self, o):
+            return o
+
 # ========== Serializador para crear el usuario ==========
-
-
 class CreateUserSerializer(serializers.ModelSerializer):
 
     passwordUser = serializers.CharField(
