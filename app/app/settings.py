@@ -28,9 +28,7 @@ DEBUG = True
 ALLOWED_HOSTS = [
     '0.0.0.0',
     '127.0.0.1',
-    'localhost',
-    'ec2-54-152-207-114.compute-1.amazonaws.com',
-    '54.152.207.114'
+    'localhost'
 ]
 
 
@@ -97,13 +95,14 @@ WSGI_APPLICATION = 'app.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'sige2020',
+        'NAME': 'sigeedu',
         'USER': 'adminsige',
         'PASSWORD': 'ia2127374',
-        'HOST': 'sige-2020.cfgbol9pangg.sa-east-1.rds.amazonaws.com',
+        'HOST': 'sigeedu.cfgbol9pangg.sa-east-1.rds.amazonaws.com',
         'PORT': '5432',
     }
 }
+        
 
 """
 DATABASES = {
@@ -162,4 +161,3 @@ REST_AUTH_REGISTER_SERIALIZERS = {
 }
 
 CORS_ORIGIN_ALLOW_ALL = True
-STATIC_ROOT = os.path.join(BASE_DIR, "static/")

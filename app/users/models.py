@@ -58,7 +58,7 @@ class CustomUser(AbstractUser):
     emailUser = models.EmailField(max_length=70, blank=True, null= True, unique= True)
     phoneUser = models.CharField(validators = [phone_or_id_validate], max_length=10, null = False, unique=True)
     addressUser = models.CharField(max_length=50, null = False)
-    passwordUser = models.CharField(max_length=20,default=[documentIdUser], null = False)
+    passwordUser = models.CharField(max_length=200,default=[documentIdUser], null = False)
     dateOfBirthUser = models.DateField(default=datetime.date.today, null=False)  
     dateLastAccessUser = models.DateField(default=datetime.date.today, null=False)
     genderUser =  models.CharField(max_length=20, null = False)
