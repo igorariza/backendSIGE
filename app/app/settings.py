@@ -28,10 +28,7 @@ DEBUG = True
 ALLOWED_HOSTS = [
     '0.0.0.0',
     '127.0.0.1',
-    'localhost',
-    '54.152.207.114',
-    'ec2-54-152-207-114.compute-1.amazonaws.com',
-
+    'localhost'
 ]
 
 
@@ -164,4 +161,3 @@ REST_AUTH_REGISTER_SERIALIZERS = {
 }
 
 CORS_ORIGIN_ALLOW_ALL = True
-STATIC_ROOT = os.path.join(BASE_DIR, "static/")

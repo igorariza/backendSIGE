@@ -12,51 +12,56 @@ run project:
 
 routes:
 
----CRUD to Users------
+-----Rutas Base --------------------------
+http://54.152.207.114:8000/api/
+http://54.152.207.114:8000/api/admin/
+http://54.152.207.114:8000/api/user/
+http://54.152.207.114:8000/api/institutions/
 
-//To create a user or a lot of users// 
+--Rutas IE -------------------------------
+http://54.152.207.114:8000/api/institutions/educationalinstitution/ --> get all aply by all of routes
+http://54.152.207.114:8000/api/institutions/educationalinstitution/create/
+http://54.152.207.114:8000/api/institutions/educationalinstitution/<pk> --> get one
+http://54.152.207.114:8000/api/institutions/educationalinstitution/update/<pk>/
+http://54.152.207.114:8000/api/institutions/educationalinstitution/inactivate/<pk>/'
+http://54.152.207.114:8000/api/institutions/educationalinstitution/delete/<pk>
+http://54.152.207.114:8000/api/institutions/headquarters/
+http://54.152.207.114:8000/api/institutions/headquarters/create/
+http://54.152.207.114:8000/api/institutions/headquarters/<pk>
+http://54.152.207.114:8000/api/institutions/headquarters/update/<pk>
+http://54.152.207.114:8000/api/institutions/headquarters/delete/<pk>
+http://54.152.207.114:8000/api/institutions/headquarters/inactivate/<pk>/
 
--createStudent:
--createTeacher:
--createDependent:
--createPrincipal:
--createCoordinator:
--createAssistant:
--createAccountant:
+--Rutas Usuarios -------------------------------
+http://54.152.207.114:8000/api/user/login
+http://54.152.207.114:8000/api/user/create/
+http://54.152.207.114:8000/api/user/<pk>/
+http://54.152.207.114:8000/api/user/update/<pk>/
+http://54.152.207.114:8000/api/user/delete/<pk>
 
-//To read a user or a lot of users// 
+http://54.152.207.114:8000/api/user/teacher/
+http://54.152.207.114:8000/api/user/teacher/create/
+http://54.152.207.114:8000/api/user/teacher/create/bulk --> para crear multiples
+http://54.152.207.114:8000/api/user/teacher/<pk>
+http://54.152.207.114:8000/api/user/teacher/update/<pk>
+http://54.152.207.114:8000/api/user/teacher/delete/<pk>
 
--readAllUsers:
--readStudents:
--readStudent:<pk>
--readTeachers:
--readTeacher:<pk>
--readDependents:
--readDependent:<pk>
--readStaffs:
--readPrincipal:
--readCoordinators:
--readCoordinator:<pk>
--readAssistants:
--readAssistant: <pk>
--readAccountant:<pk>
+http://54.152.207.114:8000/api/user/student/
+http://54.152.207.114:8000/api/user/student/create/
+http://54.152.207.114:8000/api/user/student/create/bulk/
+http://54.152.207.114:8000/api/user/student/<pk>/
+http://54.152.207.114:8000/api/user/student/update/<pk>/
+http://54.152.207.114:8000/api/user/student/delete/<pk>/
 
-//To update a user or a lot of users// 
+http://54.152.207.114:8000/api/user/relative/
+http://54.152.207.114:8000/api/user/relative/create/
+http://54.152.207.114:8000/api/user/relative/create/bulk/
+http://54.152.207.114:8000/api/user/relative/<pk>/
+http://54.152.207.114:8000/api/user/relative/update/<pk>/
 
--updateStudent:<pk>
--updateTeacher:<pk>
--updateDependent:<pk>
--updatePrincipal:<pk>
--updateCoordinator:<pk>
--updateAssistant: <pk>
--updateAccountant:<pk>
-
-//To delete a user or a lot of users// 
-
--deleteStudent:<pk>
--deleteTeacher:<pk>
--deleteDependent:<pk>
--deletePrincipal:<pk>
--deleteCoordinator:<pk>
--deleteAssistant: <pk>
--deleteAccountant:<pk>
+http://54.152.207.114:8000/api/user/staff/
+http://54.152.207.114:8000/api/user/staff/create/
+http://54.152.207.114:8000/api/user/staff/create/bulk/
+http://54.152.207.114:8000/api/user/staff/<pk>
+http://54.152.207.114:8000/api/user/staff/update/<pk>/
+http://54.152.207.114:8000/api/user/staff/delete<pk>
