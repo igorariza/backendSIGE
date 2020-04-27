@@ -2,6 +2,12 @@ from rest_framework import serializers
 from users.models import CustomUser, TeacherUser, StudentUser, RelativeUser, StaffUser
 from django.contrib.auth.hashers import make_password
 from json import JSONEncoder
+
+
+#Para agregar las avidencias al usuario
+from files.serializers import EvidenceSerializer
+from files.models import Evidence
+
 # ========== Serializador para el usuario ================================================================
 
 
@@ -10,7 +16,6 @@ class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = CustomUser
         fields = [
-            'codeUser',
             'documentIdUser',
             'typeIdeUser',
             'firstNameUser',
@@ -23,7 +28,8 @@ class UserSerializer(serializers.ModelSerializer):
             'dateLastAccessUser',
             'genderUser',
             'rhUser',
-            'codeHeadquartersUser',
+            'codeIE',
+            'codeHeadquarters',
             'is_active',
             'is_staff',
             'is_superuser'
@@ -43,7 +49,6 @@ class CreateUserSerializer(serializers.ModelSerializer):
     class Meta:
         model = CustomUser
         fields = [
-            'codeUser',
             'documentIdUser',
             'typeIdeUser',
             'firstNameUser',
@@ -56,7 +61,8 @@ class CreateUserSerializer(serializers.ModelSerializer):
             'dateLastAccessUser',
             'genderUser',
             'rhUser',
-            'codeHeadquartersUser',
+            'codeIE',
+            'codeHeadquarters',
             'is_active',
             'is_staff',
             'is_superuser'
@@ -64,27 +70,28 @@ class CreateUserSerializer(serializers.ModelSerializer):
         extra_kwargs = {'passwordUser': {'write_only': True}}
 
     def create(self, validated_data):
-        user = CustomUser.objects.create(
-            documentIdUser=validated_data['documentIdUser'],
-            typeIdeUser=validated_data['typeIdeUser'],
-            firstNameUser=validated_data['firstNameUser'],
-            lastNameUser=validated_data['lastNameUser'],
-            emailUser=validated_data['emailUser'],
-            phoneUser=validated_data['phoneUser'],
-            addressUser=validated_data['addressUser'],
-            passwordUser=make_password(validated_data['passwordUser']),
-            dateOfBirthUser=validated_data['dateOfBirthUser'],
-            dateLastAccessUser=validated_data['dateLastAccessUser'],
-            genderUser=validated_data['genderUser'],
-            rhUser=validated_data['rhUser'],
-            codeHeadquartersUser=validated_data['codeHeadquartersUser'],
-            is_active=validated_data['is_active'],
-            is_staff=validated_data['is_staff'],
-            is_superuser=validated_data['is_superuser']
-        )
-        user.save()
-        return user
-
+          user = CustomUser.objects.create(
+                documentIdUser=validated_data['documentIdUser'],
+                typeIdeUser=validated_data['typeIdeUser'],
+                firstNameUser=validated_data['firstNameUser'],
+                lastNameUser=validated_data['lastNameUser'],
+                emailUser=validated_data['emailUser'],
+                phoneUser=validated_data['phoneUser'],
+                addressUser=validated_data['addressUser'],
+                passwordUser=make_password(validated_data['passwordUser']),
+                dateOfBirthUser=validated_data['dateOfBirthUser'],
+                dateLastAccessUser=validated_data['dateLastAccessUser'],
+                genderUser=validated_data['genderUser'],
+                rhUser=validated_data['rhUser'],
+                codeIE=validated_data['codeIE'],
+                codeHeadquarters= validated_data['codeHeadquarters'],
+                is_active=validated_data['is_active'],
+                is_staff=validated_data['is_staff'],
+                is_superuser=validated_data['is_superuser']
+            )
+          user.save()
+          return user
+    
 # ========== Serializador para inactivar un user ==========
 
 
@@ -92,25 +99,7 @@ class InactivateUserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = CustomUser
-        fields = [
-            'codeUser',
-            'documentIdUser',
-            'typeIdeUser',
-            'firstNameUser',
-            'lastNameUser',
-            'emailUser',
-            'phoneUser',
-            'addressUser',
-            'passwordUser',
-            'dateOfBirthUser',
-            'dateLastAccessUser',
-            'genderUser',
-            'rhUser',
-            'codeHeadquartersUser',
-            'is_active',
-            'is_staff',
-            'is_superuser'
-        ]
+        fields = '__all__'
 
     def patch(self, request, *args, **kwargs):
         user = self.partial_update(request, *args, **kwargs)
@@ -124,8 +113,6 @@ class UpdateUserSerializer(serializers.ModelSerializer):
     class Meta:
         model = CustomUser
         fields = [
-            'codeUser',
-            'documentIdUser',
             'typeIdeUser',
             'firstNameUser',
             'lastNameUser',
@@ -137,7 +124,8 @@ class UpdateUserSerializer(serializers.ModelSerializer):
             'dateLastAccessUser',
             'genderUser',
             'rhUser',
-            'codeHeadquartersUser',
+            'codeIE',
+            'codeHeadquarters',
             'is_active',
             'is_staff',
             'is_superuser'
@@ -156,13 +144,15 @@ class UpdateUserSerializer(serializers.ModelSerializer):
 class TeacherSerializer(serializers.ModelSerializer):
 
     user = UserSerializer()
+    evidences = EvidenceSerializer(many=True, read_only=True)
 
     class Meta:
         model = TeacherUser
         fields = [
             'codeTeacher',
             'degreesTeacher',
-            'user'
+            'user',
+            'evidences' 
         ]
 
 # ========== Serializador para crear teacher con usuario ==========
@@ -171,7 +161,8 @@ class TeacherSerializer(serializers.ModelSerializer):
 class CreateTeacherSerializer(serializers.ModelSerializer):
 
     user = UserSerializer()
-
+    #evidences = EvidenceSerializer(many=True)
+    
     class Meta:
         model = TeacherUser
         fields = [
@@ -181,10 +172,14 @@ class CreateTeacherSerializer(serializers.ModelSerializer):
         ]
 
     def create(self, validated_data):
+        """upload neted objects"""
         user = validated_data.pop('user')
         user['passwordUser'] = make_password(user['passwordUser'])
         custom = CustomUser.objects.create(**user)
         teacher = TeacherUser.objects.create(user=custom, **validated_data)
+        #evidences = validated_data.pop('evidences')
+        #for track_data in evidences:
+        #    Evidence.objects.create(teacher=teacher, **track_data)
         return teacher
 
 # ========== Serializador para actualizar el teacher ==========
@@ -209,6 +204,7 @@ class UpdateTeacherSerializer(serializers.ModelSerializer):
 class StudentSerializer(serializers.ModelSerializer):
 
     user = UserSerializer()
+    
 
     class Meta:
         model = StudentUser

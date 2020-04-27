@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from .models import EducationalInstitution, Headquarters
+from groups.serializers import GroupSerializer
 
 
 # ========== Serializador para una IE =================================================================
@@ -7,14 +8,14 @@ class EducationalInstitutionSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = EducationalInstitution
-        fields = ['codeIE', 'nameIE', 'nitIE', 'is_active']
+        fields = ['nameIE', 'nitIE', 'is_active']
 
 # ========== Serializador para crear la IE ==========
 class CreateEducationalInstitutionSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = EducationalInstitution
-        fields = ['codeIE', 'nameIE', 'nitIE', 'is_active']
+        fields = ['nameIE', 'nitIE', 'is_active']
 
     def create(self, validated_data):
         ie = EducationalInstitution.objects.create(
@@ -30,7 +31,7 @@ class UpdateEducationalInstitutionSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = EducationalInstitution
-        fields = ['codeIE', 'nameIE', 'nitIE', 'is_active']
+        fields = ['nameIE', 'nitIE', 'is_active']
 
     def update(self, instance, validated_data):
         ie = super().update(instance, validated_data)
@@ -41,7 +42,7 @@ class InactivateEducationalInstitutionSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = EducationalInstitution
-        fields = ['codeIE', 'nameIE', 'nitIE', 'is_active']
+        fields = '__all__'
 
     def patch(self, request, *args, **kwargs):
         ie = self.partial_update(request, *args, **kwargs)
@@ -52,30 +53,30 @@ class DeleteEducationalInstitutionSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = EducationalInstitution
-        fields = ['codeIE', 'nameIE', 'nitIE', 'is_active']
+        fields = '__all__'
 
     def perform_destroy(self, instance):
             instance.delete()
  
-# ========== Serializador para el Transformator =====================================================
+# ========== Serializador para el Headquarters =====================================================
 class HeadquartersSerializer(serializers.ModelSerializer):
 
+    groups = GroupSerializer(many=True, read_only=True)
     class Meta:
         model = Headquarters
-        fields = ['codeHeadquarters', 'nameHeadquarters', 'daneHeadquarters', 'codeIE', 'is_active']
+        fields = ['nameHeadquarters', 'daneHeadquarters', 'ieHeadquarters', 'is_active', 'groups']
 
 # ========== Serializador para crear una headquarters ==========
 class CreateHeadquartersSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Headquarters
-        fields = ['codeHeadquarters', 'nameHeadquarters', 'daneHeadquarters', 'codeIE', 'is_active']
+        fields = ['nameHeadquarters', 'daneHeadquarters', 'ieHeadquarters', 'is_active']
 
     def create(self, validated_data):
         headquarters = Headquarters.objects.create(
             nameHeadquarters=validated_data['nameHeadquarters'],
-            daneHeadquarters=validated_data['daneHeadquarters'],
-            codeIE=validated_data['codeIE'],
+            ieHeadquarters=validated_data['ieHeadquarters'],
             is_active=validated_data['is_active']
             )
         headquarters.save()
@@ -86,7 +87,7 @@ class UpdateHeadquartersSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Headquarters
-        fields = ['codeHeadquarters', 'nameHeadquarters', 'daneHeadquarters', 'codeIE', 'is_active']
+        fields = ['nameHeadquarters','daneHeadquarters', 'ieHeadquarters', 'is_active']
 
     def update(self, instance, validated_data):
         headquarters = super().update(instance, validated_data)
@@ -97,7 +98,7 @@ class InactivateHeadquartersSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Headquarters
-        fields = ['codeHeadquarters', 'nameHeadquarters', 'daneHeadquarters', 'codeIE', 'is_active']
+        fields = '__all__'
 
     def patch(self, request, *args, **kwargs):
         headquarters = self.partial_update(request, *args, **kwargs)
@@ -109,7 +110,7 @@ class DeleteHeadquartersSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Headquarters
-        fields = ['codeHeadquarters', 'nameHeadquarters', 'daneHeadquarters', 'codeIE', 'is_active']
+        fields = '__all__'
 
     def perform_destroy(self, instance):
             instance.delete()

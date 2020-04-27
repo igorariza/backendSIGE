@@ -9,7 +9,10 @@ from django.conf import settings
 #Para manejar el tiempo 
 import datetime
 #Para hacer la foreign key con las ie
-from institutions.models import Headquarters 
+from institutions.models import EducationalInstitution, Headquarters
+
+
+
 # ========== Modelo del usuario base de Django ========== 
 class UserManager(BaseUserManager):
 
@@ -48,22 +51,27 @@ class CustomUser(AbstractUser):
     """Validate than fields phone and id are ok"""
     phone_or_id_validate = RegexValidator(regex=r'^\+?1?\d{7,10}$', message= "Numero incorrecto")
         
-    """Fields own of the customuser"""
-    #foto = models.ImageField('Foto de perfil', upload_to= 'users/photos/', blank=True, null=True)
-    codeUser = models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')
-    documentIdUser = models.CharField(validators = [phone_or_id_validate], max_length=10, null = False ,unique=True)
+    documentIdUser = models.CharField(validators = [phone_or_id_validate],
+                                      max_length=10,
+                                      null = False ,
+                                      unique=True,
+                                      primary_key=True,
+                                      serialize=False,
+                                      verbose_name='ID')
     typeIdeUser = models.CharField(max_length=100, null = False)
     firstNameUser = models.CharField(max_length=100,null = False)
     lastNameUser = models.CharField(max_length=100, null = False)
     emailUser = models.EmailField(max_length=70, blank=True, null= True, unique= True)
-    phoneUser = models.CharField(validators = [phone_or_id_validate], max_length=10, null = False, unique=True)
+    phoneUser = models.CharField(validators = [phone_or_id_validate], max_length=10,
+                                  null = False, unique=True)
     addressUser = models.CharField(max_length=50, null = False)
     passwordUser = models.CharField(max_length=200,default=[documentIdUser], null = False)
     dateOfBirthUser = models.DateField(default=datetime.date.today, null=False)  
     dateLastAccessUser = models.DateField(default=datetime.date.today, null=False)
     genderUser =  models.CharField(max_length=20, null = False)
     rhUser = models.CharField(max_length=20, null = False)  
-    codeHeadquartersUser = models.ForeignKey(Headquarters, on_delete=models.CASCADE)
+    codeIE = models.ForeignKey(EducationalInstitution, on_delete=models.CASCADE)
+    codeHeadquarters = models.ForeignKey(Headquarters, on_delete=models.CASCADE)
     """Fields to determinate if a user es active o inactive"""
     is_active = models.BooleanField(default=True)
     """Fields by select a superuser and staffuser"""  
@@ -95,14 +103,21 @@ class TeacherUser(models.Model):
     """fields to TeacherUser"""
     codeTeacher = models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')
     degreesTeacher = models.CharField(max_length=100)
+    
+    def __str__(self):
+        return str(self.user.documentIdUser)
 
 # ========== Modelo del Estudiante que contiene un usuario ========== 
 class StudentUser(models.Model):
     
     """create a user"""
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    """fields to TeacherUser"""
+    """fields to StudentUser"""
     codeStudent = models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')
+    #groupStudent = models.ForeignKey(Group, related_name='students',on_delete=models.CASCADE)
+
+    def __str__(self):
+        return str(self.user.documentIdUser)
 
 
 #==========  Modelo del familiar que extiende de usuario basico ========== 
@@ -119,6 +134,9 @@ class RelativeUser(models.Model):
     codeRelative = models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')
     typeRelative = models.PositiveSmallIntegerField(choices=USER_TYPE_CHOICES)
     student = models.ForeignKey(StudentUser, on_delete=models.CASCADE)
+    
+    def __str__(self):
+        return str(self.user.documentIdUser)
 
 #==========  Modelo del trabajador que extiende de usuario basico ========== 
 class StaffUser(models.Model):
@@ -137,3 +155,6 @@ class StaffUser(models.Model):
     """fields to Staff"""
     codeStaff = models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')
     ocupationStaff = models.PositiveSmallIntegerField(choices=USER_TYPE_CHOICES)
+    
+    def __str__(self):
+        return str(self.user.documentIdUser)

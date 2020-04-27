@@ -4,9 +4,9 @@ from django.db import models
 # Create models here........................................................................
 class EducationalInstitution(models.Model):
     """Represent a Education institutional object"""
-    codeIE = models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')
-    nameIE = models.CharField(max_length=100, null=True, unique=True)
-    nitIE = models.CharField(max_length=100, null=True, unique=True)
+    nameIE = models.CharField(max_length=100, null=False, unique=True)
+    nitIE = models.CharField(max_length=100, primary_key=True,
+                              serialize=False, verbose_name='ID')
     is_active = models.BooleanField(default=True)
 
     def __str__(self):
@@ -15,11 +15,9 @@ class EducationalInstitution(models.Model):
 
 class Headquarters(models.Model):
     """Represent a Headquarters object"""
-    codeHeadquarters = models.AutoField(auto_created=True, primary_key=True, serialize=False,
-                                         verbose_name='ID')
+    daneHeadquarters = models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')
     nameHeadquarters = models.CharField(max_length=100)
-    daneHeadquarters = models.CharField(max_length=100)
-    codeIE = models.ForeignKey(EducationalInstitution,
+    ieHeadquarters = models.ForeignKey(EducationalInstitution,
                                on_delete=models.CASCADE)
     is_active = models.BooleanField(default=True)
 

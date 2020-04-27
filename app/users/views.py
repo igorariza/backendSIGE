@@ -133,8 +133,8 @@ class Login(APIView):
                     staff_querysets = StaffUser.objects.filter(user__documentIdUser__iexact=documentIdUser).values(
                         'codeStaff',
                         'ocupationStaff')
-                    staff = staff_querysets[0]
                     if (staff_querysets.exists()):
+                        staff = staff_querysets[0]
                         return Response({"message": "Login exitoso",
                                          "code": 200,
                                          "data":  {
@@ -145,8 +145,8 @@ class Login(APIView):
                     teacher_querysets = TeacherUser.objects.filter(user__documentIdUser__iexact=documentIdUser).values(
                         'codeTeacher',
                         'degreesTeacher')
-                    teacher = teacher_querysets[0]
                     if (teacher_querysets.exists()):
+                       teacher = teacher_querysets[0] 
                        return Response({"message": "Login exitoso",
                                          "code": 200,
                                          "data":  {
@@ -156,8 +156,8 @@ class Login(APIView):
                                          }})
                     student_querysets = StudentUser.objects.filter(user__documentIdUser__iexact=documentIdUser).values(
                         'codeStudent')
-                    student = student_querysets[0]
                     if (student_querysets.exists()):
+                        student = student_querysets[0]
                         return Response({"message": "Login exitoso",
                                          "code": 200,
                                          "data":  {
@@ -169,8 +169,8 @@ class Login(APIView):
                         'codeRelative',
                         'typeRelative',
                         'student')
-                    relative = relative_querysets[0]
                     if (relative_querysets.exists()):
+                        relative = relative_querysets[0]
                         return Response({"message": "Login exitoso",
                                          "code": 200,
                                          "data":  {
@@ -203,8 +203,6 @@ class UserList(ListAPIView):
     serializer_class = UserSerializer
 
 # Listar un usuario por id
-
-
 class UserDetail(RetrieveAPIView):
     queryset = CustomUser.objects.all()
     serializer_class = UserSerializer

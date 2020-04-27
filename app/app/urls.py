@@ -16,9 +16,22 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
+"""by allow charge a file in the dirname"""
+from django.conf import settings
+from django.conf.urls.static import static
+
+
 urlpatterns = [
     path('api/', include('rest_framework.urls')),
     path('admin/', admin.site.urls),
     path('api/user/', include('users.urls')),
-    path('api/institutions/', include('institutions.urls'))
+    path('api/institutions/', include('institutions.urls')),
+    path('api/upload/', include('files.urls')),
+    path('api/groups/', include('groups.urls')),
+    path('api/courses/', include('courses.urls')),
+    path('api/workspace/', include('workspace.urls')),
+
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -5,15 +5,15 @@ from institutions.models import EducationalInstitution, Headquarters
 # Register yours models here.
 @admin.register(EducationalInstitution)
 class EducationalInstitutionAdmin(admin.ModelAdmin):
-    list_display = ('codeIE', 'nameIE', 'nitIE', 'is_active')
-    list_editable = ('nameIE', 'nitIE', 'is_active')
+    list_display = ( 'nameIE', 'nitIE', 'is_active')
+    list_editable = ('is_active',)
     search_fields = ('is_active',)
 
 @admin.register(Headquarters)
 class HeadquartersAdmin(admin.ModelAdmin):
-      list_display = ('codeHeadquarters', 'nameHeadquarters', 'daneHeadquarters', 'codeIE', 'is_active')
-      list_editable = ('nameHeadquarters', 'daneHeadquarters', 'is_active')
-      search_fields = ('codeIE',
+      list_display = ('nameHeadquarters', 'daneHeadquarters', 'ieHeadquarters', 'is_active')
+      list_editable = ('is_active',)
+      search_fields = ('ieHeadquarters',
                        'is_active')
       
 

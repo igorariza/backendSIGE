@@ -31,7 +31,6 @@ ALLOWED_HOSTS = [
     'localhost',
     'ec2-52-67-254-116.sa-east-1.compute.amazonaws.com',
     '52.67.254.116'
-
 ]
 
 
@@ -47,12 +46,15 @@ INSTALLED_APPS = [
     'users',
     'institutions',
     'test',
+    'files',
+    'courses',
+    'groups',
+    'workspace',
     'rest_framework',
     'rest_framework.authtoken',
     'corsheaders',
     'psycopg2'
 ]
-#    'psycopg2'
 
 
 REST_FRAMEWORK = {
@@ -95,6 +97,7 @@ WSGI_APPLICATION = 'app.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
@@ -104,17 +107,16 @@ DATABASES = {
         'HOST': 'sigeedu.cfgbol9pangg.sa-east-1.rds.amazonaws.com',
         'PORT': '5432',
     }
-}
-        
+}    
 
-"""
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    }
-}
-"""
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+#     }
+# }
+
 
 # Password validation
 # https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators
@@ -139,7 +141,8 @@ AUTH_PASSWORD_VALIDATORS = [
 # https://docs.djangoproject.com/en/3.0/topics/i18n/
 
 LANGUAGE_CODE = 'en-es'
-
+LANG='en_US.UTF-8'
+LC_ALL='en_US.UTF-8'
 TIME_ZONE = 'UTC'
 
 USE_I18N = True
@@ -153,6 +156,12 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = '/static/'
+
+"""Configurate at upload files"""
+MEDIA_URL =  '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, "media")
+
+
 """Configurate costumuser by Auth"""
 AUTH_USER_MODEL = 'users.CustomUser'
 
