@@ -29,6 +29,7 @@ ALLOWED_HOSTS = [
     '0.0.0.0',
     '127.0.0.1',
     'localhost',
+    '18.230.107.229',
     'ec2-52-67-246-35.sa-east-1.compute.amazonaws.com',
     'api.sige-edu.com'
 ]
