@@ -24,13 +24,13 @@ from django.conf.urls.static import static
 urlpatterns = [
     path('api/', include('rest_framework.urls')),
     path('admin/', admin.site.urls),
-    path('api/user/', include('users.urls')),
+    path('api/users/', include('users.urls')),
     path('api/institutions/', include('institutions.urls')),
-    path('api/upload/', include('files.urls')),
+    path('api/uploads/', include('files.urls')),
     path('api/groups/', include('groups.urls')),
     path('api/courses/', include('courses.urls')),
-    path('api/workspace/', include('workspace.urls')),
-
+    path('api/workspaces/', include('workspace.urls')),
+    path('api/secctions/', include('secctions.urls')),
 ]
 
 if settings.DEBUG:

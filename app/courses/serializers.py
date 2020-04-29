@@ -4,6 +4,7 @@ from .models import (
     AcademicCharge,
     TimeTable
 )
+from groups.serializers import GroupSerializer 
 # libreria serializers
 from rest_framework import serializers
 
@@ -166,6 +167,7 @@ class DeleteTimeTableSerializer(serializers.ModelSerializer):
 class AcademicChargeSerializer(serializers.ModelSerializer):
 
     schedule = TimeTableSerializer(many=True, read_only=True)
+    courseDictate = CourseSerializer()
 
     class Meta:
         model = AcademicCharge
@@ -174,6 +176,13 @@ class AcademicChargeSerializer(serializers.ModelSerializer):
                   'courseDictate',
                   'groupDictate',
                   'hourlyintensity', 'schedule']
+        
+class AcademicChargeGetGroupsSerializer(serializers.ModelSerializer):
+    
+    groupDictate = GroupSerializer(read_only=True)
+    class Meta:
+        model = AcademicCharge
+        fields = ['groupDictate','teacherDictate']
 
 
 # ========== Serializador para crear la Carga Academica ==========
@@ -210,8 +219,6 @@ class UpdateAcademicChargeSerializer(serializers.ModelSerializer):
         return academiccharge
 
 # ========== Serializador para eliminar la Carga Academica ==========
-
-
 class DeleteAcademicChargeSerializer(serializers.ModelSerializer):
 
     class Meta:

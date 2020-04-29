@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from .models import EducationalInstitution, Headquarters
-from groups.serializers import GroupSerializer
+from groups.serializers import JourneySerializer
 
 
 # ========== Serializador para una IE =================================================================
@@ -61,10 +61,10 @@ class DeleteEducationalInstitutionSerializer(serializers.ModelSerializer):
 # ========== Serializador para el Headquarters =====================================================
 class HeadquartersSerializer(serializers.ModelSerializer):
 
-    groups = GroupSerializer(many=True, read_only=True)
+    #journeys = JourneySerializer(many=True, read_only=True)
     class Meta:
         model = Headquarters
-        fields = ['nameHeadquarters', 'daneHeadquarters', 'ieHeadquarters', 'is_active', 'groups']
+        fields = ['nameHeadquarters', 'daneHeadquarters', 'ieHeadquarters', 'is_active']
 
 # ========== Serializador para crear una headquarters ==========
 class CreateHeadquartersSerializer(serializers.ModelSerializer):
@@ -75,6 +75,7 @@ class CreateHeadquartersSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         headquarters = Headquarters.objects.create(
+            daneHeadquarters=validated_data['daneHeadquarters'],
             nameHeadquarters=validated_data['nameHeadquarters'],
             ieHeadquarters=validated_data['ieHeadquarters'],
             is_active=validated_data['is_active']

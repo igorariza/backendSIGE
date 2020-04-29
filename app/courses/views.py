@@ -4,6 +4,8 @@ from .models import (
     AcademicCharge,
     TimeTable
 )
+from groups.models import Group
+import json
 
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -21,22 +23,25 @@ from .serializers import (
     CreateAreaSerializer,
     UpdateAreaSerializer,
     DeleteAreaSerializer,
-    
+
     CourseSerializer,
     CreateCourseSerializer,
     UpdateCourseSerializer,
     DeleteCourseSerializer,
-    
+
     AcademicChargeSerializer,
     CreateAcademicChargeSerializer,
     UpdateAcademicChargeSerializer,
     DeleteAcademicChargeSerializer,
-    
+    AcademicChargeGetGroupsSerializer,
+
     TimeTableSerializer,
     CreateTimeTableSerializer,
     UpdateTimeTableSerializer,
     DeleteTimeTableSerializer
 )
+
+from django.db.models import Count
 
 # ========== Area ===================================================================================
 
@@ -47,11 +52,13 @@ class AreaList(ListAPIView):
 
 # Listar un Area por id
 
+
 class AreaDetail(RetrieveAPIView):
     queryset = Area.objects.all()
     serializer_class = AreaSerializer
 
 # Crear Area asignando un usuario ya existente
+
 
 class AreaCreate(ListCreateAPIView):
     queryset = Area.objects.all()
@@ -59,16 +66,18 @@ class AreaCreate(ListCreateAPIView):
 
 # Actualizar datos de Area por id
 
+
 class AreaUpdate(UpdateAPIView):
     queryset = Area.objects.all()
     serializer_class = UpdateAreaSerializer
 
 # Eliminar Un Area sin afectar usuario
 
+
 class AreaDelete(DestroyAPIView):
     queryset = Area.objects.all()
     serializer_class = AreaSerializer
-    
+
 # ========== Courses ===================================================================================
 
 
@@ -111,6 +120,23 @@ class AcademicChargeList(ListAPIView):
     queryset = AcademicCharge.objects.all()
     serializer_class = AcademicChargeSerializer
 
+class AcademicChargeCoursesListTeacher(ListAPIView):
+    queryset = AcademicCharge.objects.all()
+    serializer_class = AcademicChargeGetGroupsSerializer
+
+    def get_queryset(self):
+        """
+        Optionally restricts the returned purchases to a given user,
+        by filtering against a `teacherDictate` query parameter in the URL.
+        """
+        teacher = self.kwargs['teacherDictate']
+        charga = AcademicCharge.objects.raw('SELECT * FROM courses_academiccharge GROUP BY groupDictate_id')
+        
+        #filter(teacherDictate=teacher).order_by('groupDictate__nameGroup')
+        #filterdata = charga.filter(teacherDictate=teacher)
+        return charga
+
+
 # Listar un AcademicCharge por id
 
 
@@ -140,6 +166,7 @@ class AcademicChargeDelete(DestroyAPIView):
     serializer_class = AcademicChargeSerializer
 
 # ========== TimeTable ===================================================================================
+
 
 class TimeTableList(ListAPIView):
     queryset = TimeTable.objects.all()

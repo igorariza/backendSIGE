@@ -29,9 +29,8 @@ ALLOWED_HOSTS = [
     '0.0.0.0',
     '127.0.0.1',
     'localhost',
-    '18.230.107.229',
-    'ec2-52-67-246-35.sa-east-1.compute.amazonaws.com',
-    'api.sige-edu.com'
+    'ec2-52-67-254-116.sa-east-1.compute.amazonaws.com',
+    '52.67.254.116'
 ]
 
 
@@ -51,6 +50,7 @@ INSTALLED_APPS = [
     'courses',
     'groups',
     'workspace',
+    'secctions',
     'rest_framework',
     'rest_framework.authtoken',
     'corsheaders',
@@ -98,7 +98,7 @@ WSGI_APPLICATION = 'app.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
-
+"""
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
@@ -108,15 +108,16 @@ DATABASES = {
         'HOST': 'sigeedu.cfgbol9pangg.sa-east-1.rds.amazonaws.com',
         'PORT': '5432',
     }
-}    
+}
+"""       
 
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-#     }
-# }
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    }
+}
 
 
 # Password validation
@@ -142,8 +143,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # https://docs.djangoproject.com/en/3.0/topics/i18n/
 
 LANGUAGE_CODE = 'en-es'
-LANG='en_US.UTF-8'
-LC_ALL='en_US.UTF-8'
+
 TIME_ZONE = 'UTC'
 
 USE_I18N = True
@@ -174,4 +174,3 @@ REST_AUTH_REGISTER_SERIALIZERS = {
 }
 
 CORS_ORIGIN_ALLOW_ALL = True
-STATIC_ROOT = os.path.join(BASE_DIR, "static/")

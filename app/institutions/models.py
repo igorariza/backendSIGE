@@ -15,7 +15,7 @@ class EducationalInstitution(models.Model):
 
 class Headquarters(models.Model):
     """Represent a Headquarters object"""
-    daneHeadquarters = models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')
+    daneHeadquarters = models.CharField(max_length=100, primary_key=True, verbose_name='ID')
     nameHeadquarters = models.CharField(max_length=100)
     ieHeadquarters = models.ForeignKey(EducationalInstitution,
                                on_delete=models.CASCADE)

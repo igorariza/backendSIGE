@@ -4,7 +4,7 @@ from django.contrib.auth.hashers import make_password
 from json import JSONEncoder
 
 
-#Para agregar las avidencias al usuario
+# Para agregar las avidencias al usuario
 from files.serializers import EvidenceSerializer
 from files.models import Evidence
 
@@ -36,11 +36,15 @@ class UserSerializer(serializers.ModelSerializer):
         ]
 
 # ========== Serializador para  el  login usuario ==========
+
+
 class UserEncoder(JSONEncoder, serializers.ModelSerializer):
-        def default(self, o):
-            return o
+    def default(self, o):
+        return o
 
 # ========== Serializador para crear el usuario ==========
+
+
 class CreateUserSerializer(serializers.ModelSerializer):
 
     passwordUser = serializers.CharField(
@@ -70,28 +74,28 @@ class CreateUserSerializer(serializers.ModelSerializer):
         extra_kwargs = {'passwordUser': {'write_only': True}}
 
     def create(self, validated_data):
-          user = CustomUser.objects.create(
-                documentIdUser=validated_data['documentIdUser'],
-                typeIdeUser=validated_data['typeIdeUser'],
-                firstNameUser=validated_data['firstNameUser'],
-                lastNameUser=validated_data['lastNameUser'],
-                emailUser=validated_data['emailUser'],
-                phoneUser=validated_data['phoneUser'],
-                addressUser=validated_data['addressUser'],
-                passwordUser=make_password(validated_data['passwordUser']),
-                dateOfBirthUser=validated_data['dateOfBirthUser'],
-                dateLastAccessUser=validated_data['dateLastAccessUser'],
-                genderUser=validated_data['genderUser'],
-                rhUser=validated_data['rhUser'],
-                codeIE=validated_data['codeIE'],
-                codeHeadquarters= validated_data['codeHeadquarters'],
-                is_active=validated_data['is_active'],
-                is_staff=validated_data['is_staff'],
-                is_superuser=validated_data['is_superuser']
-            )
-          user.save()
-          return user
-    
+        user = CustomUser.objects.create(
+            documentIdUser=validated_data['documentIdUser'],
+            typeIdeUser=validated_data['typeIdeUser'],
+            firstNameUser=validated_data['firstNameUser'],
+            lastNameUser=validated_data['lastNameUser'],
+            emailUser=validated_data['emailUser'],
+            phoneUser=validated_data['phoneUser'],
+            addressUser=validated_data['addressUser'],
+            passwordUser=make_password(validated_data['passwordUser']),
+            dateOfBirthUser=validated_data['dateOfBirthUser'],
+            dateLastAccessUser=validated_data['dateLastAccessUser'],
+            genderUser=validated_data['genderUser'],
+            rhUser=validated_data['rhUser'],
+            codeIE=validated_data['codeIE'],
+            codeHeadquarters=validated_data['codeHeadquarters'],
+            is_active=validated_data['is_active'],
+            is_staff=validated_data['is_staff'],
+            is_superuser=validated_data['is_superuser']
+        )
+        user.save()
+        return user
+
 # ========== Serializador para inactivar un user ==========
 
 
@@ -152,7 +156,7 @@ class TeacherSerializer(serializers.ModelSerializer):
             'codeTeacher',
             'degreesTeacher',
             'user',
-            'evidences' 
+            'evidences'
         ]
 
 # ========== Serializador para crear teacher con usuario ==========
@@ -162,7 +166,7 @@ class CreateTeacherSerializer(serializers.ModelSerializer):
 
     user = UserSerializer()
     #evidences = EvidenceSerializer(many=True)
-    
+
     class Meta:
         model = TeacherUser
         fields = [
@@ -178,7 +182,7 @@ class CreateTeacherSerializer(serializers.ModelSerializer):
         custom = CustomUser.objects.create(**user)
         teacher = TeacherUser.objects.create(user=custom, **validated_data)
         #evidences = validated_data.pop('evidences')
-        #for track_data in evidences:
+        # for track_data in evidences:
         #    Evidence.objects.create(teacher=teacher, **track_data)
         return teacher
 
@@ -198,18 +202,17 @@ class UpdateTeacherSerializer(serializers.ModelSerializer):
         user = super().update(instance, validated_data)
         return user
 
-# ========== Serializador para el student ============================================================
-
 
 class StudentSerializer(serializers.ModelSerializer):
 
     user = UserSerializer()
-    
 
     class Meta:
         model = StudentUser
         fields = [
             'codeStudent',
+           # 'groupStudent',
+           # 'journeyStudent',
             'user'
         ]
 
@@ -224,6 +227,8 @@ class CreateStudentSerializer(serializers.ModelSerializer):
         model = StudentUser
         fields = [
             'codeStudent',
+            #'groupStudent',
+            #'journeyStudent',
             'user'
         ]
 
@@ -242,12 +247,15 @@ class UpdateStudentSerializer(serializers.ModelSerializer):
     class Meta:
         model = StudentUser
         fields = [
-            'codeStudent'
+            'codeStudent',
+            #'groupStudent',
+            #'journeyStudent'
         ]
 
     def update(self, instance, validated_data):
         user = super().update(instance, validated_data)
         return user
+
 
 # ========== Serializador para el relative ============================================================
 

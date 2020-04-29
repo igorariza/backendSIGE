@@ -4,23 +4,25 @@ from .models import WorkSpace
 # libreria serializers
 from rest_framework import serializers
 from courses.serializers import AcademicChargeSerializer
+from secctions.serializers import SecctionSerializer
 
 
 # ========== Serializador para un Grupo =================================================================
 class WorkSpaceSerializer(serializers.ModelSerializer):
 
     academicCharge = AcademicChargeSerializer()
+    secctions = SecctionSerializer(many=True, read_only=True)
 
     class Meta:
         model = WorkSpace
         fields = ['codeWorkSpace',
                   'nameWorkSpace',
                   'descriptionWorkSpace',
-                  'academicCharge'
+                  'academicCharge',
+                  'secctions'
                   ]
 
 # ========== Serializador para crear el grupo ==========
-
 
 class CreateWorkSpaceSerializer(serializers.ModelSerializer):
 
@@ -67,3 +69,4 @@ class DeleteWorkSpaceSerializer(serializers.ModelSerializer):
 
     def perform_destroy(self, instance):
         instance.delete()
+
