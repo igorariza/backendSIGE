@@ -12,7 +12,7 @@ class Secction(models.Model):
     codeSecction = models.AutoField(
         auto_created=True, primary_key=True, serialize=False, verbose_name='ID')
     nameSecction = models.CharField(max_length=100, null=False)
-    descriptionSecction = models.CharField(max_length=255, null=False)
+    descriptionSecction = models.CharField(max_length=255)
     uploadOnSecction = models.DateTimeField(auto_now_add=True)
     workspaceSecction = models.ForeignKey(
         WorkSpace, related_name='secctions', on_delete=models.CASCADE)

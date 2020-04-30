@@ -36,7 +36,7 @@ class AcademicCharge(models.Model):
     teacherDictate = models.ForeignKey(TeacherUser, on_delete=models.CASCADE)
     courseDictate = models.ForeignKey(Course, on_delete=models.CASCADE)
     groupDictate = models.ForeignKey(Group, on_delete=models.CASCADE)
-    hourlyintensity = models.IntegerField(null=False)
+    hourlyintensity = models.IntegerField(blank=True)
 
     def __str__(self):
         return 'The Academic Charge was created as: course {}, group {}, teacher {} with a intensiti: {}'.format(
@@ -50,9 +50,9 @@ class TimeTable(models.Model):
     """Represent a TimTable object"""
     codeTimeTable = models.AutoField(
         auto_created=True, primary_key=True, serialize=False, verbose_name='ID')
-    dayTimeTable = models.CharField(max_length=100, null=False)
-    startHourTimeTable = models.CharField(max_length=100, null=False)
-    endHourTimeTable = models.CharField(max_length=100, null=False)
+    dayTimeTable = models.CharField(max_length=100)
+    startHourTimeTable = models.CharField(max_length=100)
+    endHourTimeTable = models.CharField(max_length=100)
     courseTimeTable = models.ForeignKey(AcademicCharge, related_name='schedule',
                                         on_delete=models.CASCADE)
 

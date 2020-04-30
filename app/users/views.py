@@ -14,6 +14,7 @@ from django.contrib.auth.hashers import make_password
 """para responder los usuarios en el login"""
 
 from .models import CustomUser, TeacherUser, StudentUser, StaffUser, RelativeUser
+from institutions.models import EducationalInstitution, Headquarters
 
 
 from .serializers import (
@@ -146,13 +147,13 @@ class Login(APIView):
                         'codeTeacher',
                         'degreesTeacher')
                     if (teacher_querysets.exists()):
-                       teacher = teacher_querysets[0] 
-                       return Response({"message": "Login exitoso",
+                        teacher = teacher_querysets[0]
+                        return Response({"message": "Login exitoso",
                                          "code": 200,
                                          "data":  {
-                                                    "token": token.key,
-                                                    "user_data": {"teacher": teacher,
-                                                                  "user": user}
+                                             "token": token.key,
+                                             "user_data": {"teacher": teacher,
+                                                           "user": user}
                                          }})
                     student_querysets = StudentUser.objects.filter(user__documentIdUser__iexact=documentIdUser).values(
                         'codeStudent')
@@ -178,8 +179,8 @@ class Login(APIView):
                                                     "user_data": {"relative": relative,
                                                                   "user": user}
                                          }})
-                    #Si el usuario existe pero no tiene perfil no puede acceder
-                    else: 
+                    # Si el usuario existe pero no tiene perfil no puede acceder
+                    else:
                         message = "Usuario no tiene un rol asignado"
                         return Response({"message": message,
                                          "code": 204,
@@ -203,6 +204,8 @@ class UserList(ListAPIView):
     serializer_class = UserSerializer
 
 # Listar un usuario por id
+
+
 class UserDetail(RetrieveAPIView):
     queryset = CustomUser.objects.all()
     serializer_class = UserSerializer
@@ -259,10 +262,17 @@ class TeacherCreateMultiple(APIView):
     def post(self, request):
         data = request.data
         for user in data:
-            print(user)
             usuario = user.pop('user')
+            print(usuario['documentIdUser'])
+            codeIE = usuario.pop('codeIE')
+            IE = EducationalInstitution.objects.get(nitIE=codeIE)
+            codeHeadquarters = usuario.pop('codeHeadquarters')
+            Headq = Headquarters.objects.get(codeHeadquarters=codeHeadquarters)
             usuario['passwordUser'] = make_password(usuario['passwordUser'])
-            custom = CustomUser.objects.create(**usuario)
+            print('Paso por aqui')
+            custom = CustomUser.objects.create(
+                codeIE=IE, codeHeadquarters=Headq, **usuario)
+            print('Paso por aqui')
             teacher = TeacherUser.objects.create(user=custom, **user)
         return Response({"message": "Creacion exitoso",  "code": 200})
 

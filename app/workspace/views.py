@@ -9,6 +9,7 @@ from rest_framework.generics import (
 )
 
 from .models import WorkSpace
+from courses.models import AcademicCharge
 
 from .serializers import (
     WorkSpaceSerializer,
@@ -63,6 +64,21 @@ class WorkSpaceDetail(RetrieveAPIView):
 class WorkSpaceCreate(ListCreateAPIView):
     queryset = WorkSpace.objects.all()
     serializer_class = CreateWorkSpaceSerializer
+
+
+class WorkSpaceCreateMultiple(APIView):
+    queryset = WorkSpace.objects.all()
+
+    def post(self, request):
+        data = request.data
+        for workspace in data:
+            print(workspace)
+            charga = workspace.pop('academicCharge')
+            chargaObj = AcademicCharge.objects.get(codeAcademicCharge=charga)
+            workSpace = WorkSpace.objects.create(academicCharge=chargaObj,
+                                                 **workspace)
+        return Response({"message": "Creacion exitoso",  "code": 200})
+
 
 # Actualizar datos de WorkSpace por id
 

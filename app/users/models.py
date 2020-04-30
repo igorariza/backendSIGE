@@ -55,26 +55,25 @@ class CustomUser(AbstractUser):
 
     documentIdUser = models.CharField(validators=[phone_or_id_validate],
                                       max_length=10,
-                                      null=False,
-                                      unique=True,
                                       primary_key=True,
                                       serialize=False,
                                       verbose_name='ID')
-    typeIdeUser = models.CharField(max_length=100, null=False)
+    typeIdeUser = models.CharField(max_length=100)
     firstNameUser = models.CharField(max_length=100, null=False)
     lastNameUser = models.CharField(max_length=100, null=False)
     emailUser = models.EmailField(
-        max_length=70, blank=True, null=True, unique=True)
+        max_length=70, blank=True)
     phoneUser = models.CharField(validators=[phone_or_id_validate], max_length=10,
-                                 null=False, unique=True)
-    addressUser = models.CharField(max_length=50, null=False)
+                                 blank=True)
+    addressUser = models.CharField(max_length=50, blank=True)
     passwordUser = models.CharField(max_length=200, default=[
                                     documentIdUser], null=False)
-    dateOfBirthUser = models.DateField(default=datetime.date.today, null=False)
+    dateOfBirthUser = models.DateField(default=datetime.date.today, blank=True)
     dateLastAccessUser = models.DateField(
-        default=datetime.date.today, null=False)
-    genderUser = models.CharField(max_length=20, null=False)
-    rhUser = models.CharField(max_length=20, null=False)
+        default=datetime.date.today, blank=True)
+    genderUser = models.CharField(max_length=20, blank=True)
+    genderUser = models.CharField(max_length=20, blank=True)
+    rhUser = models.CharField(max_length=20, blank=True)
     codeIE = models.ForeignKey(
         EducationalInstitution, on_delete=models.CASCADE)
     codeHeadquarters = models.ForeignKey(
@@ -87,7 +86,7 @@ class CustomUser(AbstractUser):
 
     """Fields requires"""
     USERNAME_FIELD = 'documentIdUser'
-    REQUIRED_FIELDS = ['firstNameUser', 'lastNameUser', 'phoneUser']
+    REQUIRED_FIELDS = ['firstNameUser', 'lastNameUser']
 
     """"Add a user manager it model"""
     objects = UserManager()
@@ -114,7 +113,7 @@ class TeacherUser(models.Model):
     """fields to TeacherUser"""
     codeTeacher = models.AutoField(
         auto_created=True, primary_key=True, serialize=False, verbose_name='ID')
-    degreesTeacher = models.CharField(max_length=100)
+    degreesTeacher = models.CharField(max_length=100, blank=True)
 
     def __str__(self):
         return str(self.user.documentIdUser)

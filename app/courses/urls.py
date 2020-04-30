@@ -6,12 +6,14 @@ from .views import (
     AreaCreate,
     AreaUpdate,
     AreaDelete,
+    AreaCreateMultiple,
 
     CourseList,
     CourseDetail,
     CourseCreate,
     CourseUpdate,
     CourseDelete,
+    CourseCreateMultiple,
 
     AcademicChargeList,
     AcademicChargeDetail,
@@ -19,6 +21,7 @@ from .views import (
     AcademicChargeUpdate,
     AcademicChargeDelete,
     AcademicChargeCoursesListTeacher,
+    AcademicChargeCreateMultiple,
 
     TimeTableList,
     TimeTableDetail,
@@ -31,18 +34,21 @@ urlpatterns = [
     # Areas
     path('area/', AreaList.as_view()),
     path('area/create/', AreaCreate.as_view()),
+    path('area/create/bulk/', AreaCreateMultiple.as_view()),
     path('area/<pk>', AreaDetail.as_view()),
     path('area/update/<pk>', AreaUpdate.as_view()),
     path('area/delete/<pk>', AreaDelete.as_view()),
     # Courses
     path('course/', CourseList.as_view()),
     path('course/create/', CourseCreate.as_view()),
+    path('course/create/bulk/', CourseCreateMultiple.as_view()),
     path('course/<pk>', CourseDetail.as_view()),
     path('course/update/<pk>', CourseUpdate.as_view()),
     path('coursedelete/<pk>', CourseDelete.as_view()),
     # Academic Charges
     path('academiccharge/', AcademicChargeList.as_view()),
     path('academiccharge/create/', AcademicChargeCreate.as_view()),
+    path('academiccharge/create/bulk/', AcademicChargeCreateMultiple.as_view()),
     path('academiccharge/<pk>', AcademicChargeDetail.as_view()),
     path('academiccharge/update/<pk>', AcademicChargeUpdate.as_view()),
     path('academiccharge/delete/<pk>', AcademicChargeDelete.as_view()),

@@ -35,6 +35,7 @@ Las siguientes clases verifican si quien consulta una ruta
 tiene el cargo para poder hacer dicha consulta.
 """
 
+
 class AllowPrincipal(BasePermission):
     def has_permission(self, request, view):
         if request.user.is_authenticated:
@@ -43,6 +44,7 @@ class AllowPrincipal(BasePermission):
             return bool(quey[1]['ocupationStaff'] == 1)
         else:
             return False
+
 
 class AllowSubprincipal(BasePermission):
     def has_permission(self, request, view):
@@ -62,7 +64,8 @@ class AllowPayer(BasePermission):
             return bool(quey[1]['ocupationStaff'] == 3)
         else:
             return False
-        
+
+
 class AllowAssistant(BasePermission):
     def has_permission(self, request, view):
         if request.user.is_authenticated:
@@ -72,6 +75,7 @@ class AllowAssistant(BasePermission):
         else:
             return False
 
+
 class AllowAssistantSIMAT(BasePermission):
     def has_permission(self, request, view):
         if request.user.is_authenticated:
@@ -80,35 +84,57 @@ class AllowAssistantSIMAT(BasePermission):
             return bool(quey[1]['ocupationStaff'] == 5)
         else:
             return False
-        
+
 # ========== CRUD para la informacion basica de la Educational Institution ==========
 
 # Listar todos las EducationalInstitution
+
+
 class EducationalInstitutionList(ListAPIView):
     queryset = EducationalInstitution.objects.all()
     serializer_class = EducationalInstitutionSerializer
 
 # Listar un EducationalInstitution por id
+
+
 class EducationalInstitutionDetail(RetrieveAPIView):
     queryset = EducationalInstitution.objects.all()
     serializer_class = EducationalInstitutionSerializer
 
 # Crear un EducationalInstitution
+
+
 class EducationalInstitutionCreate(ListCreateAPIView):
     queryset = EducationalInstitution.objects.all()
     serializer_class = CreateEducationalInstitutionSerializer
 
+
+class EducationalInstitutionCreateMultiple(APIView):
+    queryset = EducationalInstitution.objects.all()
+
+    def post(self, request):
+        data = request.data
+        for ie in data:
+            educationalinstitution = EducationalInstitution.objects.create(
+                **ie)
+        return Response({"message": "Creacion exitoso",  "code": 200})
+
 # Actualizar datos de un EducationalInstitution por id
+
 class EducationalInstitutionUpdate(UpdateAPIView):
     queryset = EducationalInstitution.objects.all()
     serializer_class = UpdateEducationalInstitutionSerializer
 
 # Eliminar EducationalInstitution
+
+
 class EducationalInstitutionDelete(DestroyAPIView):
     queryset = EducationalInstitution.objects.all()
     serializer_class = DeleteEducationalInstitutionSerializer
 
 # Inactvar EducationalInstitution
+
+
 class EducationalInstitutionInactivate(UpdateAPIView):
     queryset = EducationalInstitution.objects.all()
     serializer_class = InactivateEducationalInstitutionSerializer
@@ -116,31 +142,53 @@ class EducationalInstitutionInactivate(UpdateAPIView):
 # ========== CRUD para la informacion del Transfomator ===================================
 
 # Listar todos los Headquarters
+
+
 class HeadquartersList(ListAPIView):
     queryset = Headquarters.objects.all()
     serializer_class = HeadquartersSerializer
 
 # Listar un Headquarters
+
+
 class HeadquartersDetail(RetrieveAPIView):
     queryset = Headquarters.objects.all()
     serializer_class = HeadquartersSerializer
 
 # Crear cliente asignando un Headquarters ya existente
+
+
 class HeadquartersCreate(ListCreateAPIView):
     queryset = Headquarters.objects.all()
     serializer_class = CreateHeadquartersSerializer
+    
+    
+class HeadquartersCreateMultiple(APIView):
+    queryset = Headquarters.objects.all()
+
+    def post(self, request):
+        data = request.data
+        for headq in data:
+            headquarters = Headquarters.objects.create(**headq)
+        return Response({"message": "Creacion exitoso",  "code": 200})
 
 # Actualizar datos de Headquarters por id
+
+
 class HeadquartersUpdate(UpdateAPIView):
     queryset = Headquarters.objects.all()
     serializer_class = UpdateHeadquartersSerializer
 
 # Eliminar Un Headquarters sin afectar usuario
+
+
 class HeadquartersDelete(DestroyAPIView):
     queryset = Headquarters.objects.all()
-    serializer_class =  DeleteHeadquartersSerializer
+    serializer_class = DeleteHeadquartersSerializer
 
 # Inactvar Headquarters
+
+
 class HeadquartersInactivate(UpdateAPIView):
     queryset = Headquarters.objects.all()
     serializer_class = InactivateHeadquartersSerializer

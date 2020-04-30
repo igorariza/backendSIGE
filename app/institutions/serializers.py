@@ -64,14 +64,14 @@ class HeadquartersSerializer(serializers.ModelSerializer):
     #journeys = JourneySerializer(many=True, read_only=True)
     class Meta:
         model = Headquarters
-        fields = ['nameHeadquarters', 'daneHeadquarters', 'ieHeadquarters', 'is_active']
+        fields = ['codeHeadquarters','nameHeadquarters', 'daneHeadquarters', 'ieHeadquarters', 'is_active']
 
 # ========== Serializador para crear una headquarters ==========
 class CreateHeadquartersSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Headquarters
-        fields = ['nameHeadquarters', 'daneHeadquarters', 'ieHeadquarters', 'is_active']
+        fields = ['codeHeadquarters','nameHeadquarters', 'daneHeadquarters', 'ieHeadquarters', 'is_active']
 
     def create(self, validated_data):
         headquarters = Headquarters.objects.create(

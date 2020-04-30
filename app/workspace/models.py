@@ -14,7 +14,7 @@ class WorkSpace(models.Model):
     nameWorkSpace = models.CharField(max_length=100, null=False)
     academicCharge = models.OneToOneField(AcademicCharge,
                                           on_delete=models.CASCADE)
-    descriptionWorkSpace = models.CharField(max_length=255, null=False)
+    descriptionWorkSpace = models.CharField(max_length=255)
 
     def __str__(self):
         return 'The Work Space was created as: {}, with a code: {}'.format(
