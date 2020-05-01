@@ -7,6 +7,7 @@ from .views import (
     GroupCreate,
     GroupUpdate,
     GroupDelete,
+    GroupCreateMultiple,
     
     JourneyList,
     JourneyDetail,
@@ -20,6 +21,7 @@ from .views import (
 urlpatterns = [
     path('group/', GroupList.as_view()),
     path('group/create/', GroupCreate.as_view()),
+    path('group/create/bulk/', GroupCreateMultiple.as_view()),
     path('group/<pk>', GroupDetail.as_view()),
     path('group/update/<pk>', GroupUpdate.as_view()),
     path('group/delete/<pk>', GroupDelete.as_view()),
