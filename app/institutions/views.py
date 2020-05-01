@@ -169,7 +169,9 @@ class HeadquartersCreateMultiple(APIView):
     def post(self, request):
         data = request.data
         for headq in data:
-            headquarters = Headquarters.objects.create(**headq)
+            ie = headq.pop('ieHeadquarters')        
+            institutions = Headquarters.objects.get(nitIE=ie)
+            headquarters = Headquarters.objects.create(ieHeadquarters=institutions,**headq)
         return Response({"message": "Creacion exitoso",  "code": 200})
 
 # Actualizar datos de Headquarters por id

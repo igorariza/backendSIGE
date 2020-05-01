@@ -15,7 +15,6 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from django.conf.urls import url
 
 """by allow charge a file in the dirname"""
 from django.conf import settings
@@ -23,15 +22,15 @@ from django.conf.urls.static import static
 
 
 urlpatterns = [
-    url('api/', include('rest_framework.urls')),
-    url('admin/', admin.site.urls),
-    url('api/users/', include('users.urls')),
-    url('api/institutions/', include('institutions.urls')),
-    url('api/uploads/', include('files.urls')),
-    url('api/groups/', include('groups.urls')),
-    url('api/courses/', include('courses.urls')),
-    url('api/workspaces/', include('workspace.urls')),
-    url('api/secctions/', include('secctions.urls')),
+    path('api/', include('rest_framework.urls')),
+    path('admin/', admin.site.urls),
+    path('api/users/', include('users.urls')),
+    path('api/institutions/', include('institutions.urls')),
+    path('api/uploads/', include('files.urls')),
+    path('api/groups/', include('groups.urls')),
+    path('api/courses/', include('courses.urls')),
+    path('api/workspaces/', include('workspace.urls')),
+    path('api/secctions/', include('secctions.urls')),
 ]
 
 if settings.DEBUG:
