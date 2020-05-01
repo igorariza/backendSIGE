@@ -170,7 +170,7 @@ class HeadquartersCreateMultiple(APIView):
         data = request.data
         for headq in data:
             ie = headq.pop('ieHeadquarters')        
-            institutions = Headquarters.objects.get(nitIE=ie)
+            institutions = EducationalInstitution.objects.get(nitIE=ie)
             headquarters = Headquarters.objects.create(ieHeadquarters=institutions,**headq)
         return Response({"message": "Creacion exitoso",  "code": 200})
 
