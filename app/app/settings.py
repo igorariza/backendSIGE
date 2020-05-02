@@ -24,17 +24,18 @@ SECRET_KEY = '#samdp1spi+#%h0k7m8-1+w)yp3p)tf3*3_ic8it=j1a79x3pr'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
+
 ALLOWED_HOSTS = [
     '0.0.0.0',
     '127.0.0.1',
     'localhost',
-    'ec2-18-230-107-229.sa-east-1.compute.amazonaws.com',
-    '18.230.107.229', 
-    'api.sige-edu.com'
+    'ec2-52-67-254-116.sa-east-1.compute.amazonaws.com',
+    '52.67.254.116'
 ]
 
 
 # Application definition
+
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -50,8 +51,9 @@ INSTALLED_APPS = [
     'groups',
     'workspace',
     'secctions',
+    'enrollments',
     'rest_framework',
-       'rest_framework.authtoken',
+    'rest_framework.authtoken',
     'corsheaders',
     'psycopg2'
 ]
@@ -62,6 +64,7 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.TokenAuthentication',  # <-- And here
     ],
 }
+
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
@@ -74,6 +77,7 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'app.urls'
+
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -89,6 +93,7 @@ TEMPLATES = [
         },
     },
 ]
+
 WSGI_APPLICATION = 'app.wsgi.application'
 
 
@@ -104,6 +109,9 @@ DATABASES = {
         'PORT': '5432',
     }
 }
+# Password validation
+# https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators
+
 AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
@@ -118,13 +126,25 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
+
+
+# Internationalization
+# https://docs.djangoproject.com/en/3.0/topics/i18n/
+
 LANGUAGE_CODE = 'en-es'
 LC_ALL='en_US.UTF-8'
 TIME_ZONE = 'UTC'
 LANG='en_US.UTF-8'
 USE_I18N = True
+
 USE_L10N = True
+
 USE_TZ = True
+
+
+# Static files (CSS, JavaScript, Images)
+# https://docs.djangoproject.com/en/3.0/howto/static-files/
+
 STATIC_URL = '/static/'
 
 """Configurate at upload files"""
