@@ -152,9 +152,10 @@ class AcademicChargeCoursesListTeacher(ListAPIView):
         Optionally restricts the returned purchases to a given user,
         by filtering against a `teacherDictate` query parameter in the URL.
         """
-        charga = AcademicCharge.objects.raw('SELECT DISTINCT ON ("groupDictate_id") "groupDictate_id", "codeAcademicCharge" FROM "courses_academiccharge" WHERE "teacherDictate_id"={}  GROUP BY "groupDictate_id", "codeAcademicCharge"'.format(
+        charga = AcademicCharge.objects.raw('SELECT  "groupDictate_id" FROM "courses_academiccharge" WHERE "teacherDictate_id"={}  GROUP BY "groupDictate_id"'.format(
             self.kwargs['teacherDictate']))
-        return charga    
+        order = charga.order_by('groupDictate__nameGroup')
+        return order    
 
 # Listar un AcademicCharge por id
 

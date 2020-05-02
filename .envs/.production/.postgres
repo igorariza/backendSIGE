@@ -1,0 +1,6 @@
+# Postgres
+POSTGRES_HOST=sigeedu.cfgbol9pangg.sa-east-1.rds.amazonaws.com
+POSTGRES_PORT=5432
+POSTGRES_DB=sigeedu
+POSTGRES_USER=adminsige
+POSTGRES_PASSWORD=ia2127374
