@@ -129,10 +129,7 @@ class StudentUser(models.Model):
     """fields to StudentUser"""
     codeStudent = models.CharField(
         max_length=255, primary_key=True, verbose_name='ID')
-   # journeyStudent = models.ForeignKey(Journey, on_delete=models.CASCADE)
-   # groupStudent = models.ForeignKey(
-    #    Group, related_name='students', on_delete=models.CASCADE)
-
+    
     def __str__(self):
         return str(self.user.documentIdUser)
 

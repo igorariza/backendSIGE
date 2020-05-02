@@ -152,8 +152,9 @@ class AcademicChargeCoursesListTeacher(ListAPIView):
         Optionally restricts the returned purchases to a given user,
         by filtering against a `teacherDictate` query parameter in the URL.
         """
-        teacher = self.kwargs['teacherDictate']
-        charga = AcademicCharge.objects.raw('SELECT * FROM courses_academiccharge GROUP BY groupDictate_id')
+        #teacher = self.kwargs['teacherDictate']
+        charga = AcademicCharge.objects.raw('SELECT  "groupDictate_id" FROM "courses_academiccharge" WHERE "teacherDictate_id"={}  GROUP BY "groupDictate_id"'.format(
+            self.kwargs['teacherDictate']))
         
         #filter(teacherDictate=teacher).order_by('groupDictate__nameGroup')
         #filterdata = charga.filter(teacherDictate=teacher)

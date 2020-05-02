@@ -9,14 +9,14 @@ class Migration(migrations.Migration):
     initial = True
 
     dependencies = [
-        ('groups', '0001_initial'),
-        ('courses', '0001_initial'),
+        ('users', '0001_initial'),
+        ('enrollments', '0002_auto_20200502_1736'),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='academiccharge',
-            name='groupDictate',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='groups.Group'),
+            model_name='enrollment',
+            name='studentEnrollment',
+            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='users.StudentUser'),
         ),
     ]
