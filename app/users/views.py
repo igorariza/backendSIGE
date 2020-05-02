@@ -323,8 +323,13 @@ class StudentCreateMultiple(APIView):
         for user in data:
             print(user)
             usuario = user.pop('user')
+            codeIE = usuario.pop('codeIE')
+            IE = EducationalInstitution.objects.get(nitIE=codeIE)
+            codeHeadquarters = usuario.pop('codeHeadquarters')
+            Headq = Headquarters.objects.get(codeHeadquarters=codeHeadquarters)
             usuario['passwordUser'] = make_password(usuario['passwordUser'])
-            custom = CustomUser.objects.create(**usuario)
+            custom = CustomUser.objects.create(
+                codeIE=IE, codeHeadquarters=Headq, **usuario)
             teacher = StudentUser.objects.create(user=custom, **user)
         return Response({"message": "Creacion exitoso",  "code": 200})
 
