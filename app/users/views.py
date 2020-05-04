@@ -118,7 +118,7 @@ class Login(APIView):
                 'dateLastAccessUser',
                 'genderUser',
                 'rhUser',
-                'codeHeadquartersUser',
+                'codeHeadquarters',
                 'is_active'
             )
             """Si lo encuentra y esta activo elimna los campos sencibiles y crea el token"""
