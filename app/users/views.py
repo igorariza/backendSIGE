@@ -119,8 +119,13 @@ class Login(APIView):
                 'genderUser',
                 'rhUser',
                 'codeHeadquarters',
+<<<<<<< HEAD
+=======
+                'codeIE',
+>>>>>>> aa5d3f32224191c966a3dafd00ff06499ddf0e1a
                 'is_active'
             )
+            
             """Si lo encuentra y esta activo elimna los campos sencibiles y crea el token"""
             if (user_querysets.exists() and user_querysets[0]['is_active']):
                 user = user_querysets[0]
@@ -330,7 +335,7 @@ class StudentCreateMultiple(APIView):
             usuario['passwordUser'] = make_password(usuario['passwordUser'])
             custom = CustomUser.objects.create(
                 codeIE=IE, codeHeadquarters=Headq, **usuario)
-            teacher = StudentUser.objects.create(user=custom, **user)
+            student = StudentUser.objects.create(user=custom, **user)
         return Response({"message": "Creacion exitoso",  "code": 200})
 
 # Actualizar datos de Student por id
