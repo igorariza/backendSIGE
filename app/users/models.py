@@ -51,7 +51,7 @@ class CustomUser(AbstractUser):
 
     """Validate than fields phone and id are ok"""
     phone_or_id_validate = RegexValidator(
-        regex=r'^\+?1?\d{7,10}$', message="Numero incorrecto")
+        regex=r'^\+?1?\d{1,10}$', message="Numero incorrecto")
 
     documentIdUser = models.CharField(validators=[phone_or_id_validate],
                                       max_length=10,
