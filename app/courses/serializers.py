@@ -4,7 +4,8 @@ from .models import (
     AcademicCharge,
     TimeTable
 )
-from groups.serializers import GroupSerializer 
+from groups.serializers import GroupSerializer
+
 # libreria serializers
 from rest_framework import serializers
 
@@ -26,7 +27,7 @@ class CreateAreaSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         area = Area.objects.create(
-            nameArea    =validated_data['nameArea'],
+            nameArea=validated_data['nameArea'],
         )
         area.save()
         return area
@@ -176,13 +177,27 @@ class AcademicChargeSerializer(serializers.ModelSerializer):
                   'courseDictate',
                   'groupDictate',
                   'hourlyintensity', 'schedule']
-        
+
+
 class AcademicChargeGetGroupsSerializer(serializers.ModelSerializer):
-    
+
     groupDictate = GroupSerializer(read_only=True)
+
     class Meta:
         model = AcademicCharge
-        fields = ['groupDictate','teacherDictate']
+        fields = ['groupDictate', 'teacherDictate']
+
+
+class AcademicChargeGetbyTeacherSerializer(serializers.ModelSerializer):
+
+    groupDictate = GroupSerializer(read_only=True)
+    courseDictate = CourseSerializer(read_only=True)
+
+    class Meta:
+        model = AcademicCharge
+        fields = ['codeAcademicCharge', 'groupDictate',
+                  'courseDictate', 'teacherDictate']
+
 
 
 # ========== Serializador para crear la Carga Academica ==========
@@ -219,6 +234,8 @@ class UpdateAcademicChargeSerializer(serializers.ModelSerializer):
         return academiccharge
 
 # ========== Serializador para eliminar la Carga Academica ==========
+
+
 class DeleteAcademicChargeSerializer(serializers.ModelSerializer):
 
     class Meta:
@@ -227,5 +244,3 @@ class DeleteAcademicChargeSerializer(serializers.ModelSerializer):
 
     def perform_destroy(self, instance):
         instance.delete()
-
-

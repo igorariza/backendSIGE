@@ -13,10 +13,10 @@ from .views import (
 
 urlpatterns = [
     # Academic Charges
-    path('Enrollment/', EnrollmentList.as_view()),
-    path('Enrollment/create/', EnrollmentCreate.as_view()),
-    path('Enrollment/create/bulk/', EnrollmentCreateMultiple.as_view()),
-    path('Enrollment/<pk>', EnrollmentDetail.as_view()),
-    path('Enrollment/update/<pk>', EnrollmentUpdate.as_view()),
-    path('Enrollment/delete/<pk>', EnrollmentDelete.as_view())
+    path('enrollment/', EnrollmentList.as_view()),
+    path('enrollment/create/', EnrollmentCreate.as_view()),
+    path('enrollment/create/bulk/', EnrollmentCreateMultiple.as_view()),
+    path('enrollment/<pk>', EnrollmentDetail.as_view()),
+    path('enrollment/update/<pk>', EnrollmentUpdate.as_view()),
+    path('enrollment/delete/<pk>', EnrollmentDelete.as_view())
 ]

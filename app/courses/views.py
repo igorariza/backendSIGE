@@ -1,48 +1,26 @@
-from .models import (
-    Course,
-    Area,
-    AcademicCharge,
-    TimeTable
-)
-from groups.models import Group
-from users.models import TeacherUser
 import json
 
+from django.db.models import Count
+from groups.models import Group
+from rest_framework.generics import (DestroyAPIView, ListAPIView,
+                                     ListCreateAPIView, RetrieveAPIView,
+                                     UpdateAPIView)
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from rest_framework.generics import (
-    ListAPIView,
-    RetrieveAPIView,
-    ListCreateAPIView,
-    RetrieveAPIView,
-    UpdateAPIView,
-    DestroyAPIView
-)
+from users.models import TeacherUser
 
-from .serializers import (
-    AreaSerializer,
-    CreateAreaSerializer,
-    UpdateAreaSerializer,
-    DeleteAreaSerializer,
-
-    CourseSerializer,
-    CreateCourseSerializer,
-    UpdateCourseSerializer,
-    DeleteCourseSerializer,
-
-    AcademicChargeSerializer,
-    CreateAcademicChargeSerializer,
-    UpdateAcademicChargeSerializer,
-    DeleteAcademicChargeSerializer,
-    AcademicChargeGetGroupsSerializer,
-
-    TimeTableSerializer,
-    CreateTimeTableSerializer,
-    UpdateTimeTableSerializer,
-    DeleteTimeTableSerializer
-)
-
-from django.db.models import Count
+from .models import AcademicCharge, Area, Course, TimeTable
+from .serializers import (AcademicChargeGetbyTeacherSerializer,
+                          AcademicChargeGetGroupsSerializer,
+                          AcademicChargeSerializer, AreaSerializer,
+                          CourseSerializer, CreateAcademicChargeSerializer,
+                          CreateAreaSerializer, CreateCourseSerializer,
+                          CreateTimeTableSerializer,
+                          DeleteAcademicChargeSerializer, DeleteAreaSerializer,
+                          DeleteCourseSerializer, DeleteTimeTableSerializer,
+                          TimeTableSerializer, UpdateAcademicChargeSerializer,
+                          UpdateAreaSerializer, UpdateCourseSerializer,
+                          UpdateTimeTableSerializer)
 
 # ========== Area ===================================================================================
 
@@ -64,7 +42,8 @@ class AreaDetail(RetrieveAPIView):
 class AreaCreate(ListCreateAPIView):
     queryset = Area.objects.all()
     serializer_class = CreateAreaSerializer
-    
+
+
 class AreaCreateMultiple(APIView):
     queryset = Area.objects.all()
 
@@ -143,6 +122,17 @@ class AcademicChargeList(ListAPIView):
     queryset = AcademicCharge.objects.all()
     serializer_class = AcademicChargeSerializer
 
+
+class AcademicChargebyTeacher(ListAPIView):
+    queryset = AcademicCharge.objects.all()
+    serializer_class = AcademicChargeGetbyTeacherSerializer
+
+    def get_queryset(self):
+        charga = AcademicCharge.objects.all().filter(
+            teacherDictate=self.kwargs['teacherDictate'])
+        return charga
+
+
 class AcademicChargeCoursesListTeacher(ListAPIView):
     queryset = AcademicCharge.objects.all()
     serializer_class = AcademicChargeGetGroupsSerializer
@@ -155,6 +145,8 @@ class AcademicChargeCoursesListTeacher(ListAPIView):
         charga = AcademicCharge.objects.raw('SELECT DISTINCT ON ("groupDictate_id") "groupDictate_id", "codeAcademicCharge" FROM "courses_academiccharge" WHERE "teacherDictate_id"={}  GROUP BY "groupDictate_id", "codeAcademicCharge"'.format(
             self.kwargs['teacherDictate']))
         return charga    
+
+
 
 # Listar un AcademicCharge por id
 
@@ -170,6 +162,7 @@ class AcademicChargeCreate(ListCreateAPIView):
     queryset = AcademicCharge.objects.all()
     serializer_class = CreateAcademicChargeSerializer
 
+
 class AcademicChargeCreateMultiple(APIView):
     queryset = AcademicCharge.objects.all()
 
@@ -184,11 +177,10 @@ class AcademicChargeCreateMultiple(APIView):
             groupObj = Group.objects.get(nameGroup=group)
             teacherObje = TeacherUser.objects.get(codeTeacher=teacher)
             workSpace = AcademicCharge.objects.create(courseDictate=courseObj,
-                                                 groupDictate=groupObj,
-                                                 teacherDictate=teacherObje,
-                                                   **workspace)
+                                                      groupDictate=groupObj,
+                                                      teacherDictate=teacherObje,
+                                                      **workspace)
         return Response({"message": "Creacion exitoso",  "code": 200})
-
 
 
 # Actualizar datos de AcademicCharge por id
