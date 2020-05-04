@@ -119,10 +119,6 @@ class Login(APIView):
                 'genderUser',
                 'rhUser',
                 'codeHeadquarters',
-<<<<<<< HEAD
-=======
-                'codeIE',
->>>>>>> aa5d3f32224191c966a3dafd00ff06499ddf0e1a
                 'is_active'
             )
             
