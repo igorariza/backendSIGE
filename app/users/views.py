@@ -119,6 +119,7 @@ class Login(APIView):
                 'genderUser',
                 'rhUser',
                 'codeHeadquarters',
+                'codeIE',
                 'is_active'
             )
             
@@ -291,6 +292,17 @@ class TeacherDelete(DestroyAPIView):
     queryset = TeacherUser.objects.all()
     serializer_class = TeacherSerializer
 
+
+class TeacherAllowHeadquarters(ListAPIView):
+    queryset = TeacherUser.objects.all()
+    serializer_class = TeacherSerializer
+
+    def get_queryset(self):
+        charga = TeacherUser.objects.all().filter(
+            user__codeHeadquarters=self.kwargs['codeHeadquarters'])
+        return charga
+
+
 # ========== CRUD para la informacion del Student==============================================
 # Listar todos los student (anida info basica de usuario)
 
@@ -298,6 +310,16 @@ class TeacherDelete(DestroyAPIView):
 class StudentList(ListAPIView):
     queryset = StudentUser.objects.all()
     serializer_class = StudentSerializer
+
+class StudentAllowHeadquarters(ListAPIView):
+    queryset = StudentUser.objects.all()
+    serializer_class = StudentSerializer
+
+    def get_queryset(self):
+        charga = StudentUser.objects.all().filter(
+            user__codeHeadquarters=self.kwargs['codeHeadquarters'])
+        return charga
+
 
 # Listar un student por id
 
