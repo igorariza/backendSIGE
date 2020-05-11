@@ -16,20 +16,6 @@ import os
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # # s3 Upload
-AWS_ACCESS_KEY_ID = 'AKIASX643RRL5KPOP7WA'
-AWS_SECRET_ACCESS_KEY = '2M9jCnVbtBwu6R1F3UmSEau52'
-AWS_STORAGE_BUCKET_NAME = 'ap-sigebackendv2'
-AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
-AWS_S3_OBJECT_PARAMETERS = {
-    'CacheControl': 'max-age=86400',
-}
-AWS_LOCATION = 'static'
-
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'app/static'),
-]
-STATIC_URL = 'http://%s/%s/' % (AWS_S3_CUSTOM_DOMAIN, AWS_LOCATION)
-STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
@@ -44,11 +30,7 @@ ALLOWED_HOSTS = [
     '0.0.0.0',
     '127.0.0.1',
     'localhost',
-    'ec2-18-229-136-215.sa-east-1.compute.amazonaws.com',
-    'ec2-18-230-107-229.sa-east-1.compute.amazonaws.com',
-    'ec2-18-230-128-152.sa-east-1.compute.amazonaws.com',
-    '18.230.128.152',
-    '18.230.107.229',
+    'ec2-177-71-141-32.sa-east-1.compute.amazonaws.com',
     'api.sige-edu.com'
 ]
 
