@@ -56,9 +56,9 @@ class EnrollmentCreateMultiple(APIView):
             journeyObj = Journey.objects.get(codeJourney=journey)
             groupObj = Group.objects.get(nameGroup=group)
             studentObje = StudentUser.objects.get(codeStudent=student)
-            enrollment = Enrollment.objects.create(journeyEnrollment=journeyObj,
-                                                 groupEnrollment=groupObj,
-                                                 studentEnrollment=studentObje,
+            enrollment = Enrollment.objects.create(courseDictate=journeyObj,
+                                                 groupDictate=groupObj,
+                                                 teacherDictate=studentObje,
                                                    **enrollment)
         return Response({"message": "Creacion exitoso",  "code": 200})
 

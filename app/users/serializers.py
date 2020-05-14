@@ -15,25 +15,7 @@ class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = CustomUser
-        fields = [
-            'documentIdUser',
-            'typeIdeUser',
-            'firstNameUser',
-            'lastNameUser',
-            'emailUser',
-            'phoneUser',
-            'addressUser',
-            'passwordUser',
-            'dateOfBirthUser',
-            'dateLastAccessUser',
-            'genderUser',
-            'rhUser',
-            'codeIE',
-            'codeHeadquarters',
-            'is_active',
-            'is_staff',
-            'is_superuser'
-        ]
+        fields = '__all__'
 
 # ========== Serializador para  el  login usuario ==========
 
@@ -52,25 +34,7 @@ class CreateUserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = CustomUser
-        fields = [
-            'documentIdUser',
-            'typeIdeUser',
-            'firstNameUser',
-            'lastNameUser',
-            'emailUser',
-            'phoneUser',
-            'addressUser',
-            'passwordUser',
-            'dateOfBirthUser',
-            'dateLastAccessUser',
-            'genderUser',
-            'rhUser',
-            'codeIE',
-            'codeHeadquarters',
-            'is_active',
-            'is_staff',
-            'is_superuser'
-        ]
+        fields = '__all__'
         extra_kwargs = {'passwordUser': {'write_only': True}}
 
     def create(self, validated_data):
@@ -116,24 +80,7 @@ class UpdateUserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = CustomUser
-        fields = [
-            'typeIdeUser',
-            'firstNameUser',
-            'lastNameUser',
-            'emailUser',
-            'phoneUser',
-            'addressUser',
-            'passwordUser',
-            'dateOfBirthUser',
-            'dateLastAccessUser',
-            'genderUser',
-            'rhUser',
-            'codeIE',
-            'codeHeadquarters',
-            'is_active',
-            'is_staff',
-            'is_superuser'
-        ]
+        fields = '__all__'
 
     def update(self, instance, validated_data):
         print(validated_data)

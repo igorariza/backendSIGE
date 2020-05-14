@@ -3,15 +3,13 @@ from groups.models import Group, Journey
 from users.models import StudentUser
 
 # Create your models here.
-
-
 class Enrollment(models.Model):
     """Represent a Area object"""
     codeEnrollment = models.AutoField(auto_created=True, primary_key=True,
                                       serialize=False, verbose_name='ID')
-    groupEnrollment = models.name = models.ForeignKey(
+    groupEnrollment = models.ForeignKey(
         Group, related_name='groups', on_delete=models.CASCADE)
-    journeyEnrollment = models.name = models.ForeignKey(
+    journeyEnrollment  = models.ForeignKey(
         Journey, related_name='journeys', on_delete=models.CASCADE)
     studentEnrollment = models.ForeignKey(
         StudentUser, on_delete=models.CASCADE)
