@@ -120,7 +120,7 @@ class UpdateSecctionSerializer(serializers.ModelSerializer):
     class Meta:
         model = Secction
         fields = ['nameSecction',
-                  'workingDay',
+                  'workspaceSecction',
                   'managerSecction']
 
     def update(self, instance, validated_data):

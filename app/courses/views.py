@@ -10,6 +10,8 @@ from rest_framework.views import APIView
 from users.models import TeacherUser
 
 from .models import AcademicCharge, Area, Course, TimeTable
+from enrollments.models import Enrollment
+
 from .serializers import (AcademicChargeGetbyTeacherSerializer,
                           AcademicChargeGetGroupsSerializer,
                           AcademicChargeSerializer, AreaSerializer,
@@ -121,6 +123,21 @@ class CourseDelete(DestroyAPIView):
 class AcademicChargeList(ListAPIView):
     queryset = AcademicCharge.objects.all()
     serializer_class = AcademicChargeSerializer
+
+
+class AcademicChargabyStuden(ListAPIView):
+    queryset = AcademicCharge.objects.all()
+    serializer_class = AcademicChargeSerializer
+    
+    """Consegir las materias que ve un alumno por su grupo""" 
+    def get_queryset(self):
+        enrrollment = Enrollment.objects.get(
+            studentEnrollment=self.kwargs['studentEnrollment'])
+        charga= AcademicCharge.objects.all().filter(
+            groupDictate=enrrollment.groupEnrollment
+        )
+        return charga
+    
 
 
 class AcademicChargebyTeacher(ListAPIView):
