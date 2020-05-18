@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     'workspace',
     'secctions',
     'enrollments',
+    'tutorials',
     'rest_framework',
     'rest_framework.authtoken',
     'corsheaders',
