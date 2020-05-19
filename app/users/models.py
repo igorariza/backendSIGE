@@ -1,7 +1,8 @@
 # modelos para bd
 from django.db import models
 # modelos de auth
-from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin, AbstractUser
+from django.contrib.auth.models import (
+    AbstractBaseUser, BaseUserManager, PermissionsMixin, AbstractUser)
 # Para validar expresiones regulares
 from django.core.validators import RegexValidator
 # Para manejar la configuracion
