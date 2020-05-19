@@ -15,7 +15,25 @@ class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = CustomUser
-        fields = '__all__'
+        fields = [
+            'documentIdUser',
+            'typeIdeUser',
+            'firstNameUser',
+            'lastNameUser',
+            'emailUser',
+            'phoneUser',
+            'addressUser',
+            'passwordUser',
+            'dateOfBirthUser',
+            'dateLastAccessUser',
+            'genderUser',
+            'rhUser',
+            'is_active',
+            'is_staff',
+            'is_superuser',
+            'codeIE',
+            'codeHeadquarters'
+        ]
 
 # ========== Serializador para  el  login usuario ==========
 
@@ -158,8 +176,8 @@ class StudentSerializer(serializers.ModelSerializer):
         model = StudentUser
         fields = [
             'codeStudent',
-           # 'groupStudent',
-           # 'journeyStudent',
+            # 'groupStudent',
+            # 'journeyStudent',
             'user'
         ]
 
@@ -174,8 +192,8 @@ class CreateStudentSerializer(serializers.ModelSerializer):
         model = StudentUser
         fields = [
             'codeStudent',
-            #'groupStudent',
-            #'journeyStudent',
+            # 'groupStudent',
+            # 'journeyStudent',
             'user'
         ]
 
@@ -195,8 +213,8 @@ class UpdateStudentSerializer(serializers.ModelSerializer):
         model = StudentUser
         fields = [
             'codeStudent',
-            #'groupStudent',
-            #'journeyStudent'
+            # 'groupStudent',
+            # 'journeyStudent'
         ]
 
     def update(self, instance, validated_data):
