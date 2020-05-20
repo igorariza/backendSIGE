@@ -121,7 +121,7 @@ class UpdateSecctionSerializer(serializers.ModelSerializer):
         model = Secction
         fields = ['nameSecction',
                   'workspaceSecction',
-                  'managerSecction']
+                  'descriptionSecction']
 
     def update(self, instance, validated_data):
         Secction = super().update(instance, validated_data)
