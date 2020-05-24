@@ -23,7 +23,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '#samdp1spi+#%h0k7m8-1+w)yp3p)tf3*3_ic8it=j1a79x3pr'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = [
     '0.0.0.0',
@@ -31,6 +31,8 @@ ALLOWED_HOSTS = [
     'localhost',
     'ec2-18-229-136-215.sa-east-1.compute.amazonaws.com',
     'ec2-18-230-107-229.sa-east-1.compute.amazonaws.com',
+    'ec2-18-230-128-152.sa-east-1.compute.amazonaws.com',
+    '18.230.128.152',
     '18.230.107.229',
     'api.sige-edu.com'
 ]
@@ -148,7 +150,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = '/static/'
-
+STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
 """Configurate at upload files"""
 MEDIA_URL =  '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
@@ -165,4 +167,3 @@ REST_AUTH_REGISTER_SERIALIZERS = {
 }
 
 CORS_ORIGIN_ALLOW_ALL = True
-STATIC_ROOT = os.path.join(BASE_DIR, "static/")
