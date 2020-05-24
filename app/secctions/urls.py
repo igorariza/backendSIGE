@@ -37,5 +37,5 @@ urlpatterns = [
     path('secction/', SecctionList.as_view()),
     path('secction/<pk>', SecctionDetail.as_view()),
     path('secction/delete/<pk>', SecctionDelete.as_view()),
-    path('secction/upate/<pk>', SecctionUpdate.as_view()) 
+    path('secction/update/<pk>', SecctionUpdate.as_view()) 
     ]

@@ -22,6 +22,8 @@ from .views import (
     AcademicChargeDelete,
     AcademicChargeCoursesListTeacher,
     AcademicChargeCreateMultiple,
+    AcademicChargebyTeacher,
+    AcademicChargabyStuden,
 
     TimeTableList,
     TimeTableDetail,
@@ -53,6 +55,10 @@ urlpatterns = [
     path('academiccharge/update/<pk>', AcademicChargeUpdate.as_view()),
     path('academiccharge/delete/<pk>', AcademicChargeDelete.as_view()),
     path('academiccharge/dictategroup/<teacherDictate>', AcademicChargeCoursesListTeacher.as_view()),
+    path('academiccharge/byteacher/<teacherDictate>', AcademicChargebyTeacher.as_view()),
+    path('academiccharge/bystudent/<studentEnrollment>', AcademicChargabyStuden.as_view()),
+
+
 
     # Time Table
     path('timetable/', TimeTableList.as_view()),

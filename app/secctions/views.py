@@ -127,3 +127,4 @@ class SecctionUpdate(UpdateAPIView):
 class SecctionDelete(DestroyAPIView):
     queryset = Secction.objects.all()
     serializer_class =  DeleteSecctionSerializer
+

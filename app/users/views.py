@@ -118,9 +118,11 @@ class Login(APIView):
                 'dateLastAccessUser',
                 'genderUser',
                 'rhUser',
-                'codeHeadquartersUser',
+                'codeHeadquarters',
+                'codeIE',
                 'is_active'
             )
+            
             """Si lo encuentra y esta activo elimna los campos sencibiles y crea el token"""
             if (user_querysets.exists() and user_querysets[0]['is_active']):
                 user = user_querysets[0]
@@ -290,6 +292,17 @@ class TeacherDelete(DestroyAPIView):
     queryset = TeacherUser.objects.all()
     serializer_class = TeacherSerializer
 
+
+class TeacherAllowHeadquarters(ListAPIView):
+    queryset = TeacherUser.objects.all()
+    serializer_class = TeacherSerializer
+
+    def get_queryset(self):
+        charga = TeacherUser.objects.all().filter(
+            user__codeHeadquarters=self.kwargs['codeHeadquarters'])
+        return charga
+
+
 # ========== CRUD para la informacion del Student==============================================
 # Listar todos los student (anida info basica de usuario)
 
@@ -297,6 +310,16 @@ class TeacherDelete(DestroyAPIView):
 class StudentList(ListAPIView):
     queryset = StudentUser.objects.all()
     serializer_class = StudentSerializer
+
+class StudentAllowHeadquarters(ListAPIView):
+    queryset = StudentUser.objects.all()
+    serializer_class = StudentSerializer
+
+    def get_queryset(self):
+        charga = StudentUser.objects.all().filter(
+            user__codeHeadquarters=self.kwargs['codeHeadquarters'])
+        return charga
+
 
 # Listar un student por id
 
@@ -330,7 +353,7 @@ class StudentCreateMultiple(APIView):
             usuario['passwordUser'] = make_password(usuario['passwordUser'])
             custom = CustomUser.objects.create(
                 codeIE=IE, codeHeadquarters=Headq, **usuario)
-            teacher = StudentUser.objects.create(user=custom, **user)
+            student = StudentUser.objects.create(user=custom, **user)
         return Response({"message": "Creacion exitoso",  "code": 200})
 
 # Actualizar datos de Student por id
@@ -418,6 +441,7 @@ class StaffDetail(RetrieveAPIView):
 
 
 class StaffCreateMultiple(APIView):
+    
     queryset = StaffUser.objects.all()
 
     def post(self, request):
@@ -425,8 +449,13 @@ class StaffCreateMultiple(APIView):
         for user in data:
             print(user)
             usuario = user.pop('user')
+            codeIE = usuario.pop('codeIE')
+            IE = EducationalInstitution.objects.get(nitIE=codeIE)
+            codeHeadquarters = usuario.pop('codeHeadquarters')
+            Headq = Headquarters.objects.get(codeHeadquarters=codeHeadquarters)
             usuario['passwordUser'] = make_password(usuario['passwordUser'])
-            custom = CustomUser.objects.create(**usuario)
+            custom = CustomUser.objects.create(
+                codeIE=IE, codeHeadquarters=Headq, **usuario)
             staff = StaffUser.objects.create(user=custom, **user)
 
         return Response({"message": "Creacion exitoso",  "code": 200})

@@ -15,7 +15,8 @@ from .serializers import (
     WorkSpaceSerializer,
     CreateWorkSpaceSerializer,
     UpdateWorkSpaceSerializer,
-    DeleteWorkSpaceSerializer
+    DeleteWorkSpaceSerializer,
+    WorkSpaceOnlySecctionsSerializer,
 )
 
 from rest_framework import viewsets
@@ -93,3 +94,13 @@ class WorkSpaceUpdate(UpdateAPIView):
 class WorkSpaceDelete(DestroyAPIView):
     queryset = WorkSpace.objects.all()
     serializer_class = DeleteWorkSpaceSerializer
+
+
+class WorkSpaceOnlySecctions(ListAPIView):
+    queryset = WorkSpace.objects.all()
+    serializer_class = WorkSpaceOnlySecctionsSerializer
+
+    def get_queryset(self):
+        charga = WorkSpace.objects.all().filter(
+            academicCharge__teacherDictate=self.kwargs['teacherDictate'])
+        return charga

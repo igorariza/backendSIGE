@@ -22,6 +22,20 @@ class WorkSpaceSerializer(serializers.ModelSerializer):
                   'secctions'
                   ]
 
+
+
+class WorkSpaceOnlySecctionsSerializer(serializers.ModelSerializer):
+    
+    #academicCharge = AcademicChargeSerializer()
+    secctions = SecctionSerializer(many=True, read_only=True)
+
+    class Meta:
+        model = WorkSpace
+        fields = [
+                  'secctions'
+                  ]
+
+
 # ========== Serializador para crear el grupo ==========
 
 class CreateWorkSpaceSerializer(serializers.ModelSerializer):
