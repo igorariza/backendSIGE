@@ -33,8 +33,8 @@ class UserManager(BaseUserManager):
         user = self.create_user(email, password, **extra_fields)
         return user
 
-    def create_superuser(self, email, full_name, profile_picture, password=None, **extra_fields):
-        if not email:
+    def create_superuser(self, emailUser, full_name, password=None, **extra_fields):
+        if not emailUser:
             raise ValueError("User must have an email")
         if not password:
             raise ValueError("User must have a password")
@@ -42,11 +42,10 @@ class UserManager(BaseUserManager):
             raise ValueError("User must have a full name")
 
         user = self.model(
-            email=self.normalize_email(email)
+            email=self.normalize_email(emailUser)
         )
         user.full_name = full_name
         user.set_password(password)
-        user.profile_picture = profile_picture
         user.admin = True
         user.staff = True
         user.active = True
