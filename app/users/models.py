@@ -100,7 +100,7 @@ class CustomUser(AbstractUser):
 
     """Fields requires"""
     USERNAME_FIELD = 'documentIdUser'
-    REQUIRED_FIELDS = ['firstNameUser', 'lastNameUser']
+    REQUIRED_FIELDS = ['firstNameUser', 'lastNameUser', 'emailUser']
 
     """"Add a user manager it model"""
     objects = UserManager()
