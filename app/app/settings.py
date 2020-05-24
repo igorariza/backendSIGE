@@ -118,21 +118,15 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/3.0/topics/i18n/
-
 LANGUAGE_CODE = 'en-es'
 LC_ALL='en_US.UTF-8'
 TIME_ZONE = 'UTC'
 LANG='en_US.UTF-8'
 USE_I18N = True
-
 USE_L10N = True
-
 USE_TZ = True
-
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 STATICFILES_DIRS = [
@@ -143,7 +137,7 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
 """Configurate at upload files"""
 MEDIA_URL =  '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
-
+DEFAULT_FILE_STORAGE = 'app.storage_backends.MediaStorage'
 
 """Configurate costumuser by Auth"""
 AUTH_USER_MODEL = 'users.CustomUser'
@@ -154,5 +148,4 @@ REST_AUTH_SERIALIZERS = {
 REST_AUTH_REGISTER_SERIALIZERS = {
     "REGISTER_SERIALIZER": "users.serializers.RegisterUserSerializer",
 }
-
 CORS_ORIGIN_ALLOW_ALL = True
