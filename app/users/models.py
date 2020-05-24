@@ -33,11 +33,24 @@ class UserManager(BaseUserManager):
         user = self.create_user(email, password, **extra_fields)
         return user
 
-    def create_superuser(self, email, password, **extra_fields):
-        """Create and save a new superuser"""
-        extra_fields.setdefault('is_staff', True)
-        extra_fields.setdefault('is_superuser', True)
-        user = self.create_user(email, password, **extra_fields)
+    def create_superuser(self, email, full_name, profile_picture, password=None, **extra_fields):
+        if not email:
+            raise ValueError("User must have an email")
+        if not password:
+            raise ValueError("User must have a password")
+        if not full_name:
+            raise ValueError("User must have a full name")
+
+        user = self.model(
+            email=self.normalize_email(email)
+        )
+        user.full_name = full_name
+        user.set_password(password)
+        user.profile_picture = profile_picture
+        user.admin = True
+        user.staff = True
+        user.active = True
+        user.save(using=self._db)
         return user
 
 # ========== Modelo para el usuario personalizado==========
