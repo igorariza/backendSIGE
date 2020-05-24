@@ -12,7 +12,7 @@ from decouple import config, Csv
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = config('SECRET_KEY')
 DEBUG = config('DEBUG', cast=bool)
-AWS_DEFAULT_ACL = None
+AWS_DEFAULT_ACL = 'None'
 # # s3 Upload
 AWS_ACCESS_KEY_ID = config('ACCESS_KEY_ID')
 AWS_SECRET_ACCESS_KEY = config('SECRET_ACCESS_KEY')
