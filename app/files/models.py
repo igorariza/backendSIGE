@@ -2,6 +2,7 @@ from django.db import models
 from django.conf import settings
 # Importamos los usuarios.
 from users.models import TeacherUser
+import uuid
 # Create models here........................................................................
 
 # Model to the file in the evidences of the teachers........................................................................
@@ -18,7 +19,16 @@ class File(models.Model):
         return 'The File was created as: {}'.format(self.file.name)
 
 # Model to the profile picture to the user........................................................................
-
+class PhotoUser(models.Model):
+    """Represent a PhotoUser object"""
+    uuid = models.UUIDField(
+        primary_key=True, default=uuid.uuid4, editable=False,
+    )
+    created_at = models.DateTimeField(auto_now_add=True) 
+    title = models.CharField(max_length=100)
+    photo = models.FileField()
+    def __str__(self):
+        return 'The File was created as: {}'.format(self.title)
 # Create model to Evidence ...................................................................
 class Evidence(models.Model):
     """Represent a Evidence object"""
