@@ -32,7 +32,9 @@ urlpatterns = [
     path('api/workspaces/', include('workspace.urls')),
     path('api/secctions/', include('secctions.urls')),
     path('api/enrollments/', include('enrollments.urls')),
-    path('api/tutorials/', include('tutorials.urls'))
+    path('api/tutorials/', include('tutorials.urls')),
+    path('api/profilepictures/', include('photouser.urls')),
+    path('api/community/', include('community.urls'))
 ]
 
 if settings.DEBUG:

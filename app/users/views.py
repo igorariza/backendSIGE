@@ -122,7 +122,7 @@ class Login(APIView):
                 'codeIE',
                 'is_active'
             )
-            
+
             """Si lo encuentra y esta activo elimna los campos sencibiles y crea el token"""
             if (user_querysets.exists() and user_querysets[0]['is_active']):
                 user = user_querysets[0]
@@ -241,64 +241,75 @@ class TeacherList(ListAPIView):
     queryset = TeacherUser.objects.all()
     serializer_class = TeacherSerializer
 
+
+class TeacherListByIE(ListAPIView):
+    queryset = TeacherUser.objects.all()
+    serializer_class = TeacherSerializer
+
+    def query_set(self):
+        teacher = TeacherUser.objects.all().filter(
+            user__codeIE=self.kwargs['codeIE']
+        )
+        return teacher
+
 # Listar un teacher por id
 
 
 class TeacherDetail(RetrieveAPIView):
-    queryset = TeacherUser.objects.all()
-    serializer_class = TeacherSerializer
+    queryset=TeacherUser.objects.all()
+    serializer_class=TeacherSerializer
 
 # Crear teacher asignando un usuario ya existente
 
 
 class TeacherCreate(ListCreateAPIView):
-    queryset = TeacherUser.objects.all()
-    serializer_class = CreateTeacherSerializer
+    queryset=TeacherUser.objects.all()
+    serializer_class=CreateTeacherSerializer
 
 # Crear un grupo de teacher completos
 
 
 class TeacherCreateMultiple(APIView):
-    queryset = TeacherUser.objects.all()
+    queryset=TeacherUser.objects.all()
 
     def post(self, request):
-        data = request.data
+        data=request.data
         for user in data:
-            usuario = user.pop('user')
+            usuario=user.pop('user')
             print(usuario['documentIdUser'])
-            codeIE = usuario.pop('codeIE')
-            IE = EducationalInstitution.objects.get(nitIE=codeIE)
-            codeHeadquarters = usuario.pop('codeHeadquarters')
-            Headq = Headquarters.objects.get(codeHeadquarters=codeHeadquarters)
-            usuario['passwordUser'] = make_password(usuario['passwordUser'])
+            codeIE=usuario.pop('codeIE')
+            IE=EducationalInstitution.objects.get(nitIE = codeIE)
+            codeHeadquarters=usuario.pop('codeHeadquarters')
+            Headq=Headquarters.objects.get(codeHeadquarters = codeHeadquarters)
+            usuario['passwordUser']=make_password(usuario['passwordUser'])
             print('Paso por aqui')
-            custom = CustomUser.objects.create(
-                codeIE=IE, codeHeadquarters=Headq, **usuario)
+            custom=CustomUser.objects.create(
+                codeIE = IE, codeHeadquarters = Headq, **usuario)
             print('Paso por aqui')
-            teacher = TeacherUser.objects.create(user=custom, **user)
+            teacher=TeacherUser.objects.create(user = custom, **user)
         return Response({"message": "Creacion exitoso",  "code": 200})
 
 # Actualizar datos de teacher por id
 
 
 class TeacherUpdate(UpdateAPIView):
-    queryset = TeacherUser.objects.all()
-    serializer_class = UpdateTeacherSerializer
+    queryset=TeacherUser.objects.all()
+    serializer_class=UpdateTeacherSerializer
 
 # Eliminar Un teacher sin afectar usuario
 
 
 class TeacherDelete(DestroyAPIView):
-    queryset = TeacherUser.objects.all()
-    serializer_class = TeacherSerializer
+    queryset=TeacherUser.objects.all()
+    serializer_class=TeacherSerializer
 
 
 class TeacherAllowHeadquarters(ListAPIView):
-    queryset = TeacherUser.objects.all()
-    serializer_class = TeacherSerializer
+    queryset=TeacherUser.objects.all()
+    serializer_class=TeacherSerializer
 
     def get_queryset(self):
-        charga = TeacherUser.objects.all().filter(
+        charga=TeacherUser.objects.all().filter(
             user__codeHeadquarters=self.kwargs['codeHeadquarters'])
         return charga
 
@@ -310,6 +321,17 @@ class TeacherAllowHeadquarters(ListAPIView):
 class StudentList(ListAPIView):
     queryset = StudentUser.objects.all()
     serializer_class = StudentSerializer
+
+
+class StudentListByIE(ListAPIView):
+    queryset = StudentUser.objects.all()
+    serializer_class = StudentSerializer
+
+    def query_set(self):
+        teacher = StudentUser.objects.all().filter(
+            user__codeIE=self.kwargs['codeIE']
+        )
+        return teacher
 
 class StudentAllowHeadquarters(ListAPIView):
     queryset = StudentUser.objects.all()
@@ -441,7 +463,7 @@ class StaffDetail(RetrieveAPIView):
 
 
 class StaffCreateMultiple(APIView):
-    
+
     queryset = StaffUser.objects.all()
 
     def post(self, request):

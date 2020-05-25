@@ -2,6 +2,7 @@ from django.db import models
 from django.conf import settings
 # Importamos los usuarios.
 from users.models import TeacherUser
+import uuid
 # Create models here........................................................................
 
 # Model to the file in the evidences of the teachers........................................................................

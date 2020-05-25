@@ -74,3 +74,14 @@ class DeleteEnrollmentSerializer(serializers.ModelSerializer):
 
     def perform_destroy(self, instance):
         instance.delete()
+
+
+class EnrollmentbyGroupSerializer(serializers.ModelSerializer):
+    
+    studentEnrollment = StudentSerializer()
+
+    class Meta:
+        model = Enrollment
+        fields = [
+            'studentEnrollment'
+            ]

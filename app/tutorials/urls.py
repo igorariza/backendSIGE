@@ -18,5 +18,5 @@ urlpatterns = [
     path('create/bulk/', TutorialsCreateMultiple.as_view()),
     path('<pk>', TutorialsDetail.as_view()),
     path('update/<pk>', TutorialsUpdate.as_view()),
-    path('delete/<pk>', TutorialsDelete.as_view()),
+    #path('delete/<pk>', TutorialsDelete.as_view()),
 ]

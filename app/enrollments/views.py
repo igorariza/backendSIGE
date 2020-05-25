@@ -15,16 +15,18 @@ from rest_framework.generics import (
 )
 
 from .serializers import (
-    
+
     EnrollmentSerializer,
     CreateEnrollmentSerializer,
     UpdateEnrollmentSerializer,
-    DeleteEnrollmentSerializer
+    DeleteEnrollmentSerializer,
+    EnrollmentbyGroupSerializer,
 )
 
 # Create your views here.
 
 # ========== Enrollment ===================================================================================
+
 
 class EnrollmentList(ListAPIView):
     queryset = Enrollment.objects.all()
@@ -39,9 +41,11 @@ class EnrollmentDetail(RetrieveAPIView):
 
 # Crear Enrollment asignando un usuario ya existente
 
+
 class EnrollmentCreate(ListCreateAPIView):
     queryset = Enrollment.objects.all()
     serializer_class = CreateEnrollmentSerializer
+
 
 class EnrollmentCreateMultiple(APIView):
     queryset = Enrollment.objects.all()
@@ -63,7 +67,6 @@ class EnrollmentCreateMultiple(APIView):
         return Response({"message": "Creacion exitoso",  "code": 200})
 
 
-
 # Actualizar datos de Enrollment por id
 
 
@@ -77,3 +80,13 @@ class EnrollmentUpdate(UpdateAPIView):
 class EnrollmentDelete(DestroyAPIView):
     queryset = Enrollment.objects.all()
     serializer_class = EnrollmentSerializer
+
+
+class EnrollmentListByGroup(ListAPIView):
+    queryset = Enrollment.objects.all()
+    serializer_class = EnrollmentbyGroupSerializer
+
+    def query_set(self):
+        students = Enrollment.objects.all().filter(
+                        groupEnrollment=self.kwargs['groupEnrollment'])
+        return students

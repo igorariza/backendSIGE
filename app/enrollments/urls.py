@@ -7,7 +7,8 @@ from .views import (
     EnrollmentCreate,
     EnrollmentUpdate,
     EnrollmentDelete,
-    EnrollmentCreateMultiple
+    EnrollmentCreateMultiple,
+    EnrollmentListByGroup
     
 )
 
@@ -18,5 +19,7 @@ urlpatterns = [
     path('enrollment/create/bulk/', EnrollmentCreateMultiple.as_view()),
     path('enrollment/<pk>', EnrollmentDetail.as_view()),
     path('enrollment/update/<pk>', EnrollmentUpdate.as_view()),
-    path('enrollment/delete/<pk>', EnrollmentDelete.as_view())
+    #path('enrollment/delete/<pk>', EnrollmentDelete.as_view()),
+    path('enrollment/byGroup/<groupEnrollment>', EnrollmentListByGroup.as_view()),
+
 ]

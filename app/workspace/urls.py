@@ -22,5 +22,5 @@ urlpatterns = [
     path('create/bulk/', WorkSpaceCreateMultiple.as_view()),
     path('<pk>', WorkSpaceDetail.as_view()),
     path('update/<pk>', WorkSpaceUpdate.as_view()),
-    path('delete/<pk>', WorkSpaceDelete.as_view()),
+    #path('delete/<pk>', WorkSpaceDelete.as_view()),
 ]

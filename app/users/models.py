@@ -33,11 +33,23 @@ class UserManager(BaseUserManager):
         user = self.create_user(email, password, **extra_fields)
         return user
 
-    def create_superuser(self, email, password, **extra_fields):
-        """Create and save a new superuser"""
-        extra_fields.setdefault('is_staff', True)
-        extra_fields.setdefault('is_superuser', True)
-        user = self.create_user(email, password, **extra_fields)
+    def create_superuser(self, emailUser, firstNameUser, password=None, **extra_fields):
+        if not emailUser:
+            raise ValueError("User must have an email")
+        if not password:
+            raise ValueError("User must have a password")
+        if not firstNameUser:
+            raise ValueError("User must have a full name")
+
+        user = self.model(
+            email=self.normalize_email(emailUser)
+        )
+        user.firstNameUser = firstNameUser
+        user.set_password(password)
+        user.admin = True
+        user.staff = True
+        user.active = True
+        user.save(using=self._db)
         return user
 
 # ========== Modelo para el usuario personalizado==========
@@ -87,7 +99,7 @@ class CustomUser(AbstractUser):
 
     """Fields requires"""
     USERNAME_FIELD = 'documentIdUser'
-    REQUIRED_FIELDS = ['firstNameUser', 'lastNameUser']
+    REQUIRED_FIELDS = ['firstNameUser', 'lastNameUser', 'emailUser']
 
     """"Add a user manager it model"""
     objects = UserManager()
@@ -101,7 +113,7 @@ class CustomUser(AbstractUser):
         return self.documentoID
 
     def __str__(self):
-        return str(self.correo)
+        return str(self.documentIdUser)
 
 # ========== Modelo del Docente que contiene un usuario ==========
 
