@@ -62,7 +62,7 @@ class CommunityDelete(DestroyAPIView):
 # ========== upload to ProfilePicture ===================================================================================
 class CommunityListbyIE(ListAPIView):
     queryset = Community.objects.all()
-    serializer_class = CreateCommunitySerializer
+    serializer_class = CommunitySerializer
     
     def get_queryset(self):
         Communitys = Community.objects.all().filter(
