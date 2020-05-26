@@ -90,3 +90,14 @@ class EnrollmentListByGroup(ListAPIView):
         students = Enrollment.objects.all().filter(
                         groupEnrollment=self.kwargs['groupEnrollment'])
         return students
+    
+class EnrollmentListByGroupManager(ListAPIView):
+    queryset = Enrollment.objects.all()
+    serializer_class = EnrollmentbyGroupSerializer
+
+    def query_set(self):
+        group = Group.objects.get(managerGroup=self.kwargs['managerGroup'])
+        name = group.nameGroup
+        students = Enrollment.objects.all().filter(
+                        groupEnrollment=name)
+        return students

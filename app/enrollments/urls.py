@@ -8,7 +8,8 @@ from .views import (
     EnrollmentUpdate,
     EnrollmentDelete,
     EnrollmentCreateMultiple,
-    EnrollmentListByGroup
+    EnrollmentListByGroup,
+    EnrollmentListByGroupManager
     
 )
 
@@ -21,5 +22,7 @@ urlpatterns = [
     path('enrollment/update/<pk>', EnrollmentUpdate.as_view()),
     #path('enrollment/delete/<pk>', EnrollmentDelete.as_view()),
     path('enrollment/byGroup/<groupEnrollment>', EnrollmentListByGroup.as_view()),
+    path('enrollment/byGroupmanager/<managerGroup>', EnrollmentListByGroupManager.as_view()),
+
 
 ]
