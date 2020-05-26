@@ -1,0 +1,9 @@
+Django==2.1.1
+djangorestframework==3.11.0
+django-cors-headers==3.2.1
+flake8>=3.6.0,<3.7.0
+psycopg2==2.7.5
+python-decouple==3.3
+django-storages==1.9.1
+boto3==1.13.1
+Pillow==7.1.2
