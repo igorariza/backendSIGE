@@ -23,7 +23,7 @@ class EnrollmentSerializer(serializers.ModelSerializer):
             'studentEnrollment',
             'dateEnrollment',
             'is_active'
-            ]
+        ]
 
 
 # ========== Serializador para crear la Matricula ==========
@@ -38,7 +38,7 @@ class CreateEnrollmentSerializer(serializers.ModelSerializer):
             'studentEnrollment',
             'dateEnrollment',
             'is_active'
-            ]
+        ]
 
     def create(self, validated_data):
         enrollment = Enrollment.objects.create(
@@ -77,11 +77,11 @@ class DeleteEnrollmentSerializer(serializers.ModelSerializer):
 
 
 class EnrollmentbyGroupSerializer(serializers.ModelSerializer):
-    
+
     studentEnrollment = StudentSerializer()
 
     class Meta:
         model = Enrollment
         fields = [
             'studentEnrollment'
-            ]
+        ]
