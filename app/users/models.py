@@ -113,7 +113,7 @@ class CustomUser(AbstractUser):
         return self.documentoID
 
     def __str__(self):
-        return str(self.correo)
+        return str(self.documentIdUser)
 
 # ========== Modelo del Docente que contiene un usuario ==========
 

@@ -4,7 +4,9 @@
 from .models import (
     Resource,
     Secction,
-    HyperLynks
+    HyperLynks,
+    ResponseSecction,
+    Comment
 )
 
 from rest_framework.response import Response
@@ -33,7 +35,16 @@ from .serializers import (
     SecctionSerializer,
     CreateSecctionSerializer,
     UpdateSecctionSerializer,
-    DeleteSecctionSerializer
+    DeleteSecctionSerializer,
+    # Respose Secction
+    ResponseSecctionSerializer,
+    UpdateResponseSecctionSerializer,
+    DeleteResponseSecctionSerializer,
+    # Comment Response
+    CommentSerializer,
+    CreateCommentSerializer,
+    DeleteCommentSerializer,
+    UpdateCommentSerializer
 )
 
 
@@ -45,7 +56,6 @@ class ResourceUploadView(APIView):
     def post(self, request, *args, **kwargs):
         """keept the data Resource"""
         Resource_serializer = ResourceSerializer(data=request.data)
-
         if Resource_serializer.is_valid():
             """if the Resource is full then save"""
             Resource_serializer.save()
@@ -128,3 +138,66 @@ class SecctionDelete(DestroyAPIView):
     queryset = Secction.objects.all()
     serializer_class =  DeleteSecctionSerializer
 
+# ========== CRUD para la informacion del Response ===================================
+class ResponseSecctionUploadView(APIView):
+    parser_class = (FileUploadParser,)
+
+    def post(self, request, *args, **kwargs):
+        """keept the data Resource"""
+        Response_serializer = ResponseSecctionSerializer(data=request.data)
+        if Response_serializer.is_valid():
+            """if the Resource is full then save"""
+            Response_serializer.save()
+            return Response(Response_serializer.data, status=status.HTTP_201_CREATED)
+        else:
+            """return a bad request code"""
+            return Response(Response_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+# Listar todos las Resource
+class ResponseSecctionList(ListAPIView):
+    queryset = ResponseSecction.objects.all()
+    serializer_class = ResponseSecctionSerializer
+
+# Listar un Resource por id
+class ResponseSecctionDetail(RetrieveAPIView):
+    queryset = ResponseSecction.objects.all()
+    serializer_class = ResponseSecctionSerializer
+
+ # Delete un Resource por id
+class ResponseSecctionDelete(DestroyAPIView):
+    queryset = ResponseSecction.objects.all()
+    serializer_class = DeleteResponseSecctionSerializer
+
+# Actualizar datos de Secction por id
+class ResponseSecctionUpdate(UpdateAPIView):
+    queryset = ResponseSecction.objects.all()
+    serializer_class = UpdateResponseSecctionSerializer
+
+# ========== CRUD para la informacion del Comment ===================================
+
+
+# Listar todos los Secction
+class CommentList(ListAPIView):
+    queryset = Comment.objects.all()
+    serializer_class = CommentSerializer
+
+# Listar un Secction
+class CommentDetail(RetrieveAPIView):
+    queryset = Comment.objects.all()
+    serializer_class = CommentSerializer
+
+# Crear Secction 
+class CommentCreate(ListCreateAPIView):
+    queryset = Comment.objects.all()
+    serializer_class = CreateCommentSerializer
+
+# Actualizar datos de Secction por id
+class CommentUpdate(UpdateAPIView):
+    queryset = Comment.objects.all()
+    serializer_class = UpdateCommentSerializer
+
+# Eliminar Un Secction sin afectar usuario
+class CommentDelete(DestroyAPIView):
+    queryset = Comment.objects.all()
+    serializer_class =  DeleteCommentSerializer

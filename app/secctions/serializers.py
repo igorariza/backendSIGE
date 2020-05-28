@@ -1,6 +1,8 @@
 from .models import (Secction,
                      Resource,
-                     HyperLynks
+                     HyperLynks,
+                     ResponseSecction,
+                     Comment
                      )
 # libreria serializers
 from rest_framework import serializers
@@ -77,12 +79,96 @@ class DeleteHyperLynksSerializer(serializers.ModelSerializer):
     def perform_destroy(self, instance):
         instance.delete()
 
+#======================Serializadores para la respuesta ================================================
+
+class ResponseSecctionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ResponseSecction
+        fields = '__all__'
+
+# ========== Serializador para actualizar la ResponseSecction ==========
+
+
+class UpdateResponseSecctionSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = ResponseSecction
+        fields = ['messageResponse']
+
+    def update(self, instance, validated_data):
+        responseSecction = super().update(instance, validated_data)
+        return responseSecction
+
+# ========== Serializador para eliminar la ResponseSecction ==========
+
+
+class DeleteResponseSecctionSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = ResponseSecction
+        fields = "__all__"
+
+    def perform_destroy(self, instance):
+        instance.delete()
+        
+#======================Serializadores para el comentario de la respuesta ================================================
+
+class CommentSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Comment
+        fields = '__all__'
+
+
+# ========== Serializador para crear la Comment ==========
+class CreateCommentSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Comment
+        fields = '__all__'
+
+    def create(self, validated_data):
+        comment = Comment.objects.create(
+            teacherComment=validated_data['teacherComment'],
+            comment=validated_data['comment'],
+            responseToComment=validated_data['responseToComment']
+        )
+        comment.save()
+        return comment
+
+# ========== Serializador para actualizar la Comment ==========
+
+
+class UpdateCommentSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Comment
+        fields = ['comment']
+
+    def update(self, instance, validated_data):
+        comment = super().update(instance, validated_data)
+        return comment
+
+# ========== Serializador para eliminar la Comment ==========
+
+
+class DeleteCommentSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Comment
+        fields = "__all__"
+
+    def perform_destroy(self, instance):
+        instance.delete()
+        
+        
+
 
 # ========== Serializador para un SecctionSerializer =================================================================
 class SecctionSerializer(serializers.ModelSerializer):
 
     resources = ResourceSerializer(many=True, read_only=True)
     lynks = HyperLynksSerializer(many=True, read_only=True)
+    responses = ResponseSecctionSerializer(many=True, read_only=True)
 
     class Meta:
         model = Secction
@@ -92,7 +178,8 @@ class SecctionSerializer(serializers.ModelSerializer):
                   'uploadOnSecction',
                   'workspaceSecction',
                   'resources',
-                  'lynks']
+                  'lynks',
+                  'responses']
 
 # ========== Serializador para crear el SecctionSerializer ==========
 

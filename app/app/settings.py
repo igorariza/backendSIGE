@@ -45,6 +45,8 @@ INSTALLED_APPS = [
     'secctions',
     'enrollments',
     'tutorials',
+    'community',
+    'photouser',
     'rest_framework',
     'rest_framework.authtoken',
     'corsheaders',
