@@ -246,7 +246,7 @@ class TeacherListByIE(ListAPIView):
     queryset = TeacherUser.objects.all()
     serializer_class = TeacherSerializer
 
-    def query_set(self):
+    def get_queryset(self):
         teacher = TeacherUser.objects.all().filter(
             user__codeIE=self.kwargs['codeIE']
         )
@@ -327,7 +327,7 @@ class StudentListByIE(ListAPIView):
     queryset = StudentUser.objects.all()
     serializer_class = StudentSerializer
 
-    def query_set(self):
+    def get_queryset(self):
         teacher = StudentUser.objects.all().filter(
             user__codeIE=self.kwargs['codeIE']
         )
