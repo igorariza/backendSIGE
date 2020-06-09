@@ -4,7 +4,7 @@ from .models import WorkSpace
 # libreria serializers
 from rest_framework import serializers
 from courses.serializers import AcademicChargeSerializer
-from secctions.serializers import SecctionSerializer
+from secctions.serializers import SecctionSerializer,SecctionStudentSerializer
 
 
 # ========== Serializador para un Grupo =================================================================
@@ -22,7 +22,19 @@ class WorkSpaceSerializer(serializers.ModelSerializer):
                   'secctions'
                   ]
 
+class WorkSpaceStudentSerializer(serializers.ModelSerializer):
+    
+    academicCharge = AcademicChargeSerializer()
+    secctions = SecctionStudentSerializer(many=True, read_only=True)
 
+    class Meta:
+        model = WorkSpace
+        fields = ['codeWorkSpace',
+                  'nameWorkSpace',
+                  'descriptionWorkSpace',
+                  'academicCharge',
+                  'secctions'
+                  ]
 
 class WorkSpaceOnlySecctionsSerializer(serializers.ModelSerializer):
     

@@ -9,6 +9,7 @@ from rest_framework.generics import (
 )
 
 from .models import WorkSpace
+from django.db.models import Prefetch
 from courses.models import AcademicCharge
 
 from .serializers import (
@@ -17,6 +18,7 @@ from .serializers import (
     UpdateWorkSpaceSerializer,
     DeleteWorkSpaceSerializer,
     WorkSpaceOnlySecctionsSerializer,
+    WorkSpaceStudentSerializer,
 )
 
 from rest_framework import viewsets
@@ -59,9 +61,27 @@ class WorkSpaceDetail(RetrieveAPIView):
     queryset = WorkSpace.objects.all()
     serializer_class = WorkSpaceSerializer
 
+
+
+class WorkSpaceDetailCourse(ListAPIView):
+    queryset = WorkSpace.objects.all()
+    serializer_class = WorkSpaceSerializer
+    
+    def get_queryset(self):
+        charga = WorkSpace.objects.all().filter(
+            academicCharge=self.kwargs['academicCharge'])
+        return charga
+    
+class WorkSpaceDetailStudentCourse(ListAPIView):
+    queryset = WorkSpace.objects.all()
+    serializer_class = WorkSpaceStudentSerializer
+    
+    def get_queryset(self):
+        charga = WorkSpace.objects.all().filter(
+            academicCharge=self.kwargs['academicCharge'])
+        return charga
+
 # Crear WorkSpace
-
-
 class WorkSpaceCreate(ListCreateAPIView):
     queryset = WorkSpace.objects.all()
     serializer_class = CreateWorkSpaceSerializer

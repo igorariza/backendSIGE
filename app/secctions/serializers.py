@@ -180,6 +180,34 @@ class SecctionSerializer(serializers.ModelSerializer):
                   'resources',
                   'lynks',
                   'responses']
+        
+class SecctionStudentSerializer(serializers.ModelSerializer):
+    
+    resources = ResourceSerializer(many=True, read_only=True)
+    lynks = HyperLynksSerializer(many=True, read_only=True)
+
+    class Meta:
+        model = Secction
+        fields = ['codeSecction',
+                  'nameSecction',
+                  'descriptionSecction',
+                  'uploadOnSecction',
+                  'workspaceSecction',
+                  'resources',
+                  'lynks']
+              
+    
+
+    class Meta:
+        model = Secction
+        fields = ['codeSecction',
+                  'nameSecction',
+                  'descriptionSecction',
+                  'uploadOnSecction',
+                  'workspaceSecction',
+                  'resources',
+                  'lynks',
+                  'response']
 
 # ========== Serializador para crear el SecctionSerializer ==========
 

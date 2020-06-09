@@ -35,6 +35,21 @@ class UserSerializer(serializers.ModelSerializer):
             'codeHeadquarters'
         ]
 
+
+
+
+class RetriveNameUserSerializer(serializers.ModelSerializer):
+    
+    class Meta:
+        model = CustomUser
+        fields = [
+            'firstNameUser',
+            'lastNameUser',
+            'emailUser',
+            'phoneUser',
+            'codeIE',
+            'codeHeadquarters'
+        ]
 # ========== Serializador para  el  login usuario ==========
 
 
@@ -122,6 +137,17 @@ class TeacherSerializer(serializers.ModelSerializer):
             'degreesTeacher',
             'user',
             'evidences'
+        ]
+ 
+class RetriveNameTeacherSerializer(serializers.ModelSerializer):
+    
+    user = RetriveNameUserSerializer()
+
+    class Meta:
+        model = TeacherUser
+        fields = [
+            'codeTeacher',
+            'user',
         ]
 
 # ========== Serializador para crear teacher con usuario ==========

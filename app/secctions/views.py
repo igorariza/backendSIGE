@@ -15,9 +15,8 @@ from rest_framework.generics import (
     ListAPIView,
     RetrieveAPIView,
     ListCreateAPIView,
-    RetrieveAPIView,
     UpdateAPIView,
-    DestroyAPIView
+    DestroyAPIView,
 )
 
 from rest_framework.parsers import FileUploadParser
@@ -118,6 +117,10 @@ class SecctionList(ListAPIView):
     queryset = Secction.objects.all()
     serializer_class = SecctionSerializer
 
+
+
+
+
 # Listar un Secction
 class SecctionDetail(RetrieveAPIView):
     queryset = Secction.objects.all()
@@ -163,6 +166,17 @@ class ResponseSecctionList(ListAPIView):
 class ResponseSecctionDetail(RetrieveAPIView):
     queryset = ResponseSecction.objects.all()
     serializer_class = ResponseSecctionSerializer
+
+
+class ResponseSecctionStudentDetail(ListAPIView):
+    queryset = ResponseSecction.objects.all()
+    serializer_class = ResponseSecctionSerializer
+    
+    def get_queryset(self):
+        query = ResponseSecction.objects.get(secctionResponse=self.kwargs['secctionResponse'],
+                                             studentResponse=self.kwargs['studentResponse'])
+        return query
+    
 
  # Delete un Resource por id
 class ResponseSecctionDelete(DestroyAPIView):

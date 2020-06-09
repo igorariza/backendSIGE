@@ -5,6 +5,7 @@ from .models import (
     TimeTable
 )
 from groups.serializers import GroupSerializer
+from users.serializers import RetriveNameTeacherSerializer
 
 # libreria serializers
 from rest_framework import serializers
@@ -177,6 +178,22 @@ class AcademicChargeSerializer(serializers.ModelSerializer):
                   'courseDictate',
                   'groupDictate',
                   'hourlyintensity', 'schedule']
+        
+class RetriveStudentAcademicChargeSerializer(serializers.ModelSerializer):
+    
+    schedule = TimeTableSerializer(many=True, read_only=True)
+    courseDictate = CourseSerializer()
+    teacherDictate = RetriveNameTeacherSerializer()
+
+    class Meta:
+        model = AcademicCharge
+        fields = ['codeAcademicCharge',
+                  'teacherDictate',
+                  'courseDictate',
+                  'groupDictate',
+                  'hourlyintensity', 'schedule']
+        
+        
 
 
 class AcademicChargeGetGroupsSerializer(serializers.ModelSerializer):

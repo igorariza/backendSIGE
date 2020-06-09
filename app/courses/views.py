@@ -22,7 +22,8 @@ from .serializers import (AcademicChargeGetbyTeacherSerializer,
                           DeleteCourseSerializer, DeleteTimeTableSerializer,
                           TimeTableSerializer, UpdateAcademicChargeSerializer,
                           UpdateAreaSerializer, UpdateCourseSerializer,
-                          UpdateTimeTableSerializer)
+                          UpdateTimeTableSerializer,
+                          RetriveStudentAcademicChargeSerializer)
 
 # ========== Area ===================================================================================
 
@@ -127,7 +128,7 @@ class AcademicChargeList(ListAPIView):
 
 class AcademicChargabyStuden(ListAPIView):
     queryset = AcademicCharge.objects.all()
-    serializer_class = AcademicChargeSerializer
+    serializer_class = RetriveStudentAcademicChargeSerializer
     
     """Consegir las materias que ve un alumno por su grupo""" 
     def get_queryset(self):
