@@ -178,6 +178,14 @@ class AcademicChargeSerializer(serializers.ModelSerializer):
                   'courseDictate',
                   'groupDictate',
                   'hourlyintensity', 'schedule']
+
+class AcademicChargeNamecourseSerializer(serializers.ModelSerializer):
+    
+    courseDictate = CourseSerializer()
+
+    class Meta:
+        model = AcademicCharge
+        fields = ['courseDictate']
         
 class RetriveStudentAcademicChargeSerializer(serializers.ModelSerializer):
     

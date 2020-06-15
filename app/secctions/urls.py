@@ -63,6 +63,6 @@ urlpatterns = [
     path('commentsecction/create/', CommentCreate.as_view()),
     path('commentsecction/', CommentList.as_view()),
     path('commentsecction/<pk>', CommentDetail.as_view()),
-    path('responsesecction/delete/<pk>', CommentDelete.as_view()),
+    path('commentsecction/delete/<pk>', CommentDelete.as_view()),
     path('commentsecction/update/<pk>', CommentUpdate.as_view()),
 ]

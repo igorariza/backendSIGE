@@ -14,7 +14,8 @@ from enrollments.models import Enrollment
 
 from .serializers import (AcademicChargeGetbyTeacherSerializer,
                           AcademicChargeGetGroupsSerializer,
-                          AcademicChargeSerializer, AreaSerializer,
+                          AcademicChargeSerializer,
+                          AcademicChargeNamecourseSerializer, AreaSerializer,
                           CourseSerializer, CreateAcademicChargeSerializer,
                           CreateAreaSerializer, CreateCourseSerializer,
                           CreateTimeTableSerializer,
@@ -150,6 +151,15 @@ class AcademicChargebyTeacher(ListAPIView):
             teacherDictate=self.kwargs['teacherDictate'])
         return charga
 
+class AcademicNameCourse(ListAPIView):
+    queryset = AcademicCharge.objects.all()
+    serializer_class = AcademicChargeNamecourseSerializer
+
+    def get_queryset(self):
+        charga = AcademicCharge.objects.all().filter(
+            codeAcademicCharge=self.kwargs['codeAcademicCharge'])
+        return charga
+    
 
 class AcademicChargeCoursesListTeacher(ListAPIView):
     queryset = AcademicCharge.objects.all()
