@@ -79,7 +79,7 @@ class ResponseSecction(models.Model):
                                     verbose_name='ID')
     secctionResponse = models.ForeignKey(
         Secction, related_name='responses', on_delete=models.PROTECT)
-    response = models.FileField(upload_to=get_upload_path, blank=True)
+    response = models.FileField(upload_to=get_upload_response_path, blank=True)
     messageResponse = models.CharField(max_length=1000)
     dateResponse = models.DateTimeField(auto_now_add=True)
 
