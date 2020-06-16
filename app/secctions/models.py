@@ -52,10 +52,8 @@ class HyperLynks(models.Model):
         auto_created=True, primary_key=True, serialize=False, verbose_name='ID')
     url = models.CharField(blank=True, max_length=500)
     secctionHyperlink = models.ForeignKey(
-        Secction, related_name='lynks', on_delete=models.PROTECT)
+        Secction, related_name='lynks', on_delete=models.CASCADE)
 
-    def __str__(self):
-        return 'The Url was created with code: {}'.format(self.codeHyperLink)
 
 
 def get_upload_response_path(instance, filename):
@@ -76,7 +74,7 @@ class ResponseSecction(models.Model):
     codeResponse = models.AutoField(auto_created=True, primary_key=True, serialize=False,
                                     verbose_name='ID')
     secctionResponse = models.ForeignKey(
-        Secction, related_name='responses', on_delete=models.PROTECT)
+        Secction, related_name='responses', on_delete=models.CASCADE)
     response = models.FileField(upload_to=get_upload_response_path, blank=True)
     messageResponse = models.CharField(max_length=1000)
     dateResponse = models.DateTimeField(auto_now_add=True)
@@ -84,8 +82,7 @@ class ResponseSecction(models.Model):
     studentResponse = models.ForeignKey(StudentUser, related_name='responses',
                                         on_delete=models.PROTECT)
 
-    def __str__(self):
-        return 'The Response was created as: {}'.format(self.file.name)
+ 
 
 
 class Comment(models.Model):
