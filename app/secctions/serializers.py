@@ -196,7 +196,7 @@ class SecctionSerializer(serializers.ModelSerializer):
 
     resources = ResourceSerializer(many=True, read_only=True)
     lynks = HyperLynksSerializer(many=True, read_only=True)
-    responses = ResponseSecctionSerializer(many=True, read_only=True)
+    responses = ResponseSecctionbyAcademicchargeSerializer(many=True, read_only=True)
 
     class Meta:
         model = Secction
