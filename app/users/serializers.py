@@ -35,6 +35,18 @@ class UserSerializer(serializers.ModelSerializer):
             'codeHeadquarters'
         ]
 
+class UserResponseSerializer(serializers.ModelSerializer):
+    
+    class Meta:
+        model = CustomUser
+        fields = [
+            'documentIdUser',
+            'firstNameUser',
+            'lastNameUser',
+            'emailUser',
+            'dateLastAccessUser',
+            'codeHeadquarters'
+        ]
 
 
 
@@ -204,6 +216,17 @@ class StudentSerializer(serializers.ModelSerializer):
             'codeStudent',
             # 'groupStudent',
             # 'journeyStudent',
+            'user'
+        ]
+        
+class StudentResponseSerializer(serializers.ModelSerializer):
+    
+    user = UserResponseSerializer()
+
+    class Meta:
+        model = StudentUser
+        fields = [
+            'codeStudent',
             'user'
         ]
 

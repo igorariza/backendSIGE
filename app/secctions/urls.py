@@ -18,6 +18,7 @@ from .views import (
     SecctionDetail,
     SecctionList,
     SecctionUpdate,
+    SecctionbyAcademicCharga,
     # ResponseSecction
     ResponseSecctionUploadView,
     ResponseSecctionDetail,
@@ -51,6 +52,8 @@ urlpatterns = [
     path('secction/<pk>', SecctionDetail.as_view()),
     path('secction/delete/<pk>', SecctionDelete.as_view()),
     path('secction/update/<pk>', SecctionUpdate.as_view()),
+    path('secction/byacademicharge/<academicCharge>', SecctionbyAcademicCharga.as_view()),
+
     # Response
     path('responsesecction/create/', ResponseSecctionUploadView.as_view()),
     path('responsesecction/', ResponseSecctionList.as_view()),

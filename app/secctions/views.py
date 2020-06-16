@@ -9,6 +9,7 @@ from .models import (
     Comment
 )
 
+from workspace.models import WorkSpace
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.generics import (
@@ -117,7 +118,17 @@ class SecctionList(ListAPIView):
     queryset = Secction.objects.all()
     serializer_class = SecctionSerializer
 
-
+class SecctionbyAcademicCharga(ListAPIView):
+    queryset = Secction.objects.all()
+    serializer_class = SecctionSerializer
+    
+    
+    def get_queryset(self):
+        workspace = WorkSpace.objects.get(academicCharge=self.kwargs['academicCharge'])
+        code = workspace.codeWorkSpace
+        query = Secction.objects.filter(
+            workspaceSecction=code)
+        return query
 
 
 

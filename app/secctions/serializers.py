@@ -6,7 +6,7 @@ from .models import (Secction,
                      )
 # libreria serializers
 from rest_framework import serializers
-
+from users.serializers import StudentResponseSerializer
 
 # ========== Serializador para una Resource =================================================================
 class ResourceSerializer(serializers.ModelSerializer):
@@ -82,10 +82,17 @@ class DeleteHyperLynksSerializer(serializers.ModelSerializer):
 #======================Serializadores para la respuesta ================================================
 
 class ResponseSecctionSerializer(serializers.ModelSerializer):
+    
+    studentResponse = StudentResponseSerializer()
     class Meta:
         model = ResponseSecction
-        fields = '__all__'
-
+        fields = ['codeResponse',
+                  'secctionResponse',
+                  'response',
+                  'messageResponse',
+                  'dateResponse',
+                  'studentResponse'
+                  ]
 # ========== Serializador para actualizar la ResponseSecction ==========
 
 

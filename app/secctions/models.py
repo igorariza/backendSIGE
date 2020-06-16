@@ -42,11 +42,9 @@ class Resource(models.Model):
     codeResouce = models.AutoField(auto_created=True, primary_key=True, serialize=False,
                                    verbose_name='ID')
     secctionResource = models.ForeignKey(
-        Secction, related_name='resources', on_delete=models.PROTECT)
+        Secction, related_name='resources', on_delete=models.CASCADE)
     resource = models.FileField(upload_to=get_upload_path, blank=True)
 
-    def __str__(self):
-        return 'The Resource was created as: {}'.format(self.file.name)
 
 
 class HyperLynks(models.Model):
