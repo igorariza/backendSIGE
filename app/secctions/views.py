@@ -10,6 +10,7 @@ from .models import (
 )
 
 from workspace.models import WorkSpace
+
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.generics import (
@@ -40,6 +41,7 @@ from .serializers import (
     ResponseSecctionSerializer,
     UpdateResponseSecctionSerializer,
     DeleteResponseSecctionSerializer,
+    ResponseSecctionbyAcademicchargeSerializer,
     # Comment Response
     CommentSerializer,
     CreateCommentSerializer,
@@ -181,7 +183,7 @@ class ResponseSecctionDetail(RetrieveAPIView):
 
 class ResponseSecctionStudentDetail(ListAPIView):
     queryset = ResponseSecction.objects.all()
-    serializer_class = ResponseSecctionSerializer
+    serializer_class = ResponseSecctionbyAcademicchargeSerializer
     
     def get_queryset(self):
         query = ResponseSecction.objects.get(secctionResponse=self.kwargs['secctionResponse'],

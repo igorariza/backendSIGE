@@ -81,7 +81,16 @@ class DeleteHyperLynksSerializer(serializers.ModelSerializer):
 
 #======================Serializadores para la respuesta ================================================
 
+
 class ResponseSecctionSerializer(serializers.ModelSerializer):
+    
+    class Meta:
+        model = ResponseSecction
+        fields = '__all__'
+      
+
+
+class ResponseSecctionbyAcademicchargeSerializer(serializers.ModelSerializer):
     
     studentResponse = StudentResponseSerializer()
     class Meta:
@@ -93,6 +102,18 @@ class ResponseSecctionSerializer(serializers.ModelSerializer):
                   'dateResponse',
                   'studentResponse'
                   ]
+    
+class DeleteResponseSecctionSerializer(serializers.ModelSerializer):
+    
+    class Meta:
+        model = ResponseSecction
+        fields = '__all__'
+
+    def perform_destroy(self, instance):
+        instance.delete()
+        
+        
+        
 # ========== Serializador para actualizar la ResponseSecction ==========
 
 
