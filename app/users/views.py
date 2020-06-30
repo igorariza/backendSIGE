@@ -59,7 +59,7 @@ class AllowPrincipal(BasePermission):
         else:
             return False
 
-
+"""  """
 class AllowSubprincipal(BasePermission):
     def has_permission(self, request, view):
         if request.user.is_authenticated:
@@ -138,44 +138,44 @@ class Login(APIView):
                     staff_querysets = StaffUser.objects.filter(user__documentIdUser__iexact=documentIdUser).values(
                         'codeStaff',
                         'ocupationStaff')
-                    photo_querysets = ProfilePicture.objects.get(user=documentIdUser)
+                    photostaff_querysets = ProfilePicture.objects.get(user=documentIdUser)
                     if (staff_querysets.exists()):
                         staff = staff_querysets[0]
-                        photo = photo_querysets[0]
+                        photostaff = photostaff_querysets[0]
                         return Response({"message": "Login exitoso",
                                          "code": 200,
                                          "data":  {
                                                     "token": token.key,
-                                                    "photo": photo,
+                                                    "photostaff": photostaff,
                                                     "user_data": {"staff": staff,
                                                                   "user": user}
                                          }})
                     teacher_querysets = TeacherUser.objects.filter(user__documentIdUser__iexact=documentIdUser).values(
                         'codeTeacher',
                         'degreesTeacher')
-                    photo_querysets = ProfilePicture.objects.get(user=documentIdUser)
+                    phototeacher_querysets = ProfilePicture.objects.get(user=documentIdUser)
                     if (teacher_querysets.exists()):
                         teacher = teacher_querysets[0]
-                        photo = photo_querysets[0]
+                        phototeacher = phototeacher_querysets[0]
                         return Response({"message": "Login exitoso",
                                          "code": 200,
                                          "data":  {
                                              "token": token.key,
-                                             "photo": photo,
+                                             "photo": phototeacher,
                                              "user_data": {"teacher": teacher,
                                                            "user": user}
                                          }})
                     student_querysets = StudentUser.objects.filter(user__documentIdUser__iexact=documentIdUser).values(
                         'codeStudent')
-                    photo_querysets = ProfilePicture.objects.get(user=documentIdUser)
+                    photostudent_querysets = ProfilePicture.objects.get(user=documentIdUser)
                     if (student_querysets.exists()):
                         student = student_querysets[0]
-                        photo = photo_querysets[0] 
+                        photostudent = photostudent_querysets[0] 
                         return Response({"message": "Login exitoso",
                                          "code": 200,
                                          "data":  {
                                                     "token": token.key,
-                                                    "photo": photo,
+                                                    "photo": photostudent,
                                                     "user_data": {"student": student,
                                                                   "user": user}
                                          }})
@@ -183,15 +183,15 @@ class Login(APIView):
                         'codeRelative',
                         'typeRelative',
                         'student')
-                    photo_querysets = ProfilePicture.objects.get(user=documentIdUser)
+                    photorelative_querysets = ProfilePicture.objects.get(user=documentIdUser)
                     if (relative_querysets.exists()):
                         relative = relative_querysets[0]
-                        photo = photo_querysets[0]
+                        photorelative = photorelative_querysets[0]
                         return Response({"message": "Login exitoso",
                                          "code": 200,
                                          "data":  {
                                                     "token": token.key,
-                                                    "photo": photo,
+                                                    "photo": photorelative,
                                                     "user_data": {"relative": relative,
                                                                   "user": user}
                                          }})
