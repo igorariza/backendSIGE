@@ -8,6 +8,7 @@ from .views import (
     UserCreate,
     UserUpdate,
     UserDelete,
+    UserchagePass,
 
     TeacherList,
     TeacherAllowHeadquarters,
@@ -79,5 +80,6 @@ urlpatterns = [
     #path('staff/delete<pk>', StaffDelete.as_view()),
     path('<pk>/', UserDetail.as_view()),
     path('update/<pk>/', UserUpdate.as_view()),
+    path('changepassword/<pk>/', UserchagePass.as_view())
     #path('delete/<pk>', UserDelete.as_view())
 ]

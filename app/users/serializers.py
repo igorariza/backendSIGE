@@ -2,7 +2,7 @@ from rest_framework import serializers
 from users.models import CustomUser, TeacherUser, StudentUser, RelativeUser, StaffUser
 from django.contrib.auth.hashers import make_password
 from json import JSONEncoder
-
+from rest_framework import status
 
 # Para agregar las avidencias al usuario
 from files.serializers import EvidenceSerializer
@@ -118,6 +118,23 @@ class InactivateUserSerializer(serializers.ModelSerializer):
         user = self.partial_update(request, *args, **kwargs)
         return user
 
+
+class ChangePassUserSerializer(serializers.ModelSerializer):
+    
+    class Meta:
+        model = CustomUser
+        fields = ['passwordUser']
+    
+    def update(self, instance, validated_data):
+            
+        if not validated_data['passwordUser']:
+              raise serializers.ValidationError({'passwordUser': 'not found'})
+          
+        validated_data['passwordUser'] = make_password(validated_data['passwordUser'])
+        user = super().update(instance, validated_data)
+        return user
+
+
 # ========== Serializador para actualizar el usuario ==========
 
 
@@ -125,12 +142,22 @@ class UpdateUserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = CustomUser
-        fields = '__all__'
+        fields = [
+            'documentIdUser',
+            'typeIdeUser',
+            'firstNameUser',
+            'lastNameUser',
+            'emailUser',
+            'phoneUser',
+            'addressUser',
+            'dateOfBirthUser',
+            'genderUser',
+            'rhUser',
+            'codeIE',
+            'codeHeadquarters'
+        ]
 
     def update(self, instance, validated_data):
-        print(validated_data)
-        validated_data['passwordUser'] = make_password(
-            validated_data['passwordUser'])
         user = super().update(instance, validated_data)
         return user
 

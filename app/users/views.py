@@ -15,10 +15,12 @@ from django.contrib.auth.hashers import make_password
 
 from .models import CustomUser, TeacherUser, StudentUser, StaffUser, RelativeUser
 from institutions.models import EducationalInstitution, Headquarters
+from photouser.models import ProfilePicture
 
 
 from .serializers import (
     UserSerializer,
+    ChangePassUserSerializer,
     InactivateUserSerializer,
     UpdateUserSerializer,
     CreateUserSerializer,
@@ -136,35 +138,44 @@ class Login(APIView):
                     staff_querysets = StaffUser.objects.filter(user__documentIdUser__iexact=documentIdUser).values(
                         'codeStaff',
                         'ocupationStaff')
+                    photo_querysets = ProfilePicture.objects.get(user=documentIdUser)
                     if (staff_querysets.exists()):
                         staff = staff_querysets[0]
+                        photo = photo_querysets[0]
                         return Response({"message": "Login exitoso",
                                          "code": 200,
                                          "data":  {
                                                     "token": token.key,
+                                                    "photo": photo,
                                                     "user_data": {"staff": staff,
                                                                   "user": user}
                                          }})
                     teacher_querysets = TeacherUser.objects.filter(user__documentIdUser__iexact=documentIdUser).values(
                         'codeTeacher',
                         'degreesTeacher')
+                    photo_querysets = ProfilePicture.objects.get(user=documentIdUser)
                     if (teacher_querysets.exists()):
                         teacher = teacher_querysets[0]
+                        photo = photo_querysets[0]
                         return Response({"message": "Login exitoso",
                                          "code": 200,
                                          "data":  {
                                              "token": token.key,
+                                             "photo": photo,
                                              "user_data": {"teacher": teacher,
                                                            "user": user}
                                          }})
                     student_querysets = StudentUser.objects.filter(user__documentIdUser__iexact=documentIdUser).values(
                         'codeStudent')
+                    photo_querysets = ProfilePicture.objects.get(user=documentIdUser)
                     if (student_querysets.exists()):
                         student = student_querysets[0]
+                        photo = photo_querysets[0] 
                         return Response({"message": "Login exitoso",
                                          "code": 200,
                                          "data":  {
                                                     "token": token.key,
+                                                    "photo": photo,
                                                     "user_data": {"student": student,
                                                                   "user": user}
                                          }})
@@ -172,12 +183,15 @@ class Login(APIView):
                         'codeRelative',
                         'typeRelative',
                         'student')
+                    photo_querysets = ProfilePicture.objects.get(user=documentIdUser)
                     if (relative_querysets.exists()):
                         relative = relative_querysets[0]
+                        photo = photo_querysets[0]
                         return Response({"message": "Login exitoso",
                                          "code": 200,
                                          "data":  {
                                                     "token": token.key,
+                                                    "photo": photo,
                                                     "user_data": {"relative": relative,
                                                                   "user": user}
                                          }})
@@ -232,6 +246,11 @@ class UserUpdate(UpdateAPIView):
 class UserDelete(DestroyAPIView):
     queryset = CustomUser.objects.all()
     serializer_class = UserSerializer
+    
+class UserchagePass(UpdateAPIView):
+    """View para delete una Subestacion"""
+    queryset = CustomUser.objects.all()
+    serializer_class = ChangePassUserSerializer
 
 # ========== CRUD para la informacion del Teacher==============================================
 # Listar todos los teacher (anida info basica de usuario)
