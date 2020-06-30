@@ -51,7 +51,15 @@ class ProfilePictureDetail(RetrieveAPIView):
     serializer_class = ProfilePictureSerializer
 
  # Delete un ProfilePicture por id
-
+class ProfilePictureByUser(APIView):
+    queryset = ProfilePicture.objects.all()
+    serializer_class = ProfilePictureSerializer
+    
+    """Consegir las materias que ve un alumno por su grupo""" 
+    def get(self,request):
+        profilePicture = ProfilePicture.objects.get(
+            user=self.kwargs['user'])
+        return profilePicture
 
 class ProfilePictureDelete(DestroyAPIView):
     queryset = ProfilePicture.objects.all()

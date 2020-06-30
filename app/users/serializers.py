@@ -157,8 +157,8 @@ class UpdateUserSerializer(serializers.ModelSerializer):
             'codeHeadquarters'
         ]
 
-    def update(self, instance, validated_data):
-        user = super().update(instance, validated_data)
+    def patch(self, request, *args, **kwargs):
+        user = self.partial_update(request, *args, **kwargs)
         return user
 
 # ========== Serializador para el teacher ============================================================

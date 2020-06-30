@@ -5,7 +5,8 @@ from .views import (
                     ProfilePictureUploadView,
                     ProfilePictureDetail,
                     ProfilePictureList,
-                    ProfilePictureDelete
+                    ProfilePictureDelete,
+                    ProfilePictureByUser
                     )
 
 urlpatterns = [
@@ -13,5 +14,6 @@ urlpatterns = [
     path('create/', ProfilePictureUploadView.as_view()),
     path('', ProfilePictureList.as_view()),
     path('<pk>', ProfilePictureDetail.as_view()),
-    path('delete/<pk>', ProfilePictureDelete.as_view())
+    path('delete/<pk>', ProfilePictureDelete.as_view()),
+    path('picture/<user>', ProfilePictureByUser.as_view())
     ]

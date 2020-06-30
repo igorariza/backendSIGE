@@ -15,7 +15,6 @@ from django.contrib.auth.hashers import make_password
 
 from .models import CustomUser, TeacherUser, StudentUser, StaffUser, RelativeUser
 from institutions.models import EducationalInstitution, Headquarters
-from photouser.models import ProfilePicture
 
 
 from .serializers import (
@@ -138,44 +137,35 @@ class Login(APIView):
                     staff_querysets = StaffUser.objects.filter(user__documentIdUser__iexact=documentIdUser).values(
                         'codeStaff',
                         'ocupationStaff')
-                    photostaff_querysets = ProfilePicture.objects.get(user=documentIdUser)
                     if (staff_querysets.exists()):
                         staff = staff_querysets[0]
-                        photostaff = photostaff_querysets[0]
                         return Response({"message": "Login exitoso",
                                          "code": 200,
                                          "data":  {
                                                     "token": token.key,
-                                                    "photostaff": photostaff,
                                                     "user_data": {"staff": staff,
                                                                   "user": user}
                                          }})
                     teacher_querysets = TeacherUser.objects.filter(user__documentIdUser__iexact=documentIdUser).values(
                         'codeTeacher',
                         'degreesTeacher')
-                    phototeacher_querysets = ProfilePicture.objects.get(user=documentIdUser)
                     if (teacher_querysets.exists()):
                         teacher = teacher_querysets[0]
-                        phototeacher = phototeacher_querysets[0]
                         return Response({"message": "Login exitoso",
                                          "code": 200,
                                          "data":  {
                                              "token": token.key,
-                                             "photo": phototeacher,
                                              "user_data": {"teacher": teacher,
                                                            "user": user}
                                          }})
                     student_querysets = StudentUser.objects.filter(user__documentIdUser__iexact=documentIdUser).values(
                         'codeStudent')
-                    photostudent_querysets = ProfilePicture.objects.get(user=documentIdUser)
                     if (student_querysets.exists()):
                         student = student_querysets[0]
-                        photostudent = photostudent_querysets[0] 
                         return Response({"message": "Login exitoso",
                                          "code": 200,
                                          "data":  {
                                                     "token": token.key,
-                                                    "photo": photostudent,
                                                     "user_data": {"student": student,
                                                                   "user": user}
                                          }})
@@ -183,15 +173,12 @@ class Login(APIView):
                         'codeRelative',
                         'typeRelative',
                         'student')
-                    photorelative_querysets = ProfilePicture.objects.get(user=documentIdUser)
                     if (relative_querysets.exists()):
                         relative = relative_querysets[0]
-                        photorelative = photorelative_querysets[0]
                         return Response({"message": "Login exitoso",
                                          "code": 200,
                                          "data":  {
                                                     "token": token.key,
-                                                    "photo": photorelative,
                                                     "user_data": {"relative": relative,
                                                                   "user": user}
                                          }})
