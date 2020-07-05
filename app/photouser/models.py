@@ -7,12 +7,10 @@ from users.models import CustomUser
 def get_upload_path(instance, filename):
     """Metodo para crear la ruta al archivo"""
     ie = instance.user.codeIE.nameIE
-    sede = instance.user.codeHeadquarters.nameHeadquarters
     user = instance.user.documentIdUser
 
-    return 'ProfilePrictures/'+"%s/%s/%s/%s" % (
+    return 'ProfilePrictures/'+"%s/%s/%s" % (
         ie,
-        sede,
         user,
         filename
         

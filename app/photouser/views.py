@@ -51,15 +51,29 @@ class ProfilePictureDetail(RetrieveAPIView):
     serializer_class = ProfilePictureSerializer
 
  # Delete un ProfilePicture por id
+
+
 class ProfilePictureByUser(APIView):
     queryset = ProfilePicture.objects.all()
     serializer_class = ProfilePictureSerializer
-    
-    """Consegir las materias que ve un alumno por su grupo""" 
-    def get(self,request):
-        profilePicture = ProfilePicture.objects.get(
-            user=self.kwargs['user'])
-        return profilePicture
+
+    """Consegir las materias que ve un alumno por su grupo"""
+
+    def post(self, request):
+        user = request.data.get('user', None)
+        profilePicture = ProfilePicture.objects.filter(
+            user=user).values(
+                'codePhoto',
+                'photo',
+                'user'
+        )
+        if profilePicture.exists():
+            pic = profilePicture[0]
+            return Response(pic, status=status.HTTP_201_CREATED)
+        else:
+            """return a bad request code"""
+            return Response({"picture": ""}, status=status.HTTP_400_BAD_REQUEST)
+
 
 class ProfilePictureDelete(DestroyAPIView):
     queryset = ProfilePicture.objects.all()

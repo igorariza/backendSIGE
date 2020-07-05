@@ -15,5 +15,5 @@ urlpatterns = [
     path('', ProfilePictureList.as_view()),
     path('<pk>', ProfilePictureDetail.as_view()),
     path('delete/<pk>', ProfilePictureDelete.as_view()),
-    path('picture/<user>', ProfilePictureByUser.as_view())
+    path('picture/', ProfilePictureByUser.as_view())
     ]
