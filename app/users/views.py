@@ -15,6 +15,7 @@ from django.contrib.auth.hashers import make_password
 
 from .models import CustomUser, TeacherUser, StudentUser, StaffUser, RelativeUser
 from institutions.models import EducationalInstitution, Headquarters
+from photouser.models import ProfilePicture
 
 
 from .serializers import (
@@ -58,7 +59,10 @@ class AllowPrincipal(BasePermission):
         else:
             return False
 
+
 """  """
+
+
 class AllowSubprincipal(BasePermission):
     def has_permission(self, request, view):
         if request.user.is_authenticated:
@@ -127,6 +131,15 @@ class Login(APIView):
             """Si lo encuentra y esta activo elimna los campos sencibiles y crea el token"""
             if (user_querysets.exists() and user_querysets[0]['is_active']):
                 user = user_querysets[0]
+                profilePicture = ProfilePicture.objects.filter(
+                                    user=user_querysets[0]['documentIdUser']).values(
+                                        'codePhoto'
+                                    )
+                pic = {"picture": ""}            
+                if profilePicture.exists():
+                     pic = profilePicture[0]
+                else:   
+                     pic = {}             
                 if(check_password(passwordUser, user['passwordUser'])):
                     user.pop('passwordUser')
                     user.pop('is_active')
@@ -143,6 +156,7 @@ class Login(APIView):
                                          "code": 200,
                                          "data":  {
                                                     "token": token.key,
+                                                    "picture": pic,
                                                     "user_data": {"staff": staff,
                                                                   "user": user}
                                          }})
@@ -155,6 +169,7 @@ class Login(APIView):
                                          "code": 200,
                                          "data":  {
                                              "token": token.key,
+                                             "picture": pic,
                                              "user_data": {"teacher": teacher,
                                                            "user": user}
                                          }})
@@ -166,6 +181,7 @@ class Login(APIView):
                                          "code": 200,
                                          "data":  {
                                                     "token": token.key,
+                                                    "picture": pic,
                                                     "user_data": {"student": student,
                                                                   "user": user}
                                          }})
@@ -179,6 +195,7 @@ class Login(APIView):
                                          "code": 200,
                                          "data":  {
                                                     "token": token.key,
+                                                    "picture": pic,
                                                     "user_data": {"relative": relative,
                                                                   "user": user}
                                          }})
@@ -233,7 +250,8 @@ class UserUpdate(UpdateAPIView):
 class UserDelete(DestroyAPIView):
     queryset = CustomUser.objects.all()
     serializer_class = UserSerializer
-    
+
+
 class UserchagePass(UpdateAPIView):
     """View para delete una Subestacion"""
     queryset = CustomUser.objects.all()
@@ -262,60 +280,60 @@ class TeacherListByIE(ListAPIView):
 
 
 class TeacherDetail(RetrieveAPIView):
-    queryset=TeacherUser.objects.all()
-    serializer_class=TeacherSerializer
+    queryset = TeacherUser.objects.all()
+    serializer_class = TeacherSerializer
 
 # Crear teacher asignando un usuario ya existente
 
 
 class TeacherCreate(ListCreateAPIView):
-    queryset=TeacherUser.objects.all()
-    serializer_class=CreateTeacherSerializer
+    queryset = TeacherUser.objects.all()
+    serializer_class = CreateTeacherSerializer
 
 # Crear un grupo de teacher completos
 
 
 class TeacherCreateMultiple(APIView):
-    queryset=TeacherUser.objects.all()
+    queryset = TeacherUser.objects.all()
 
     def post(self, request):
-        data=request.data
+        data = request.data
         for user in data:
-            usuario=user.pop('user')
+            usuario = user.pop('user')
             print(usuario['documentIdUser'])
-            codeIE=usuario.pop('codeIE')
-            IE=EducationalInstitution.objects.get(nitIE = codeIE)
-            codeHeadquarters=usuario.pop('codeHeadquarters')
-            Headq=Headquarters.objects.get(codeHeadquarters = codeHeadquarters)
-            usuario['passwordUser']=make_password(usuario['passwordUser'])
+            codeIE = usuario.pop('codeIE')
+            IE = EducationalInstitution.objects.get(nitIE = codeIE)
+            codeHeadquarters = usuario.pop('codeHeadquarters')
+            Headq = Headquarters.objects.get(codeHeadquarters = codeHeadquarters)
+            usuario['passwordUser'] = make_password(usuario['passwordUser'])
             print('Paso por aqui')
-            custom=CustomUser.objects.create(
-                codeIE = IE, codeHeadquarters = Headq, **usuario)
+            custom =CustomUser.objects.create(
+                codeIE= IE, codeHeadquarters = Headq, **usuario)
             print('Paso por aqui')
-            teacher=TeacherUser.objects.create(user = custom, **user)
+            teacher = TeacherUser.objects.create(user = custom, **user)
         return Response({"message": "Creacion exitoso",  "code": 200})
 
 # Actualizar datos de teacher por id
 
 
 class TeacherUpdate(UpdateAPIView):
-    queryset=TeacherUser.objects.all()
-    serializer_class=UpdateTeacherSerializer
+    queryset = TeacherUser.objects.all()
+    serializer_class = UpdateTeacherSerializer
 
 # Eliminar Un teacher sin afectar usuario
 
 
 class TeacherDelete(DestroyAPIView):
-    queryset=TeacherUser.objects.all()
-    serializer_class=TeacherSerializer
+    queryset = TeacherUser.objects.all()
+    serializer_class = TeacherSerializer
 
 
 class TeacherAllowHeadquarters(ListAPIView):
-    queryset=TeacherUser.objects.all()
-    serializer_class=TeacherSerializer
+    queryset = TeacherUser.objects.all()
+    serializer_class = TeacherSerializer
 
     def get_queryset(self):
-        charga=TeacherUser.objects.all().filter(
+        charga =TeacherUser.objects.all().filter(
             user__codeHeadquarters=self.kwargs['codeHeadquarters'])
         return charga
 
@@ -338,6 +356,7 @@ class StudentListByIE(ListAPIView):
             user__codeIE=self.kwargs['codeIE']
         )
         return teacher
+
 
 class StudentAllowHeadquarters(ListAPIView):
     queryset = StudentUser.objects.all()
