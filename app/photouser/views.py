@@ -46,9 +46,16 @@ class ProfilePictureList(ListAPIView):
 # Listar un ProfilePicture por id
 
 
-class ProfilePictureDetail(RetrieveAPIView):
+class ProfilePictureDetail(ListAPIView):
     queryset = ProfilePicture.objects.all()
     serializer_class = ProfilePictureSerializer
+    
+    def get_queryset(self):
+        charga = ProfilePicture.objects.filter(
+            user=self.kwargs['user'])
+        return charga
+        
+        
 
  # Delete un ProfilePicture por id
 
@@ -66,13 +73,15 @@ class ProfilePictureByUser(APIView):
                 'codePhoto',
                 'photo',
                 'user'
-        )
+        )   
         if profilePicture.exists():
             pic = profilePicture[0]
             return Response(pic, status=status.HTTP_201_CREATED)
         else:
             """return a bad request code"""
             return Response({"picture": ""}, status=status.HTTP_400_BAD_REQUEST)
+        
+
 
 
 class ProfilePictureDelete(DestroyAPIView):

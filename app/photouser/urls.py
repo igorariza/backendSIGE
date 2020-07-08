@@ -13,7 +13,7 @@ urlpatterns = [
     #Picture
     path('create/', ProfilePictureUploadView.as_view()),
     path('', ProfilePictureList.as_view()),
-    path('<pk>', ProfilePictureDetail.as_view()),
+    path('<user>', ProfilePictureDetail.as_view()),
     path('delete/<pk>', ProfilePictureDelete.as_view()),
     path('picture/', ProfilePictureByUser.as_view())
     ]
