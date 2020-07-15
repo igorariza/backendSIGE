@@ -64,13 +64,17 @@ class CustomUser(AbstractUser):
 
     """Validate than fields phone and id are ok"""
     phone_or_id_validate = RegexValidator(
-        regex=r'^\+?1?\d{7,10}$', message="Numero incorrecto")
+        regex=r'^\+?1?\d{7,30}$', message="Numero incorrecto")
 
     documentIdUser = models.CharField(validators=[phone_or_id_validate],
-                                      max_length=10,
+                                      max_length=30,
                                       primary_key=True,
                                       serialize=False,
                                       verbose_name='ID')
+    profile_picture = models.CharField(max_length=5000,
+                                       blank=True,
+                                       null=True,
+                                       default='https://res.cloudinary.com/sigeedu/image/upload/v1594776164/sigedu/1528904524_boy_1_wehjsw.svg')
     typeIdeUser = models.CharField(max_length=100)
     firstNameUser = models.CharField(max_length=100, null=False)
     lastNameUser = models.CharField(max_length=100, null=False)

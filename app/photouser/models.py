@@ -26,3 +26,5 @@ class ProfilePicture(models.Model):
 
     def __str__(self):
         return 'The Picture was created as: {}'.format(self.codePhoto)
+
+

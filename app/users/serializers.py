@@ -18,6 +18,7 @@ class UserSerializer(serializers.ModelSerializer):
         fields = [
             'documentIdUser',
             'typeIdeUser',
+            'profile_picture',
             'firstNameUser',
             'lastNameUser',
             'emailUser',
@@ -85,6 +86,7 @@ class CreateUserSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         user = CustomUser.objects.create(
             documentIdUser=validated_data['documentIdUser'],
+            profile_picture=validated_data['profile_picture'],
             typeIdeUser=validated_data['typeIdeUser'],
             firstNameUser=validated_data['firstNameUser'],
             lastNameUser=validated_data['lastNameUser'],
@@ -144,6 +146,7 @@ class UpdateUserSerializer(serializers.ModelSerializer):
         model = CustomUser
         fields = [
             'documentIdUser',
+            'profile_picture',
             'typeIdeUser',
             'firstNameUser',
             'lastNameUser',
