@@ -1,12 +1,12 @@
 from django.db import models
-
+from django.utils import timezone
 
 # import to foreing models
 from workspace.models import WorkSpace
 from users.models import StudentUser, TeacherUser
 
 
-# Create model  to a Secction........................................................................
+# Create model  to a Secction..........................................................
 
 
 class Secction(models.Model):
@@ -16,8 +16,13 @@ class Secction(models.Model):
     nameSecction = models.CharField(max_length=100, null=False)
     descriptionSecction = models.CharField(max_length=5000)
     uploadOnSecction = models.DateTimeField(auto_now_add=True)
+    date_close = models.DateTimeField(
+        default=timezone.now, blank=True)
     workspaceSecction = models.ForeignKey(
         WorkSpace, related_name='secctions', on_delete=models.PROTECT)
+    image_found = models.CharField(
+        max_length=5000, default='https://res.cloudinary.com/duyflkcyn/image/upload/v1595312014/SIGE/ActivitiesPhothos/3_talrgu.jpg',
+        null=True)
 
     def __str__(self):
         return 'The Secction was created as: {}, with a code: {}'.format(
@@ -46,14 +51,12 @@ class Resource(models.Model):
     resource = models.FileField(upload_to=get_upload_path, blank=True)
 
 
-
 class HyperLynks(models.Model):
     codeHyperLink = models.AutoField(
         auto_created=True, primary_key=True, serialize=False, verbose_name='ID')
     url = models.CharField(blank=True, max_length=500)
     secctionHyperlink = models.ForeignKey(
         Secction, related_name='lynks', on_delete=models.CASCADE)
-
 
 
 def get_upload_response_path(instance, filename):
@@ -82,8 +85,6 @@ class ResponseSecction(models.Model):
     studentResponse = models.ForeignKey(StudentUser, related_name='responses',
                                         on_delete=models.PROTECT)
 
- 
-
 
 class Comment(models.Model):
     codeComment = models.AutoField(
@@ -94,7 +95,7 @@ class Comment(models.Model):
     dateComment = models.DateTimeField(auto_now_add=True)
     responseToComment = models.OneToOneField(
         ResponseSecction, on_delete=models.PROTECT)
+    score = models.FloatField(null=True, default=0.0)
 
     def __str__(self):
         return 'The Comment was created with code: {}'.format(self.codeComment)
-

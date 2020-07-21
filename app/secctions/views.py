@@ -10,7 +10,7 @@ from .models import (
 )
 
 from workspace.models import WorkSpace
-
+from rest_framework.parsers import MultiPartParser, FormParser
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.generics import (
@@ -200,6 +200,7 @@ class ResponseSecctionDelete(DestroyAPIView):
 class ResponseSecctionUpdate(UpdateAPIView):
     queryset = ResponseSecction.objects.all()
     serializer_class = UpdateResponseSecctionSerializer
+    parser_classes = (MultiPartParser, FormParser)
 
 # ========== CRUD para la informacion del Comment ===================================
 
