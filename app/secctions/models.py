@@ -17,7 +17,7 @@ class Secction(models.Model):
     descriptionSecction = models.CharField(max_length=5000)
     uploadOnSecction = models.DateTimeField(auto_now_add=True)
     date_close = models.DateTimeField(
-        default=timezone.now, blank=True)
+        default=timezone.now, blank=True, null=True)
     workspaceSecction = models.ForeignKey(
         WorkSpace, related_name='secctions', on_delete=models.PROTECT)
     image_found = models.CharField(
