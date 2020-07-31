@@ -1,12 +1,15 @@
-from secctions.models import (Secction,
-                              Resource,
-                              HyperLynks,
-                              ResponseSecction,
-                              Comment
-                              )
 # libreria serializers
 from rest_framework import serializers
 from users.serializers import StudentResponseSerializer
+from .models import (
+    Secction,
+    Resource,
+    HyperLynks,
+    ResponseSecction,
+    Comment,
+    Responses,
+    Homework
+)
 
 # ========== Serializador para una Resource =================================================================
 
@@ -136,18 +139,15 @@ class DeleteCommentSerializer(serializers.ModelSerializer):
 
 
 class ResponseSecctionSerializer(serializers.ModelSerializer):
-    
-    comment = CommentSerializer(read_only=True)
 
     class Meta:
         model = ResponseSecction
-        fields =  ['codeResponse',
+        fields = ['codeResponse',
                   'secctionResponse',
                   'response',
                   'messageResponse',
                   'dateResponse',
                   'studentResponse',
-                  'comment'
                   ]
 
 
@@ -190,12 +190,114 @@ class UpdateResponseSecctionSerializer(serializers.ModelSerializer):
         return responseSecction
 
 
+# ========== Serializador para una Resource =================================================================
+
+
+class HomeworkSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Homework
+        fields = ['code_homework', 'response_secction', 'response_file']
+
+# ========== Serializador para eliminar la Resource ==========
+
+
+class DeleteHomeworkSerializers(serializers.ModelSerializer):
+
+    class Meta:
+        model = Homework
+        fields = "__all__"
+
+    def perform_destroy(self, instance):
+        instance.delete()
+
+
+# ======================Serializadores para la respuesta ================================================
+
+
+class ResponsesSerializer(serializers.ModelSerializer):
+
+    comment = CommentSerializer(read_only=True)
+    homework = HomeworkSerializer(read_only=True)
+
+    class Meta:
+        model = Responses
+        fields = ['code_response',
+                  'secction_response',
+                  'message_response',
+                  'date_response',
+                  'student_response',
+                  'comment',
+                  'homework'
+                  ]
+
+
+class CreateResponsesSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Responses
+        fields = '__all__'
+
+    def create(self, validated_data):
+        response = Responses.objects.create(
+            secction_response=validated_data['secction_response'],
+            message_response=validated_data['message_response'],
+            student_response=validated_data['student_response']
+        )
+        response.save()
+        return response
+
+
+class ResponsesbyAcademicchargeSerializer(serializers.ModelSerializer):
+
+    student_response = StudentResponseSerializer(read_only=True)
+    comment = CommentSerializer(read_only=True)
+    homework = HomeworkSerializer(many=True, read_only=True)
+
+    class Meta:
+        model = Responses
+        fields = ['code_response',
+                  'secction_response',
+                  'message_response',
+                  'date_response',
+                  'student_response',
+                  'comment',
+                  'homework'
+                  ]
+
+
+class DeleteResponsesSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Responses
+        fields = '__all__'
+
+    def perform_destroy(self, instance):
+        instance.delete()
+
+
+# ========== Serializador para actualizar la ResponseSecction ==========
+
+
+class UpdateResponsesSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Responses
+        fields = [
+            'message_response'
+        ]
+
+    def update(self, instance, validated_data):
+        response = super().update(instance, validated_data)
+        return response
+
 # ========== Serializador para un SecctionSerializer =================================================================
+
+
 class SecctionSerializer(serializers.ModelSerializer):
 
     resources = ResourceSerializer(many=True, read_only=True)
     lynks = HyperLynksSerializer(many=True, read_only=True)
-    responses = ResponseSecctionbyAcademicchargeSerializer(
+    response = ResponsesbyAcademicchargeSerializer(
         many=True, read_only=True)
 
     class Meta:
@@ -209,13 +311,14 @@ class SecctionSerializer(serializers.ModelSerializer):
                   'workspaceSecction',
                   'resources',
                   'lynks',
-                  'responses']
+                  'response']
 
 
 class SecctionStudentSerializer(serializers.ModelSerializer):
 
     resources = ResourceSerializer(many=True, read_only=True)
     lynks = HyperLynksSerializer(many=True, read_only=True)
+    responses = ResponsesSerializer(read_only=True)
 
     class Meta:
         model = Secction
@@ -228,7 +331,7 @@ class SecctionStudentSerializer(serializers.ModelSerializer):
                   'workspaceSecction',
                   'resources',
                   'lynks',
-                  'response']
+                  'responses']
 
 # ========== Serializador para crear el SecctionSerializer ==========
 

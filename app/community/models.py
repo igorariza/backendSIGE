@@ -21,4 +21,28 @@ class Community(models.Model):
         ordering = ['codeCommunity', 'dateCommunity']
 
     def __str__(self):
-        return 'The Community was created as: {}'.format(self.nameCommunity)
+        return 'The Community was created as:'
+
+
+class Addfile(models.Model):
+    """Represent a Resource object"""
+    codefile = models.AutoField(auto_created=True, primary_key=True, serialize=False,
+                                verbose_name='ID')
+    post = models.OneToOneField(
+        Community, related_name='file', on_delete=models.CASCADE)
+    file = models.FileField(upload_to='Community/', blank=True)
+
+
+class Replay(models.Model):
+    """Represent a Resource object"""
+    codereplay = models.AutoField(
+        auto_created=True, primary_key=True, serialize=False, verbose_name='ID')
+    user = models.ForeignKey(
+        CustomUser, on_delete=models.PROTECT)
+    comment = models.CharField(max_length=5000)
+    datereplay = models.DateTimeField(auto_now_add=True)
+    replay = models.ForeignKey(
+        Community, related_name='replays', on_delete=models.CASCADE)
+
+    def __str__(self):
+        return 'The replay was created with code: {}'.format(self.codereplay)
