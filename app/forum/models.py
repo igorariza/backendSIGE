@@ -16,7 +16,7 @@ class Feed(models.Model):
         CustomUser, related_name='feeds', on_delete=models.PROTECT)
 
 
-
+""" comentario para validar """
 
 # metodo para crear la ruta en el s3 de manera dinamica
 def get_upload_path(instance, filename):

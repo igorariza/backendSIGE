@@ -73,7 +73,7 @@ class DeleteFile_forumSerializers(serializers.ModelSerializer):
         fields = "__all__"
 
     def perform_destroy(self, instance):
-        instance.delete()
+        instance.delete() 
 
 
 # ========== Serializador para una Feed =================================================================
