@@ -14,6 +14,7 @@ from courses.models import AcademicCharge
 
 from .serializers import (
     WorkSpaceSerializer,
+    WorkSpaceSerializerCustom,
     CreateWorkSpaceSerializer,
     UpdateWorkSpaceSerializer,
     DeleteWorkSpaceSerializer,
@@ -54,6 +55,22 @@ class WorkSpaceCoursesTeacher(ListAPIView):
             academicCharge__teacherDictate=teacher, academicCharge__groupDictate=group)
 
 
+class WorkSpaceByAcademicCharge(ListAPIView):
+    queryset = WorkSpace.objects.all()
+    serializer_class = WorkSpaceSerializerCustom
+
+    def get_queryset(self):
+        """
+        Optionally restricts the returned purchases to a given user,
+        by filtering against a `teacherDictate` query parameter in the URL.
+        """
+        code_academic_charge = self.kwargs['codeAcademicCharge']
+        charga = WorkSpace.objects.all()
+        return charga.filter(
+            academicCharge=code_academic_charge
+        )
+
+
 # Listar un WorkSpace
 
 
@@ -62,26 +79,28 @@ class WorkSpaceDetail(RetrieveAPIView):
     serializer_class = WorkSpaceSerializer
 
 
-
 class WorkSpaceDetailCourse(ListAPIView):
     queryset = WorkSpace.objects.all()
     serializer_class = WorkSpaceSerializer
-    
+
     def get_queryset(self):
         charga = WorkSpace.objects.all().filter(
             academicCharge=self.kwargs['academicCharge'])
         return charga
-    
+
+
 class WorkSpaceDetailStudentCourse(ListAPIView):
     queryset = WorkSpace.objects.all()
     serializer_class = WorkSpaceStudentSerializer
-    
+
     def get_queryset(self):
         charga = WorkSpace.objects.all().filter(
             academicCharge=self.kwargs['academicCharge'])
         return charga
 
 # Crear WorkSpace
+
+
 class WorkSpaceCreate(ListCreateAPIView):
     queryset = WorkSpace.objects.all()
     serializer_class = CreateWorkSpaceSerializer

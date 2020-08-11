@@ -14,6 +14,8 @@ from institutions.models import EducationalInstitution, Headquarters
 #from groups.models import (Journey, Group)
 
 # ========== Modelo del usuario base de Django ==========
+
+
 class UserManager(BaseUserManager):
 
     def create_user(self, email, password, **extra_fields):
@@ -110,12 +112,6 @@ class CustomUser(AbstractUser):
 
     """functions by identify the model"""
 
-    def get_full_name(self):
-        return self.nombres
-
-    def get_id_user(self):
-        return self.documentoID
-
     def __str__(self):
         return str(self.documentIdUser)
 
@@ -146,7 +142,7 @@ class StudentUser(models.Model):
     """fields to StudentUser"""
     codeStudent = models.CharField(
         max_length=255, primary_key=True, verbose_name='ID')
-    
+
     def __str__(self):
         return str(self.user.documentIdUser)
 

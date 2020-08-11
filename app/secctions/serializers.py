@@ -1,6 +1,7 @@
 # libreria serializers
 from rest_framework import serializers
 from users.serializers import StudentResponseSerializer
+from images.serializers import ImageResponseSerializer
 from .models import (
     Secction,
     Resource,
@@ -217,7 +218,7 @@ class DeleteHomeworkSerializers(serializers.ModelSerializer):
 class ResponsesSerializer(serializers.ModelSerializer):
 
     comment = CommentSerializer(read_only=True)
-    homework = HomeworkSerializer(read_only=True)
+    response = HomeworkSerializer(read_only=True)
 
     class Meta:
         model = Responses
@@ -227,7 +228,7 @@ class ResponsesSerializer(serializers.ModelSerializer):
                   'date_response',
                   'student_response',
                   'comment',
-                  'homework'
+                  'response'
                   ]
 
 
@@ -252,6 +253,7 @@ class ResponsesbyAcademicchargeSerializer(serializers.ModelSerializer):
     student_response = StudentResponseSerializer(read_only=True)
     comment = CommentSerializer(read_only=True)
     homework = HomeworkSerializer(many=True, read_only=True)
+    images = ImageResponseSerializer(read_only=True, many=True)
 
     class Meta:
         model = Responses
@@ -261,7 +263,8 @@ class ResponsesbyAcademicchargeSerializer(serializers.ModelSerializer):
                   'date_response',
                   'student_response',
                   'comment',
-                  'homework'
+                  'homework',
+                  'images'
                   ]
 
 

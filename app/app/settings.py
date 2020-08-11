@@ -51,6 +51,8 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     'corsheaders',
     'storages',
+    'forum',
+    'images',
     'psycopg2'
 ]
 REST_FRAMEWORK = {

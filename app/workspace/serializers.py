@@ -22,6 +22,20 @@ class WorkSpaceSerializer(serializers.ModelSerializer):
                   'secctions'
                   ]
 
+                  
+class WorkSpaceSerializerCustom(serializers.ModelSerializer):
+
+    academicCharge = AcademicChargeSerializer()
+
+    class Meta:
+        model = WorkSpace
+        fields = ['codeWorkSpace',
+                  'nameWorkSpace',
+                  'descriptionWorkSpace',
+                  'academicCharge'
+                  ]
+
+
 class WorkSpaceStudentSerializer(serializers.ModelSerializer):
     
     academicCharge = AcademicChargeSerializer()
