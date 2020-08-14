@@ -8,7 +8,7 @@ class Feed(models.Model):
     code_feed = models.AutoField(auto_created=True, primary_key=True, serialize=False,
                                  verbose_name='ID')
     title_feed = models.CharField(max_length=255)
-    date_feed = models.DateField(auto_now_add=True)
+    date_feed = models.DateTimeField(auto_now_add=True)
     description_feed = models.CharField(max_length=10000)
     academic_charge = models.ForeignKey(
         AcademicCharge, related_name='forum', on_delete=models.CASCADE)

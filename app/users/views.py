@@ -113,6 +113,7 @@ class Login(APIView):
             user_querysets = CustomUser.objects.filter(documentIdUser__iexact=documentIdUser).values(
                 'documentIdUser',
                 'typeIdeUser',
+                'profile_picture',
                 'firstNameUser',
                 'lastNameUser',
                 'emailUser',
