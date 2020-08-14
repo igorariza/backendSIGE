@@ -157,5 +157,5 @@ class FeedListbyAcademicCharge(ListAPIView):
 
     def get_queryset(self):
         Feeds = Feed.objects.all().filter(
-            academic_charge=self.kwargs['codeAcademicCharge'])
+            academic_charge=self.kwargs['codeAcademicCharge']).order_by('-date_feed')
         return Feeds
