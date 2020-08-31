@@ -30,7 +30,6 @@ def get_upload_path(instance, filename):
         filename
     )
 
-
 class File_forum(models.Model):
     """Represent a Resource object"""
     code_file = models.AutoField(auto_created=True, primary_key=True, serialize=False,

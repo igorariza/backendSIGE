@@ -12,7 +12,7 @@ from decouple import config, Csv
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = config('SECRET_KEY')
 DEBUG = config('DEBUG', cast=bool)
-AWS_DEFAULT_ACL='public-read'
+AWS_DEFAULT_ACL = 'public-read'
 
 # # s3 Upload
 AWS_ACCESS_KEY_ID = config('ACCESS_KEY_ID')
@@ -126,9 +126,9 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/3.0/topics/i18n/
 LANGUAGE_CODE = 'en-es'
-LC_ALL='en_US.UTF-8'
+LC_ALL = 'en_US.UTF-8'
 TIME_ZONE = 'UTC'
-LANG='en_US.UTF-8'
+LANG = 'en_US.UTF-8'
 USE_I18N = True
 USE_L10N = True
 USE_TZ = True
@@ -140,7 +140,7 @@ STATICFILES_DIRS = [
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
 """Configurate at upload files"""
-MEDIA_URL =  '/media/'
+MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 DEFAULT_FILE_STORAGE = 'app.storage_backends.MediaStorage'
 
