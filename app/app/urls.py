@@ -37,6 +37,10 @@ urlpatterns = [
     path('api/forum/', include('forum.urls')),
     path('api/images/', include('images.urls')),
     path('api/community/', include('community.urls')),
+    path('api/attendance/', include('attendance.urls')),
+    path('api/stadistics/', include('stadistics.urls')),
+
+
 ]
 
 if settings.DEBUG:

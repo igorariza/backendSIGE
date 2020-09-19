@@ -54,7 +54,9 @@ INSTALLED_APPS = [
     'storages',
     'forum',
     'images',
-    'psycopg2'
+    'attendance',
+    'stadistics',
+    'psycopg2',
 ]
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
