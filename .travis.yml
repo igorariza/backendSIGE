@@ -1,5 +1,5 @@
 language: python
 # command to install dependencies
 install:
-  - python3 install -r requirements.txt
+  - python install -r requirements.txt
 # command to run test
