@@ -3,3 +3,8 @@ language: python
 # command to install dependencies
 env:
   - SECRET_KEY='#samdp1spi+#%h0k7m8-1+w)yp3p)tf3*3_ic8it=j1a79x3pr' DEBUG=True DB_NAME=databasesige DB_USER=databasesige DB_PASSWORD=ia2127374 DB_HOST=databasesige.cfgbol9pangg.sa-east-1.rds.amazonaws.com DB_PORT=5432 ALLOWED_HOSTS=.ec2-52-67-18-41.sa-east-1.compute.amazonaws.com, .ec2-54-94-2-78.sa-east-1.compute.amazonaws.com, .api-test.sige-edu.com, .ec2-15-228-7-190.sa-east-1.compute.amazonaws.com ACCESS_KEY_ID=AKIASX643RRLSRJS2VU4 SECRET_ACCESS_KEY=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 BUKET_NAME_S3 = s3-sige-file-20200523
+  before_install:
+    - python3 --version
+    - pip3 install -U pip
+    - pip3 install -U pytest
+    - pip3 install codecov
