@@ -14,6 +14,7 @@ env:
   - SECRET_ACCESS_KEY=7exghGuP4j2Iptrvi/8K4Ngth82j6sSvS0ptrT05 
   - BUKET_NAME_S3 = s3-sige-file-20200523
   before_install:
+    - python -m pip install --upgrade pip
     - python3 --version
     - pip3 install -U pip
     - pip3 install -U pytest
