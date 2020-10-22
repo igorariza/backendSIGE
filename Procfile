@@ -1,1 +1,1 @@
-web: gunicorn sigebackend.app 
+web: gunicorn app.app 
