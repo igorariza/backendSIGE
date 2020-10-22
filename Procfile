@@ -1,1 +1,1 @@
-web: gunicorn backendsige.wsgi --log-file -
+web: gunicorn sige-backend.wsgi --log-file -
