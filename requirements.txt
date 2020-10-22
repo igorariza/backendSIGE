@@ -8,3 +8,4 @@ pycodestyle>=2.4.0
 pyflakes>=2.0.0
 pytz>=2020.1
 sqlparse>=0.4.1
+python-decouple==3.1
