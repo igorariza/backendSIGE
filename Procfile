@@ -1,1 +1,1 @@
-web: gunicorn wsgi:application --log-file=-
+web: gunicorn wsgi:application --preload -b 0.0.0.0:8000 
