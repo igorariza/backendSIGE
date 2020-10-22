@@ -1,1 +1,1 @@
-web: gunicorn backend:app
+web: gunicorn backend:app --preload -b 0.0.0.0:5000
