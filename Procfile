@@ -1,1 +1,1 @@
-web: gunicorn app.wsgi:application --chdir=/sige-backend/app/app -b 0.0.0.0:8000 
+web: gunicorn --log-file=- app.wsgi:application  
