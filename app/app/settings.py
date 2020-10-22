@@ -7,12 +7,15 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.0/ref/settings/
 """
 import os
+import django_heroku
 from decouple import config, Csv
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = config('SECRET_KEY')
 DEBUG = config('DEBUG', cast=bool)
 AWS_DEFAULT_ACL = 'public-read'
+# Activate Django-Heroku.
+django_heroku.settings(locals())
 
 # # s3 Upload
 AWS_ACCESS_KEY_ID = config('ACCESS_KEY_ID')
