@@ -1,1 +1,1 @@
-web: gunicorn app.wsgi --timeout 10
+web: gunicorn sigebackend.app 
